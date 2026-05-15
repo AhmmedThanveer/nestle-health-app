@@ -1,0 +1,156 @@
+/// =======================================================
+/// common_textfield.dart
+/// =======================================================
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:health_congress/view%20model/bloc/textfield%20bloc/common_textfield_event.dart';
+import 'package:health_congress/view%20model/bloc/textfield%20bloc/common_textfield_state.dart';
+import 'package:health_congress/view%20model/bloc/textfield%20bloc/commontextfield_bloc.dart';
+
+import '../../core/constants/app_colors.dart';
+import '../../core/theme/app_textstyles.dart';
+
+class CommonTextField extends StatelessWidget {
+  final String hintText;
+
+  final TextEditingController controller;
+
+  final bool isPassword;
+
+  final Widget? suffixIcon;
+
+  final TextInputType keyboardType;
+
+  final String? Function(String?)? validator;
+
+  const CommonTextField({
+    super.key,
+    required this.hintText,
+    required this.controller,
+    this.isPassword = false,
+    this.suffixIcon,
+    this.keyboardType = TextInputType.text,
+    this.validator,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => CommonTextFieldBloc(validator: validator),
+
+      child: BlocBuilder<CommonTextFieldBloc, CommonTextFieldState>(
+        builder: (context, state) {
+          Color borderColor = AppColors.borderColor;
+
+          if (state.errorText != null && controller.text.isNotEmpty) {
+            borderColor = Colors.redAccent;
+          } else if (state.isFocused) {
+            borderColor = AppColors.lightBlue;
+          }
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: [
+              Container(
+                height: 68.h,
+
+                alignment: Alignment.center,
+
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14.r),
+
+                  border: Border.all(color: borderColor, width: 1.5),
+                ),
+
+                child: Focus(
+                  onFocusChange: (hasFocus) {
+                    context.read<CommonTextFieldBloc>().add(
+                      TextFieldFocusChanged(hasFocus),
+                    );
+                  },
+
+                  child: TextFormField(
+                    controller: controller,
+
+                    obscureText: isPassword,
+
+                    keyboardType: keyboardType,
+
+                    onChanged: (value) {
+                      context.read<CommonTextFieldBloc>().add(
+                        TextFieldValueChanged(value),
+                      );
+                    },
+
+                    textAlignVertical: TextAlignVertical.center,
+
+                    style: TextStyle(
+                      color: AppColors.white,
+
+                      fontSize: 18.sp,
+
+                      fontFamily: 'Roboto',
+
+                      fontWeight: FontWeight.w400,
+
+                      height: 1.0,
+                    ),
+
+                    cursorColor: AppColors.white,
+
+                    decoration: InputDecoration(
+                      hintText: hintText,
+
+                      hintStyle: AppTextStyles.hintStyle,
+
+                      isCollapsed: true,
+
+                      border: InputBorder.none,
+
+                      enabledBorder: InputBorder.none,
+
+                      focusedBorder: InputBorder.none,
+
+                      disabledBorder: InputBorder.none,
+
+                      errorBorder: InputBorder.none,
+
+                      focusedErrorBorder: InputBorder.none,
+
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 24.w,
+                        vertical: 22.h,
+                      ),
+
+                      suffixIcon: suffixIcon,
+                    ),
+                  ),
+                ),
+              ),
+
+              if (state.errorText != null && controller.text.isNotEmpty)
+                Padding(
+                  padding: EdgeInsets.only(top: 8.h, left: 4.w),
+
+                  child: Text(
+                    state.errorText!,
+
+                    style: TextStyle(
+                      color: Colors.redAccent,
+
+                      fontSize: 13.sp,
+
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
