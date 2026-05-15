@@ -25,6 +25,8 @@ class CommonTextField extends StatelessWidget {
 
   final String? Function(String?)? validator;
 
+  final int maxLines;
+
   const CommonTextField({
     super.key,
     required this.hintText,
@@ -33,6 +35,7 @@ class CommonTextField extends StatelessWidget {
     this.suffixIcon,
     this.keyboardType = TextInputType.text,
     this.validator,
+    this.maxLines = 1,
   });
 
   @override
@@ -55,9 +58,9 @@ class CommonTextField extends StatelessWidget {
 
             children: [
               Container(
-                height: 68.h,
+                height: maxLines == 1 ? 68.h : null,
 
-                alignment: Alignment.center,
+                alignment: maxLines == 1 ? Alignment.center : Alignment.topLeft,
 
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14.r),
@@ -78,6 +81,8 @@ class CommonTextField extends StatelessWidget {
                     obscureText: isPassword,
 
                     keyboardType: keyboardType,
+
+                    maxLines: isPassword ? 1 : maxLines,
 
                     onChanged: (value) {
                       context.read<CommonTextFieldBloc>().add(
@@ -122,7 +127,7 @@ class CommonTextField extends StatelessWidget {
 
                       contentPadding: EdgeInsets.symmetric(
                         horizontal: 24.w,
-                        vertical: 22.h,
+                        vertical: 18.h,
                       ),
 
                       suffixIcon: suffixIcon,

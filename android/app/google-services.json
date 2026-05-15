@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "61650042751",
+    "project_id": "healthapp-45b0b",
+    "storage_bucket": "healthapp-45b0b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61650042751:android:743ddf67cb374aae6e244a",
+        "android_client_info": {
+          "package_name": "com.example.health_congress"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfo6QWyY_d047K6r9KVPl28l-x1FNVnIo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -23,8 +23,8 @@ class ModuleAppBar extends StatelessWidget {
           GestureDetector(
             onTap: () => Navigator.maybePop(context),
             child: Container(
-              width: 40.r,
-              height: 40.r,
+              width: 45.r,
+              height: 45.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: AppColors.lightBlue.withValues(alpha: 0.35),
@@ -32,11 +32,11 @@ class ModuleAppBar extends StatelessWidget {
               child: Icon(
                 Icons.chevron_left_rounded,
                 color: AppColors.white,
-                size: 26.r,
+                size: 35.r,
               ),
             ),
           ),
-          SizedBox(width: 12.w),
+          SizedBox(width: 22.w),
           Text(title, style: AppTextStyles.moduleScreenTitle),
         ],
       ),

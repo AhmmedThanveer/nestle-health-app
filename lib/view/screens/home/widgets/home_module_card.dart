@@ -24,49 +24,64 @@ class HomeModuleCard extends StatefulWidget {
 
 class _HomeModuleCardState extends State<HomeModuleCard>
     with TickerProviderStateMixin {
+  // ── Entrance animation ───────────────────────────────────────────────────
   late final AnimationController _entranceCtrl;
-  late final AnimationController _pressCtrl;
   late final Animation<double> _opacity;
   late final Animation<Offset> _slide;
+  late final Animation<double> _scale;
+
+  // ── Press animation ──────────────────────────────────────────────────────
+  late final AnimationController _pressCtrl;
   late final Animation<double> _pressScale;
 
   @override
   void initState() {
     super.initState();
 
+    // Entrance — 520 ms with easeOutBack so cards "pop" past 1.0 and settle
     _entranceCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 380),
+      duration: const Duration(milliseconds: 520),
     );
 
-    _pressCtrl = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 100),
-      reverseDuration: const Duration(milliseconds: 180),
-    );
-
-    _opacity = CurvedAnimation(
-      parent: _entranceCtrl,
-      curve: Curves.easeOut,
+    _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _entranceCtrl,
+        curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
+      ),
     );
 
     _slide = Tween<Offset>(
-      begin: const Offset(0, 0.25),
+      begin: const Offset(0, 0.40),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _entranceCtrl,
-      curve: Curves.easeOutCubic,
-    ));
+    ).animate(
+      CurvedAnimation(
+        parent: _entranceCtrl,
+        curve: const Interval(0.0, 0.75, curve: Curves.easeOutCubic),
+      ),
+    );
 
-    _pressScale = Tween<double>(
-      begin: 1.0,
-      end: 0.92,
-    ).animate(CurvedAnimation(
-      parent: _pressCtrl,
-      curve: Curves.easeOut,
-    ));
+    _scale = Tween<double>(begin: 0.72, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _entranceCtrl,
+        // easeOutBack overshoots slightly → gives the "pop" bounce feel
+        curve: const Interval(0.0, 0.85, curve: Curves.easeOutBack),
+      ),
+    );
 
-    Future.delayed(Duration(milliseconds: widget.index * 35), () {
+    // Press — quick down, slower bounce back
+    _pressCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 90),
+      reverseDuration: const Duration(milliseconds: 200),
+    );
+
+    _pressScale = Tween<double>(begin: 1.0, end: 0.88).animate(
+      CurvedAnimation(parent: _pressCtrl, curve: Curves.easeOut),
+    );
+
+    // Stagger: each card starts 55 ms after the previous one
+    Future.delayed(Duration(milliseconds: widget.index * 55), () {
       if (mounted) _entranceCtrl.forward();
     });
   }
@@ -98,12 +113,11 @@ class _HomeModuleCardState extends State<HomeModuleCard>
           child: SlideTransition(
             position: _slide,
             child: Transform.scale(
-              scale: _pressScale.value,
+              scale: _scale.value * _pressScale.value,
               child: child,
             ),
           ),
         ),
-        // child is const – rebuilt only when data changes, never on animation tick
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -126,7 +140,7 @@ class _HomeModuleCardState extends State<HomeModuleCard>
   }
 }
 
-// ─── Circular icon container ─────────────────────────────────────────────────
+// ─── Circular icon container ──────────────────────────────────────────────────
 
 class _CircleIcon extends StatelessWidget {
   final String svgPath;
@@ -144,11 +158,20 @@ class _CircleIcon extends StatelessWidget {
         border: Border.all(color: AppColors.cyan, width: 1.8),
         gradient: RadialGradient(
           colors: [
-            AppColors.cyan.withValues(alpha: 0.08),
+            AppColors.cyan.withValues(alpha: 0.12),
+            AppColors.primaryBlue.withValues(alpha: 0.05),
             Colors.transparent,
           ],
+          stops: const [0.0, 0.6, 1.0],
           radius: 0.85,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.cyan.withValues(alpha: 0.18),
+            blurRadius: 10,
+            spreadRadius: 0,
+          ),
+        ],
       ),
       child: Center(
         child: AppSvgIcon(

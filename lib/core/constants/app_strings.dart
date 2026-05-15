@@ -268,4 +268,119 @@ class AppStrings {
 
   static const String registrationSuccess =
       'Registration completed successfully';
+
+  /// =========================================
+  /// SPEAKERS SCREEN
+  /// =========================================
+
+  static const String speakerDetail = 'Speaker Detail';
+
+  static const String chairpersons = 'CHAIRPERSONS';
+
+  static const String speakersCategory = 'SPEAKERS';
+
+  static const String nestleSpeakers = 'NESTLÉ SPEAKERS';
+
+  static const String speakerName = 'Name';
+
+  static const String speakerBio = 'Bio';
+
+  /// =========================================
+  /// PHOTOS & VIDEOS SCREEN
+  /// =========================================
+
+  static const String photosAndVideosTitle = 'Photos And Videos';
+
+  static const String photos = 'Photos';
+
+  static const String videos = 'Videos';
+
+  static const String play = 'Play';
+
+  static const String mediaView = 'View';
+
+  /// =========================================
+  /// ASSETS SCREEN
+  /// =========================================
+
+  static const String assetsScreenTitle = 'Assets';
+
+  static const String viewAssets = 'View Assets';
+
+  static const String nestle = 'Nestle';
+
+  static const String pdfType = 'PDF';
+
+  static const String page = 'Page';
+
+  static const String of = 'of';
+
+  /// =========================================
+  /// STATIONS SCREEN
+  /// =========================================
+
+  static const String stationsTitle = 'Stations';
+
+  static const String scanQrCode = 'Scan QR Code';
+
+  static const String pointCameraAtQr =
+      'Point the camera at the station QR code';
+
+  static const String scanFailed = 'Scan Failed';
+
+  static const String qrCodeNoMatch =
+      'QR code does not match the selected station.';
+
+  static const String done = 'Done';
+
+  static const String scan = 'Scan';
+
+  static const String points = 'points';
+
+  static const String scanned = 'Scanned';
+
+  /// =========================================
+  /// NSM SCREEN
+  /// =========================================
+
+  static const String nsmScreenTitle = 'NSM';
+
+  static const String nsmDay = 'Day';
+
+  static const String nsmFull = 'FULL';
+
+  /// =========================================
+  /// VENUE SCREEN
+  /// =========================================
+
+  static const String venueTitle = 'Venue';
+
+  static const String venueLocation = 'Location';
+
+  static const String venueAbout = 'About the Venue';
+
+  static const String venueHotelName = 'RITZ CARLTON JEDDAH';
+
+  static const String venueAddress =
+      'Southern Corniche, District, Al Hamra, Jeddah 21493, Saudi Arabia';
+
+  static const String venueCity = 'Jeddah';
+
+  static const String venueAuditorium = 'Auditorium Hall';
+
+  static const String openInGoogleMaps = 'Open in Google Maps';
+
+  /// =========================================
+  /// ASK QUESTION SCREEN
+  /// =========================================
+
+  static const String askQuestionTitle = 'Ask Question';
+
+  static const String yourName = 'Your Name';
+
+  static const String speakerLabel = 'Speaker';
+
+  static const String selectSpeaker = 'Select Speaker';
+
+  static const String writeYourQuestion = 'Write your question';
 }

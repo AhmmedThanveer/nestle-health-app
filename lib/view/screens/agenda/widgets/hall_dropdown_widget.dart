@@ -16,7 +16,8 @@ class HallDropdownWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AgendaHall hall = state.currentHall;
+    final AgendaHall? hall = state.currentHall;
+    if (hall == null) return const SizedBox.shrink();
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -59,7 +60,7 @@ class HallDropdownWidget extends StatelessWidget {
       builder: (_) => BlocProvider.value(
         value: context.read<AgendaBloc>(),
         child: HallPickerSheet(
-          halls: state.currentDay.halls,
+          halls: state.currentDay?.halls ?? [],
           selectedIndex: state.selectedHall,
         ),
       ),

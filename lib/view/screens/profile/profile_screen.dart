@@ -1,14 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../app/routes/app_routes.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../core/constants/app_strings.dart';
-import '../../../app/routes/app_routes.dart';
+import '../../../domain/entities/user_entity.dart';
+import '../../../view%20model/bloc/auth/auth_bloc.dart';
+import '../../../view%20model/bloc/auth/auth_event.dart';
+import '../../../view%20model/bloc/auth/auth_state.dart';
+import '../../../view%20model/bloc/profile/profile_bloc.dart';
+import '../../widgets/app_snackbar.dart';
+import '../../widgets/logout_confirmation_dialog.dart';
 import '../../widgets/nestle_logo_widget.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _loadProfile());
+  }
+
+  void _loadProfile() {
+    final authState = context.read<AuthBloc>().state;
+    if (authState is AuthAuthenticatedState) {
+      context.read<ProfileBloc>().add(LoadProfileEvent(authState.user.uid));
+    }
+  }
+
+  Future<void> _onRefresh() async {
+    _loadProfile();
+    await Future.delayed(const Duration(milliseconds: 800));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +47,6 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor: AppColors.primaryBlue,
       body: Stack(
         children: [
-          // Background
           Positioned.fill(
             child: Image.asset(
               AppImages.loginBg,
@@ -41,104 +71,102 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-
-          // Content
           SafeArea(
             bottom: false,
-            child: Column(
-              children: [
-                const NestleLogoWidget(),
-                SizedBox(height: 8.h),
-                Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.fromLTRB(
-                      16.w,
-                      0,
-                      16.w,
-                      80.h + MediaQuery.of(context).padding.bottom,
+            child: BlocBuilder<ProfileBloc, ProfileState>(
+              builder: (context, state) {
+                if (state.status == ProfileStatus.loading &&
+                    state.user == null) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  );
+                }
+                return Column(
+                  children: [
+                    const NestleLogoWidget(),
+                    SizedBox(height: 20.h),
+                    Expanded(
+                      child: RefreshIndicator(
+                        onRefresh: _onRefresh,
+                        color: AppColors.primaryBlue,
+                        backgroundColor: Colors.white,
+                        child: ListView(
+                          padding: EdgeInsets.fromLTRB(
+                            16.w,
+                            0,
+                            16.w,
+                            80.h + MediaQuery.of(context).padding.bottom,
+                          ),
+                          children: [
+                            _PointsCard(points: state.user?.points ?? 0),
+                            SizedBox(height: 14.h),
+                            if (state.user != null) ...[
+                              _ContactInfoCard(user: state.user!),
+                              SizedBox(height: 14.h),
+                              _CareerInfoCard(user: state.user!),
+                            ] else ...[
+                              _ContactInfoCard(user: null),
+                              SizedBox(height: 14.h),
+                              _CareerInfoCard(user: null),
+                            ],
+                            SizedBox(height: 20.h),
+                            _ActionButton(
+                              icon: Icons.edit_outlined,
+                              label: AppStrings.editProfile,
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                AppRoutes.editProfile,
+                              ),
+                            ),
+                            SizedBox(height: 10.h),
+                            _ActionButton(
+                              icon: Icons.badge_outlined,
+                              label: 'Name Tag',
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                AppRoutes.nameTag,
+                              ),
+                            ),
+                            SizedBox(height: 10.h),
+                            _ActionButton(
+                              icon: Icons.lock_outline_rounded,
+                              label: 'Change Password',
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                AppRoutes.changePassword,
+                              ),
+                            ),
+                            SizedBox(height: 10.h),
+                            _ActionButton(
+                              icon: Icons.logout_rounded,
+                              label: AppStrings.logout,
+                              onTap: () async {
+                                final confirmed =
+                                    await LogoutConfirmationDialog.show(
+                                      context,
+                                    );
+                                if (!confirmed || !context.mounted) return;
+                                context.read<AuthBloc>().add(SignOutEvent());
+                                AppSnackBar.showSuccess(
+                                  context,
+                                  'Logged out successfully.',
+                                );
+                              },
+                            ),
+                            SizedBox(height: 10.h),
+                            _ActionButton(
+                              icon: Icons.delete_outline_rounded,
+                              label: AppStrings.deleteAccount,
+                              isDestructive: true,
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    children: [
-                      // ── Points card ───────────────────────────────
-                      _PointsCard(),
-                      SizedBox(height: 14.h),
-
-                      // ── Contact Information ────────────────────────
-                      _InfoCard(
-                        title: 'Contact Information',
-                        items: const [
-                          _InfoItem(
-                            icon: Icons.person_rounded,
-                            label: 'Name',
-                            value: 'Ahmed Al-Rashidi',
-                          ),
-                          _InfoItem(
-                            icon: Icons.email_rounded,
-                            label: 'Email',
-                            value: 'ahmed@example.com',
-                          ),
-                          _InfoItem(
-                            icon: Icons.phone_rounded,
-                            label: 'Phone',
-                            value: '+966 50 000 0000',
-                          ),
-                          _InfoItem(
-                            icon: Icons.location_on_rounded,
-                            label: 'City',
-                            value: 'Riyadh',
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 14.h),
-
-                      // ── Career Information ─────────────────────────
-                      _InfoCard(
-                        title: 'Career Information',
-                        items: const [
-                          _InfoItem(
-                            icon: Icons.work_rounded,
-                            label: 'Profession',
-                            value: 'General Practitioner',
-                          ),
-                          _InfoItem(
-                            icon: Icons.business_rounded,
-                            label: 'Place of Work',
-                            value: 'King Fahad Hospital',
-                          ),
-                          _InfoItem(
-                            icon: Icons.badge_rounded,
-                            label: 'Saudi Health Council No.',
-                            value: 'SHC-00000',
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20.h),
-
-                      // ── Action buttons ─────────────────────────────
-                      _ActionButton(
-                        icon: Icons.edit_outlined,
-                        label: AppStrings.editProfile,
-                        onTap: () =>
-                            Navigator.pushNamed(context, AppRoutes.editProfile),
-                      ),
-                      SizedBox(height: 10.h),
-                      _ActionButton(
-                        icon: Icons.logout_rounded,
-                        label: AppStrings.logout,
-                        isDestructive: false,
-                        onTap: () => AppRoutes.pushAndRemoveUntil(
-                            context, AppRoutes.login),
-                      ),
-                      SizedBox(height: 10.h),
-                      _ActionButton(
-                        icon: Icons.delete_outline_rounded,
-                        label: AppStrings.deleteAccount,
-                        isDestructive: true,
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                  ],
+                );
+              },
             ),
           ),
         ],
@@ -150,6 +178,9 @@ class ProfileScreen extends StatelessWidget {
 // ─── Points card ─────────────────────────────────────────────────────────────
 
 class _PointsCard extends StatelessWidget {
+  final int points;
+  const _PointsCard({required this.points});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -174,8 +205,11 @@ class _PointsCard extends StatelessWidget {
               color: AppColors.primaryBlue.withValues(alpha: 0.10),
               borderRadius: BorderRadius.circular(10.r),
             ),
-            child: Icon(Icons.star_rounded,
-                color: AppColors.primaryBlue, size: 26.r),
+            child: Icon(
+              Icons.star_rounded,
+              color: AppColors.primaryBlue,
+              size: 26.r,
+            ),
           ),
           SizedBox(width: 14.w),
           Text(
@@ -189,7 +223,7 @@ class _PointsCard extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            '0',
+            '$points',
             style: TextStyle(
               fontFamily: 'Roboto',
               fontSize: 20.sp,
@@ -199,6 +233,73 @@ class _PointsCard extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+// ─── Contact info card ────────────────────────────────────────────────────────
+
+class _ContactInfoCard extends StatelessWidget {
+  final UserEntity? user;
+  const _ContactInfoCard({required this.user});
+
+  @override
+  Widget build(BuildContext context) {
+    return _InfoCard(
+      title: 'Contact Information',
+      items: [
+        _InfoItem(
+          icon: Icons.person_rounded,
+          label: 'Name',
+          value: user?.fullName ?? '—',
+        ),
+        _InfoItem(
+          icon: Icons.email_rounded,
+          label: 'Email',
+          value: user?.email ?? '—',
+        ),
+        _InfoItem(
+          icon: Icons.phone_rounded,
+          label: 'Phone',
+          value: user?.mobile ?? '—',
+        ),
+        _InfoItem(
+          icon: Icons.location_on_rounded,
+          label: 'City',
+          value: user?.city ?? '—',
+        ),
+      ],
+    );
+  }
+}
+
+// ─── Career info card ─────────────────────────────────────────────────────────
+
+class _CareerInfoCard extends StatelessWidget {
+  final UserEntity? user;
+  const _CareerInfoCard({required this.user});
+
+  @override
+  Widget build(BuildContext context) {
+    return _InfoCard(
+      title: 'Career Information',
+      items: [
+        _InfoItem(
+          icon: Icons.work_rounded,
+          label: 'Profession',
+          value: user?.profession ?? '—',
+        ),
+        _InfoItem(
+          icon: Icons.business_rounded,
+          label: 'Place of Work',
+          value: user?.workplace ?? '—',
+        ),
+        _InfoItem(
+          icon: Icons.badge_rounded,
+          label: 'Saudi Health Council No.',
+          value: user?.saudiCouncilNumber ?? '—',
+        ),
+      ],
     );
   }
 }
@@ -239,11 +340,13 @@ class _InfoCard extends StatelessWidget {
             ),
           ),
           SizedBox(height: 14.h),
-          ...items.expand((item) => [
-                _InfoRow(item: item),
-                if (item != items.last)
-                  Divider(height: 18.h, color: Colors.grey.shade100),
-              ]),
+          ...items.expand(
+            (item) => [
+              _InfoRow(item: item),
+              if (item != items.last)
+                Divider(height: 18.h, color: Colors.grey.shade100),
+            ],
+          ),
         ],
       ),
     );
@@ -264,7 +367,6 @@ class _InfoItem {
 
 class _InfoRow extends StatelessWidget {
   final _InfoItem item;
-
   const _InfoRow({required this.item});
 
   @override
@@ -328,8 +430,9 @@ class _ActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color color =
-        isDestructive ? Colors.red.shade600 : AppColors.primaryBlue;
+    final Color color = isDestructive
+        ? Colors.red.shade600
+        : AppColors.primaryBlue;
 
     return GestureDetector(
       onTap: onTap,
@@ -360,7 +463,11 @@ class _ActionButton extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Icon(Icons.chevron_right_rounded, color: color.withValues(alpha: 0.5), size: 20.r),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: color.withValues(alpha: 0.5),
+              size: 20.r,
+            ),
           ],
         ),
       ),

@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Events ───────────────────────────────────────────────────────────────
+    // Public read for event-code validation (happens before login).
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ── Users ─────────────────────────────────────────────────────────────────
+    // Owner can read/create their own document.
+    // Updates are allowed when:
+    //   • points can only increase (never decrease — prevents cheating)
+    //   • scannedStations can only grow (append-only — prevents re-earning)
+    // This permits both profile edits and station scan transactions.
+    match /users/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+
+      allow create: if request.auth != null && request.auth.uid == uid;
+
+      allow update: if request.auth != null
+                    && request.auth.uid == uid
+                    && request.resource.data.points >= resource.data.get('points', 0)
+                    && request.resource.data.scannedStations
+                        .hasAll(resource.data.get('scannedStations', []));
+
+      allow delete: if false;
+    }
+
+    // ── Stations ──────────────────────────────────────────────────────────────
+    // Public read so the list loads before the user has fully authenticated.
+    // All writes are admin-only (done via Firebase Console / Admin SDK).
+    match /stations/{stationId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ── Registrations ────────────────────────────────────────────────────────
+    match /registrations/{registrationId} {
+      allow read: if request.auth != null
+                  && resource.data.userId == request.auth.uid;
+      allow create: if request.auth != null
+                    && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    // ── Notifications ─────────────────────────────────────────────────────────
+    match /notifications/{notificationId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // ── Speakers ─────────────────────────────────────────────────────────────
+    match /speakers/{speakerId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ── Agenda ───────────────────────────────────────────────────────────────
+    match /agenda/{agendaId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // ── Surveys ───────────────────────────────────────────────────────────────
+    match /surveys/{surveyId} {
+      allow read: if false;
+      allow create: if request.auth != null
+                    && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if false;
+    }
+  }
+}

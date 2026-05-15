@@ -15,8 +15,9 @@ class SessionsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AgendaHall hall = state.currentHall;
-    final bool singleHall = state.currentDay.halls.length == 1;
+    final AgendaHall? hall = state.currentHall;
+    if (hall == null) return const SizedBox.shrink();
+    final bool singleHall = (state.currentDay?.halls.length ?? 1) == 1;
     final double bottomPad = 80.h + MediaQuery.of(context).padding.bottom;
 
     // index 0 → hall banner (single-hall days only)

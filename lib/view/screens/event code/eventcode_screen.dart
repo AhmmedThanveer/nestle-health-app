@@ -8,7 +8,6 @@ import 'package:health_congress/core/constants/app_images.dart';
 import 'package:health_congress/core/extensions/widget_extension.dart';
 import 'package:health_congress/core/theme/app_textstyles.dart';
 
-import 'package:health_congress/view/screens/login/login_screen.dart';
 import 'package:health_congress/view/screens/register/register_screen.dart';
 
 import 'package:health_congress/view/widgets/animated_screen_wrapper.dart';

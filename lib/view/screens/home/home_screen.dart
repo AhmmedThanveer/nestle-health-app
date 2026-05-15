@@ -5,32 +5,81 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../core/constants/app_strings.dart';
-import '../../../core/models/home_module_data.dart';
 import '../../../core/theme/app_textstyles.dart';
-import '../../../view%20model/bloc/home/home_bloc.dart';
 import '../../../view%20model/bloc/navigation/navigation_bloc.dart';
 import '../../widgets/nestle_logo_widget.dart';
-import 'widgets/home_module_card.dart';
+import 'widgets/module_grid_container.dart';
 
-/// Provides [HomeBloc] locally so the screen owns its own lifecycle.
-/// The bloc fires [HomeLoadEvent] immediately in `create`, triggering
-/// entrance animations after a single frame-settle delay.
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => HomeBloc()..add(const HomeLoadEvent()),
-      child: const _HomeView(),
-    );
-  }
+  Widget build(BuildContext context) => const _HomeView();
 }
 
-// ─── View layer – purely declarative, zero setState ───────────────────────────
+// ─── View ─────────────────────────────────────────────────────────────────────
 
-class _HomeView extends StatelessWidget {
+class _HomeView extends StatefulWidget {
   const _HomeView();
+
+  @override
+  State<_HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
+  // Header slides in from the top
+  late final AnimationController _headerCtrl;
+  late final Animation<double> _headerOpacity;
+  late final Animation<Offset> _headerSlide;
+
+  // Grid cross-fades from spinner → cards
+  late final AnimationController _gridCtrl;
+  late final Animation<double> _gridFade;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _headerCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 480),
+    );
+    _headerOpacity = CurvedAnimation(
+      parent: _headerCtrl,
+      curve: Curves.easeOut,
+    );
+    _headerSlide = Tween<Offset>(
+      begin: const Offset(0, -0.07),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _headerCtrl,
+      curve: Curves.easeOutCubic,
+    ));
+
+    // Grid fade: 700 ms smooth reveal over the spinner
+    _gridCtrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 700),
+    );
+    _gridFade = CurvedAnimation(parent: _gridCtrl, curve: Curves.easeInOut);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _headerCtrl.forward();
+      // Spinner shows for 600 ms, then smoothly fades out as grid fades in
+      Future.delayed(const Duration(milliseconds: 600), () {
+        if (!mounted) return;
+        _gridCtrl.forward();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _headerCtrl.dispose();
+    _gridCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,73 +87,95 @@ class _HomeView extends StatelessWidget {
       backgroundColor: AppColors.primaryBlue,
       body: Stack(
         children: [
-          /// Static background image – never rebuilds
+          // ── Static background ─────────────────────────────────────
           const Positioned.fill(child: _Background()),
-
-          /// Static gradient overlay – never rebuilds
           const Positioned.fill(child: _GradientOverlay()),
 
-          /// Animated content driven entirely by HomeBloc
-          BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              return SafeArea(
-                bottom: false,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // ── Header: slides down from above + fades in ──────
-                    AnimatedOpacity(
-                      opacity: state.isLoaded ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 420),
-                      curve: Curves.easeOut,
-                      child: AnimatedSlide(
-                        offset: state.isLoaded
-                            ? Offset.zero
-                            : const Offset(0, -0.06),
-                        duration: const Duration(milliseconds: 420),
-                        curve: Curves.easeOutCubic,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20.w, vertical: 4.h),
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: _BellButton(),
-                              ),
-                            ),
-                            const NestleLogoWidget(),
-                            SizedBox(height: 18.h),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    // ── Grid container: slides up + fades in ───────────
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 14.w),
-                        child: AnimatedOpacity(
-                          opacity: state.isLoaded ? 1.0 : 0.0,
-                          duration: const Duration(milliseconds: 480),
-                          curve: Curves.easeOut,
-                          child: AnimatedSlide(
-                            offset: state.isLoaded
-                                ? Offset.zero
-                                : const Offset(0, 0.07),
-                            duration: const Duration(milliseconds: 480),
-                            curve: Curves.easeOutQuart,
-                            child: const _ModuleGridContainer(),
+          // ── Animated content ──────────────────────────────────────
+          SafeArea(
+            bottom: false,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Header: bell + logo — slides down from top
+                FadeTransition(
+                  opacity: _headerOpacity,
+                  child: SlideTransition(
+                    position: _headerSlide,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 4.h),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: _BellButton(),
                           ),
                         ),
-                      ),
+                        const NestleLogoWidget(),
+                        SizedBox(height: 18.h),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-              );
-            },
+
+                // Spinner cross-fades into the module grid
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 14.w),
+                    child: Stack(
+                      children: [
+                        // Spinner fades OUT as grid fades in (opacity = 1 - gridFade)
+                        FadeTransition(
+                          opacity: ReverseAnimation(_gridFade),
+                          child: const _LoadingPlaceholder(),
+                        ),
+                        // Grid fades IN (opacity = gridFade)
+                        FadeTransition(
+                          opacity: _gridFade,
+                          child: ModuleGridContainer(
+                            onModuleTap: (route) =>
+                                Navigator.pushNamed(context, route),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ─── Loading placeholder ──────────────────────────────────────────────────────
+
+class _LoadingPlaceholder extends StatelessWidget {
+  const _LoadingPlaceholder();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(28.r),
+          topRight: Radius.circular(28.r),
+        ),
+        border: Border.all(color: AppColors.glassBorder, width: 1.2),
+        color: AppColors.glassBg,
+      ),
+      child: Center(
+        child: SizedBox(
+          width: 36.r,
+          height: 36.r,
+          child: CircularProgressIndicator(
+            strokeWidth: 2.5,
+            color: AppColors.cyan.withValues(alpha: 0.8),
+          ),
+        ),
       ),
     );
   }
@@ -161,10 +232,8 @@ class _BellButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        // Navigate to Notifications tab (index 2) via the global NavigationBloc
-        context.read<NavigationBloc>().add(const NavigateToTabEvent(2));
-      },
+      onTap: () =>
+          context.read<NavigationBloc>().add(const NavigateToTabEvent(2)),
       child: Container(
         width: 42.r,
         height: 42.r,
@@ -176,7 +245,8 @@ class _BellButton extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Icon(Icons.notifications_outlined, color: Colors.white, size: 22.r),
+            Icon(Icons.notifications_outlined,
+                color: Colors.white, size: 22.r),
             Positioned(
               top: 8.r,
               right: 8.r,
@@ -196,54 +266,7 @@ class _BellButton extends StatelessWidget {
   }
 }
 
-// ─── Glass grid container ─────────────────────────────────────────────────────
-
-class _ModuleGridContainer extends StatelessWidget {
-  const _ModuleGridContainer();
-
-  @override
-  Widget build(BuildContext context) {
-    final double navBarOffset =
-        92.h + MediaQuery.of(context).padding.bottom;
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(28.r),
-          topRight: Radius.circular(28.r),
-        ),
-        border: Border.all(color: AppColors.glassBorder, width: 1.2),
-        color: AppColors.glassBg,
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(28.r),
-          topRight: Radius.circular(28.r),
-        ),
-        child: GridView.builder(
-          padding: EdgeInsets.fromLTRB(16.w, 20.h, 16.w, navBarOffset),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 18.h,
-            crossAxisSpacing: 8.w,
-            childAspectRatio: 0.82,
-          ),
-          itemCount: HomeModuleData.all.length,
-          itemBuilder: (context, index) {
-            final module = HomeModuleData.all[index];
-            return HomeModuleCard(
-              data: module,
-              index: index,
-              onTap: () => Navigator.pushNamed(context, module.route),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-// ─── Reusable section header for sub-screens ─────────────────────────────────
+// ─── Reusable section header ──────────────────────────────────────────────────
 
 class HomeScreenHeader extends StatelessWidget {
   final String title;

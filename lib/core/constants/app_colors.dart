@@ -45,6 +45,78 @@ class AppColors {
   /// Unselected day-tab background (white 18%)
   static const Color agendaTabUnselectedBg = Color(0x2EFFFFFF);
 
+  // ── Speakers ──────────────────────────────────────────────────
+  /// Semi-transparent card background on speaker detail screen
+  static const Color speakerDetailCardBg = Color(0x26FFFFFF);
+
+  /// Muted white (60%) for detail card labels ("Name", "Bio")
+  static const Color speakerLabelColor = Color(0x99FFFFFF);
+
+  // ── Media (Photos & Videos) ───────────────────────────────────
+  /// Unselected media tab pill background
+  static const Color mediaTabUnselectedBg = Color(0xFF0A2854);
+
+  /// Dark background for video cards (no thumbnail)
+  static const Color videoCardBg = Color(0xFF0D2B4A);
+
+  /// Dark overlay at the bottom of media cards ("Play" / "View" bar)
+  static const Color mediaPlayBarBg = Color(0xCC000000);
+
+  // ── Assets ────────────────────────────────────────────────────
+  /// Top area of folder card (white 10%)
+  static const Color assetFolderCardBg = Color(0x1AFFFFFF);
+
+  /// Bottom bar of folder card – dark navy
+  static const Color assetFolderCardBottomBg = Color(0xFF0A1E35);
+
+  /// Background square for PDF/file type icon
+  static const Color pdfIconBg = Color(0xFF2D7FC8);
+
+  /// "PDF" badge background
+  static const Color pdfBadgeBg = Color(0xFF3A9FE0);
+
+  /// Muted icon color inside folder cards
+  static const Color assetIconColor = Color(0x66FFFFFF);
+
+  // ── NSM ───────────────────────────────────────────────────────
+  /// Day-header pill container background (lighter blue)
+  static const Color nsmDayPillBg = Color(0xFF1E7EC8);
+
+  /// Wave card subtle background
+  static const Color nsmCardBg = Color(0x1A1A4A8A);
+
+  /// Golden amber border on wave cards
+  static const Color nsmCardBorder = Color(0xFFCDA644);
+
+  /// Dark badge background for the "FULL" label
+  static const Color nsmFullBadgeBg = Color(0xFF404040);
+
+  // ── Venue ──────────────────────────────────────────────────────
+  /// Blue icon color used in venue info rows
+  static const Color venueIconColor = Color(0xFF005EA8);
+
+  // ── Stations ──────────────────────────────────────────────────
+  /// Semi-transparent card background for station tiles
+  static const Color stationCardBg = Color(0x1AFFFFFF);
+
+  /// Circle icon background behind the location pin
+  static const Color stationIconBg = Color(0x33FFFFFF);
+
+  /// Gold/yellow for the star points icon
+  static const Color pointsGold = Color(0xFFFFD700);
+
+  /// Red background circle for the scan-failed "!" icon
+  static const Color scanFailedRed = Color(0xFFE53935);
+
+  /// Green for the "Scanned ✓" badge
+  static const Color stationScannedGreen = Color(0xFF4CAF50);
+
+  /// Cyan accent used for station name in QR scanner sheet
+  static const Color scannerStationCyan = Color(0xFF00C8E8);
+
+  /// Dark background for the QR scanner bottom sheet
+  static const Color scannerSheetBg = Color(0xFF0D1B2A);
+
   // ── Bottom Navigation ─────────────────────────────────────────
   /// Dark navy with 85% opacity – nav bar background
   static const Color bottomNavBg = Color(0xD9001533);

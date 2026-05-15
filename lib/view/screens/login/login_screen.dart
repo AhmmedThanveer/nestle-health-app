@@ -19,6 +19,8 @@ import '../../../../../app/routes/app_routes.dart';
 import '../../../../../view model/bloc/login_bloc.dart';
 import '../../../../../view model/bloc/login_event.dart';
 import '../../../../../view model/bloc/login_state.dart';
+import '../../../../view/widgets/app_snackbar.dart';
+import '../../../../view/widgets/disclaimer_bottom_sheet.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -30,9 +32,20 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginBloc, LoginState>(
-      listenWhen: (prev, cur) => cur.isLoginSuccess && !prev.isLoginSuccess,
+      listenWhen: (prev, cur) =>
+          (cur.isLoginSuccess && !prev.isLoginSuccess) ||
+          (cur.errorMessage != null && cur.errorMessage != prev.errorMessage),
       listener: (context, state) {
-        AppRoutes.pushAndRemoveUntil(context, AppRoutes.main);
+        if (state.isLoginSuccess) {
+          AppSnackBar.showSuccess(context, 'Login Successfully');
+          DisclaimerBottomSheet.show(
+            context,
+            onAccepted: () =>
+                AppRoutes.pushAndRemoveUntil(context, AppRoutes.main),
+          );
+        } else if (state.errorMessage != null) {
+          AppSnackBar.showError(context, state.errorMessage!);
+        }
       },
       builder: (context, state) {
         return Scaffold(

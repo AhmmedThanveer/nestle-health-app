@@ -15,6 +15,8 @@ import '../../widgets/common_button.dart';
 import '../../widgets/common_dropdown_field.dart';
 import '../../widgets/common_text_button.dart';
 import '../../widgets/common_textfield.dart';
+import '../../widgets/app_snackbar.dart';
+import '../../widgets/disclaimer_bottom_sheet.dart';
 import '../../widgets/nestle_logo_widget.dart';
 import '../login/login_screen.dart';
 
@@ -109,27 +111,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
     final error = _validateAll();
     if (error != null) {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(
-            content: Text(
-              error,
-              style: const TextStyle(
-                fontFamily: 'Roboto',
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-              ),
-            ),
-            backgroundColor: Colors.redAccent.shade700,
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-            duration: const Duration(seconds: 3),
-          ),
-        );
+      AppSnackBar.showError(context, error);
       return;
     }
 
@@ -159,24 +141,16 @@ class _RegisterViewState extends State<_RegisterView> {
           cur.errorMessage != null && cur.errorMessage != prev.errorMessage,
       listener: (context, state) {
         if (state.isSuccess) {
-          // Clear entire auth stack and land on home
-          AppRoutes.pushAndRemoveUntil(context, AppRoutes.main);
+          AppSnackBar.showSuccess(context, AppStrings.registrationSuccess);
+          DisclaimerBottomSheet.show(
+            context,
+            onAccepted: () =>
+                AppRoutes.pushAndRemoveUntil(context, AppRoutes.main),
+          );
           return;
         }
         if (state.errorMessage != null) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                content: Text(state.errorMessage!),
-                backgroundColor: Colors.redAccent.shade700,
-                behavior: SnackBarBehavior.floating,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                margin: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-              ),
-            );
+          AppSnackBar.showError(context, state.errorMessage!);
         }
       },
       builder: (context, state) {

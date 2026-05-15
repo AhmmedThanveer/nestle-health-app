@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class GlobalScrollBehavior extends ScrollBehavior {
   @override
-  Widget buildViewportChrome(
+  Widget buildOverscrollIndicator(
     BuildContext context,
     Widget child,
-    AxisDirection axisDirection,
+    ScrollableDetails details,
   ) {
-    return child; // Removes glow effect
+    return child;
   }
 }

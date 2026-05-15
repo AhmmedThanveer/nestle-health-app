@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:health_congress/view/screens/forgot%20password/forgot_password_screen.dart';
 import 'package:health_congress/view/screens/login/login_screen.dart';
+import 'package:health_congress/view/screens/cme/cme_screen.dart';
+import 'package:health_congress/view/screens/splash/splash_screen.dart';
 import 'package:health_congress/view/screens/register/register_screen.dart';
 import 'package:health_congress/view/screens/main/main_screen.dart';
 import 'package:health_congress/view/screens/profile/edit_profile_screen.dart';
 import 'package:health_congress/view/screens/agenda/agenda_screen.dart';
+import 'package:health_congress/view/screens/speakers/speakers_screen.dart';
+import 'package:health_congress/view/screens/media/photos_videos_screen.dart';
+import 'package:health_congress/view/screens/assets/assets_screen.dart';
+import 'package:health_congress/view/screens/stations/stations_screen.dart';
+import 'package:health_congress/view/screens/nsm/nsm_screen.dart';
+import 'package:health_congress/view/screens/venue/venue_screen.dart';
+import 'package:health_congress/view/screens/ask_question/ask_question_screen.dart';
+import 'package:health_congress/view/screens/survey/survey_screen.dart';
+import 'package:health_congress/view/screens/change_password/change_password_screen.dart';
+import 'package:health_congress/view/screens/name_tag/name_tag_screen.dart';
 
 import 'app_page_transition.dart';
 
@@ -17,6 +29,7 @@ class AppRoutes {
 
   // ── Profile ────────────────────────────────────────────────────
   static const String editProfile = '/edit-profile';
+  static const String changePassword = '/change-password';
 
   // ── Auth ───────────────────────────────────────────────────────
   static const String login = '/login';
@@ -41,6 +54,8 @@ class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case splash:
+        return AppPageTransition.fadeSlideTransition(const SplashScreen());
+
       case login:
         return AppPageTransition.fadeSlideTransition(LoginScreen());
 
@@ -59,18 +74,45 @@ class AppRoutes {
       case agenda:
         return AppPageTransition.fadeSlideTransition(const AgendaScreen());
 
-      // ── Module placeholder routes (replace bodies as features ship) ──
       case speakers:
-      case nameTag:
-      case voting:
-      case venue:
-      case askQuestion:
+        return AppPageTransition.fadeSlideTransition(const SpeakersScreen());
+
       case photosVideos:
+        return AppPageTransition.fadeSlideTransition(
+          const PhotosVideosScreen(),
+        );
+
       case assetsDownload:
-      case claimCme:
-      case survey:
+        return AppPageTransition.fadeSlideTransition(const AssetsScreen());
+
       case stations:
+        return AppPageTransition.fadeSlideTransition(const StationsScreen());
+
       case nsm:
+        return AppPageTransition.fadeSlideTransition(const NsmScreen());
+
+      case venue:
+        return AppPageTransition.fadeSlideTransition(const VenueScreen());
+
+      case askQuestion:
+        return AppPageTransition.fadeSlideTransition(const AskQuestionScreen());
+
+      case claimCme:
+        return AppPageTransition.fadeSlideTransition(const CmeScreen());
+
+      case survey:
+        return AppPageTransition.fadeSlideTransition(const SurveyScreen());
+
+      case changePassword:
+        return AppPageTransition.fadeSlideTransition(
+          const ChangePasswordScreen(),
+        );
+
+      case nameTag:
+        return AppPageTransition.fadeSlideTransition(const NameTagScreen());
+
+      // ── Module placeholder routes (replace bodies as features ship) ──
+      case voting:
         return AppPageTransition.fadeSlideTransition(
           _ModulePlaceholderScreen(routeName: settings.name ?? ''),
         );
