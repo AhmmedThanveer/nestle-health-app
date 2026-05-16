@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
-import '../../../core/constants/app_strings.dart';
-import '../../../core/theme/app_textstyles.dart';
-import '../../../view model/bloc/home/home_bloc.dart';
-import '../../../view model/bloc/navigation/navigation_bloc.dart';
+import '../../../view%20model/bloc/home/home_bloc.dart';
 import '../../widgets/nestle_logo_widget.dart';
+import 'widgets/home_background.dart';
+import 'widgets/home_bell_button.dart';
+import 'widgets/home_gradient_overlay.dart';
+import 'widgets/home_loading_placeholder.dart';
 import 'widgets/module_grid_container.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -35,17 +35,14 @@ class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
     _headerCtrl = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-
     _headerOpacity = CurvedAnimation(
       parent: _headerCtrl,
       curve: Curves.easeOut,
     );
-
     _headerSlide = Tween<Offset>(
       begin: const Offset(0, -0.08),
       end: Offset.zero,
@@ -53,15 +50,9 @@ class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
-
-      /// PRELOAD BACKGROUND
       await precacheImage(const AssetImage(AppImages.loginBg), context);
-
       if (!mounted) return;
-
       _headerCtrl.forward();
-
-      /// START HOME LOADING
       context.read<HomeBloc>().add(const HomeLoadEvent());
     });
   }
@@ -75,21 +66,17 @@ class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryBlue,
+      backgroundColor: const Color(0xFF003087),
       body: Stack(
+        fit: StackFit.expand,
         children: [
-          /// BACKGROUND
-          const Positioned.fill(child: _Background()),
-
-          /// GRADIENT
-          const Positioned.fill(child: _GradientOverlay()),
-
+          const HomeBackground(),
+          const HomeGradientOverlay(),
           SafeArea(
             bottom: false,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                /// HEADER
                 FadeTransition(
                   opacity: _headerOpacity,
                   child: SlideTransition(
@@ -101,39 +88,31 @@ class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
                             horizontal: 20.w,
                             vertical: 4.h,
                           ),
-                          child: Align(
+                          child: const Align(
                             alignment: Alignment.centerRight,
-                            child: _BellButton(),
+                            child: HomeBellButton(),
                           ),
                         ),
-
                         const NestleLogoWidget(),
-
                         SizedBox(height: 18.h),
                       ],
                     ),
                   ),
                 ),
-
-                /// CONTENT
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 14.w),
                     child: BlocBuilder<HomeBloc, HomeState>(
                       builder: (context, state) {
-                        // Hard switch — no overlap between spinner and grid.
-                        // Card entrance animations (opacity 0→1, slide, scale)
-                        // provide the visual "fade in"; no outer transition needed.
                         if (state.isLoaded) {
                           return RepaintBoundary(
                             child: ModuleGridContainer(
-                              onModuleTap: (route) {
-                                Navigator.pushNamed(context, route);
-                              },
+                              onModuleTap: (route) =>
+                                  Navigator.pushNamed(context, route),
                             ),
                           );
                         }
-                        return const _LoadingPlaceholder();
+                        return const HomeLoadingPlaceholder();
                       },
                     ),
                   ),
@@ -143,157 +122,6 @@ class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
           ),
         ],
       ),
-    );
-  }
-}
-
-/// LOADER
-
-class _LoadingPlaceholder extends StatelessWidget {
-  const _LoadingPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(28.r),
-          topRight: Radius.circular(28.r),
-        ),
-        border: Border.all(color: AppColors.glassBorder, width: 1.2),
-        color: AppColors.glassBg,
-      ),
-      child: Center(
-        child: SizedBox(
-          width: 38.r,
-          height: 38.r,
-          child: CircularProgressIndicator(
-            strokeWidth: 2.5,
-            color: AppColors.cyan.withValues(alpha: 0.9),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// BACKGROUND
-
-class _Background extends StatelessWidget {
-  const _Background();
-
-  @override
-  Widget build(BuildContext context) {
-    return RepaintBoundary(
-      child: Image.asset(
-        AppImages.loginBg,
-        fit: BoxFit.cover,
-        alignment: Alignment.bottomCenter,
-
-        /// PERFORMANCE FIX
-        filterQuality: FilterQuality.low,
-
-        /// PREVENT IMAGE FLASH
-        gaplessPlayback: true,
-      ),
-    );
-  }
-}
-
-/// GRADIENT
-
-class _GradientOverlay extends StatelessWidget {
-  const _GradientOverlay();
-
-  @override
-  Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            stops: const [0.0, 0.45, 0.75, 1.0],
-            colors: [
-              AppColors.primaryBlue.withValues(alpha: 0.96),
-
-              AppColors.primaryBlue.withValues(alpha: 0.82),
-
-              AppColors.primaryBlue.withValues(alpha: 0.52),
-
-              Colors.transparent,
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// BELL BUTTON
-
-class _BellButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.read<NavigationBloc>().add(const NavigateToTabEvent(2));
-      },
-      child: Container(
-        width: 42.r,
-        height: 42.r,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white.withValues(alpha: 0.12),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.20)),
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Icon(Icons.notifications_outlined, color: Colors.white, size: 22.r),
-
-            Positioned(
-              top: 8.r,
-              right: 8.r,
-              child: Container(
-                width: 8.r,
-                height: 8.r,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.cyan,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// HEADER
-
-class HomeScreenHeader extends StatelessWidget {
-  final String title;
-  final String subtitle;
-
-  const HomeScreenHeader({
-    super.key,
-    required this.title,
-    this.subtitle = AppStrings.subtitle,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(title, style: AppTextStyles.sectionTitle),
-
-        SizedBox(height: 4.h),
-
-        Text(subtitle, style: AppTextStyles.bodyWhite),
-      ],
     );
   }
 }

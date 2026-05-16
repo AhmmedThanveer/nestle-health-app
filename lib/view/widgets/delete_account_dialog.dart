@@ -128,6 +128,8 @@ class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
                     fontFamily: 'Roboto',
                   ),
                   border: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
                   isCollapsed: true,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 16.w,
