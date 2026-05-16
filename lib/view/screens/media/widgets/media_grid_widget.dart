@@ -9,8 +9,8 @@ import '../../../../view%20model/bloc/media/media_state.dart';
 import '../../../widgets/animated_entrance_item.dart';
 import '../photo_viewer_screen.dart';
 import '../video_player_screen.dart';
+import '../youtube_player_screen.dart';
 
-/// 2-column grid of photo and video cards.
 class MediaGridWidget extends StatelessWidget {
   final MediaState state;
 
@@ -20,6 +20,17 @@ class MediaGridWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = state.items;
     final double bottomPad = 80.h + MediaQuery.of(context).padding.bottom;
+
+    if (items.isEmpty) {
+      return Center(
+        child: Text(
+          state.selectedType == MediaType.photo
+              ? 'No photos yet'
+              : 'No videos yet',
+          style: TextStyle(color: Colors.white54, fontSize: 15.sp),
+        ),
+      );
+    }
 
     return GridView.builder(
       padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, bottomPad),
@@ -55,24 +66,30 @@ class _MediaCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // ── Background / thumbnail ────────────────────────
-            if (item.type == MediaType.photo && item.thumbnailAsset != null)
-              Image.asset(item.thumbnailAsset!, fit: BoxFit.cover)
+            // ── Thumbnail ─────────────────────────────────────
+            if (item.url != null)
+              Image.network(
+                item.url!,
+                fit: BoxFit.cover,
+                loadingBuilder: (_, child, progress) =>
+                    progress == null ? child : _placeholder(),
+                errorBuilder: (_, __, ___) => _placeholder(),
+              )
             else
-              Container(color: AppColors.videoCardBg),
+              _placeholder(),
 
-            // ── Video: centered camera icon ───────────────────
+            // ── Video play icon overlay ────────────────────────
             if (item.type == MediaType.video)
               Center(
                 child: Container(
                   padding: EdgeInsets.all(14.r),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white.withValues(alpha: 0.18),
+                    color: Colors.black.withValues(alpha: 0.45),
                   ),
                   child: Icon(
-                    Icons.videocam_outlined,
-                    color: AppColors.white,
+                    Icons.play_arrow_rounded,
+                    color: Colors.white,
                     size: 36.r,
                   ),
                 ),
@@ -113,27 +130,43 @@ class _MediaCard extends StatelessWidget {
     );
   }
 
+  Widget _placeholder() => Container(color: AppColors.videoCardBg);
+
+  static bool _isYouTubeUrl(String url) =>
+      url.contains('youtube.com') ||
+      url.contains('youtu.be') ||
+      url.contains('img.youtube.com');
+
   void _onTap(BuildContext context) {
-    if (item.type == MediaType.photo && item.thumbnailAsset != null) {
+    if (item.type == MediaType.photo && item.url != null) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (_) => PhotoViewerScreen(
-            assetPath: item.thumbnailAsset!,
+            imageUrl: item.url!,
             title: item.title,
           ),
         ),
       );
-    } else if (item.type == MediaType.video && item.videoUrl != null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => VideoPlayerScreen(
-            videoUrl: item.videoUrl!,
-            title: item.title,
+    } else if (item.type == MediaType.video) {
+      final url = item.videoUrl ?? item.url;
+      if (url == null) return;
+
+      if (_isYouTubeUrl(url)) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => YoutubePlayerScreen(videoUrl: url, title: item.title),
           ),
-        ),
-      );
+        );
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => VideoPlayerScreen(videoUrl: url, title: item.title),
+          ),
+        );
+      }
     }
   }
 }

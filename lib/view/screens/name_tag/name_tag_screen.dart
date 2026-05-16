@@ -7,6 +7,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../view%20model/bloc/profile/profile_bloc.dart';
 import '../../widgets/module_app_bar.dart';
+import '../../widgets/nestle_logo_widget.dart';
 
 class NameTagScreen extends StatelessWidget {
   const NameTagScreen({super.key});
@@ -115,26 +116,8 @@ class _NameTagContent extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 32.h),
       child: Column(
         children: [
-          // Header
-          Text(
-            'NESTLÉ CONGRESS',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 26.sp,
-              fontWeight: FontWeight.w900,
-              letterSpacing: 1.2,
-            ),
-          ),
-          SizedBox(height: 4.h),
-          Text(
-            'The Next Era of Nutrition & Health',
-            style: TextStyle(
-              color: Colors.white70,
-              fontSize: 13.sp,
-              fontStyle: FontStyle.italic,
-            ),
-          ),
-          SizedBox(height: 24.h),
+          const NestleLogoWidget(topPadding: 0),
+          SizedBox(height: 20.h),
 
           // Name tag card
           Container(

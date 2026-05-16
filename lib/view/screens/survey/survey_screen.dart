@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../core/models/survey_models.dart';
+import '../../widgets/nestle_logo_widget.dart';
 import '../../../core/utils/session_store.dart';
 import '../../../view%20model/bloc/profile/profile_bloc.dart';
 import '../../../view%20model/bloc/survey/survey_bloc.dart';
@@ -126,32 +127,8 @@ class _SurveyContent extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 24.h),
             children: [
-              // ── Header ────────────────────────────────────────────
-              Center(
-                child: Column(
-                  children: [
-                    Text(
-                      'NESTLÉ CONGRESS',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28.sp,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.2,
-                      ),
-                    ),
-                    SizedBox(height: 4.h),
-                    Text(
-                      'The Next Era of Nutrition & Health',
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 14.sp,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 24.h),
+              const NestleLogoWidget(topPadding: 0),
+              SizedBox(height: 20.h),
 
               // ── Questions ─────────────────────────────────────────
               ...SurveyState.questions.map((q) {

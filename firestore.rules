@@ -3,18 +3,12 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // ── Events ───────────────────────────────────────────────────────────────
-    // Public read for event-code validation (happens before login).
     match /events/{eventId} {
       allow read: if true;
       allow write: if false;
     }
 
     // ── Users ─────────────────────────────────────────────────────────────────
-    // Owner can read/create their own document.
-    // Updates are allowed when:
-    //   • points can only increase (never decrease — prevents cheating)
-    //   • scannedStations can only grow (append-only — prevents re-earning)
-    // This permits both profile edits and station scan transactions.
     match /users/{uid} {
       allow read: if request.auth != null && request.auth.uid == uid;
 
@@ -30,12 +24,10 @@ service cloud.firestore {
     }
 
     // ── NSM Days ─────────────────────────────────────────────────────────────
-    // Public read — schedule visible to all attendees.
     match /nsm_days/{dayId} {
       allow read: if true;
       allow write: if false;
 
-      // Waves subcollection
       match /waves/{waveId} {
         allow read: if true;
         allow write: if false;
@@ -43,8 +35,6 @@ service cloud.firestore {
     }
 
     // ── Stations ──────────────────────────────────────────────────────────────
-    // Public read so the list loads before the user has fully authenticated.
-    // All writes are admin-only (done via Firebase Console / Admin SDK).
     match /stations/{stationId} {
       allow read: if true;
       allow write: if false;
@@ -83,6 +73,32 @@ service cloud.firestore {
       allow create: if request.auth != null
                     && request.resource.data.userId == request.auth.uid;
       allow update, delete: if false;
+    }
+
+    // ── Polls (Live Voting) ───────────────────────────────────────────────────
+    // Authenticated attendees can read active polls and submit votes.
+    // Only the vote counts (options array) may be updated — question and
+    // isActive fields are admin-managed and must not change via client writes.
+    match /polls/{pollId} {
+      allow read: if request.auth != null;
+
+      allow update: if request.auth != null
+                    && request.resource.data.isActive == resource.data.isActive
+                    && request.resource.data.question == resource.data.question;
+
+      allow create, delete: if false;
+    }
+
+    // ── Asset Folders (Downloads) ─────────────────────────────────────────────
+    match /asset_folders/{folderId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+
+    // ── Media (Photos & Videos) ───────────────────────────────────────────────
+    match /media/{mediaId} {
+      allow read: if request.auth != null;
+      allow write: if false;
     }
   }
 }

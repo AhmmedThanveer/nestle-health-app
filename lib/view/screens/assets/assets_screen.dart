@@ -14,6 +14,7 @@ import '../../widgets/animated_entrance_item.dart';
 import '../../widgets/bottom_nav/nestle_bottom_navigation_bar.dart';
 import '../../widgets/module_app_bar.dart';
 import '../../widgets/nestle_logo_widget.dart';
+import '../../widgets/screen_state_widget.dart';
 import 'asset_folder_screen.dart';
 import 'widgets/asset_folder_card_widget.dart';
 
@@ -84,14 +85,33 @@ class _AssetsView extends StatelessWidget {
                   Expanded(
                     child: BlocBuilder<AssetsBloc, AssetsState>(
                       builder: (context, state) {
-                        if (state is! AssetsLoadedState) {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
+                        return switch (state.status) {
+                          AssetsStatus.initial ||
+                          AssetsStatus.loading =>
+                            const Center(
+                              child: CircularProgressIndicator(
+                                  color: Colors.white),
                             ),
-                          );
-                        }
-                        return _FolderGrid(folders: state.folders);
+                          AssetsStatus.noInternet =>
+                            ScreenStateWidget.noInternet(
+                              onRetry: () => context
+                                  .read<AssetsBloc>()
+                                  .add(const LoadAssetsEvent()),
+                            ),
+                          AssetsStatus.serverError =>
+                            ScreenStateWidget.serverError(
+                              message: state.errorMessage,
+                              onRetry: () => context
+                                  .read<AssetsBloc>()
+                                  .add(const LoadAssetsEvent()),
+                            ),
+                          AssetsStatus.empty => ScreenStateWidget.empty(
+                              title: 'No assets available',
+                              subtitle: 'Check back later for downloads.',
+                            ),
+                          AssetsStatus.loaded =>
+                            _FolderGrid(folders: state.folders),
+                        };
                       },
                     ),
                   ),

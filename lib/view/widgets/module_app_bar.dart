@@ -7,11 +7,12 @@ import '../../core/theme/app_textstyles.dart';
 /// Reusable app-bar row for every module/detail screen.
 ///
 /// Displays a circular back button on the left and a [title] to its right.
-/// Uses [Navigator.maybePop] so it is safe regardless of stack depth.
+/// Uses [Navigator.maybePop] unless a custom [onBack] callback is provided.
 class ModuleAppBar extends StatelessWidget {
   final String title;
+  final VoidCallback? onBack;
 
-  const ModuleAppBar({super.key, required this.title});
+  const ModuleAppBar({super.key, required this.title, this.onBack});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class ModuleAppBar extends StatelessWidget {
         children: [
           // Circular back button
           GestureDetector(
-            onTap: () => Navigator.maybePop(context),
+            onTap: onBack ?? () => Navigator.maybePop(context),
             child: Container(
               width: 45.r,
               height: 45.r,

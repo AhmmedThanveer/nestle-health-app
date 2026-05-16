@@ -26,8 +26,13 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
+
+  static String? _emailValidator(String? v) =>
+      (v == null || v.trim().isEmpty) ? 'Email is required' : null;
+
+  static String? _passwordValidator(String? v) =>
+      (v == null || v.trim().isEmpty) ? 'Password is required' : null;
 
   @override
   Widget build(BuildContext context) {
@@ -50,46 +55,26 @@ class LoginScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
-
           body: Stack(
             children: [
-              /// BACKGROUND IMAGE
+              // ── Background ──────────────────────────────────────
               Positioned.fill(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return SizedBox(
-                      width: constraints.maxWidth,
-
-                      height: constraints.maxHeight,
-
-                      child: Image.asset(
-                        AppImages.loginBg,
-
-                        fit: BoxFit.cover,
-
-                        alignment: Alignment.bottomCenter,
-
-                        filterQuality: FilterQuality.high,
-                      ),
-                    );
-                  },
+                child: Image.asset(
+                  AppImages.loginBg,
+                  fit: BoxFit.cover,
+                  alignment: Alignment.bottomCenter,
+                  filterQuality: FilterQuality.high,
                 ),
               ),
-
-              /// BLUE OVERLAY
               Positioned.fill(
-                child: Container(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
-
                       end: Alignment.bottomCenter,
-
                       colors: [
-                        AppColors.primaryBlue.withOpacity(0.92),
-
-                        AppColors.primaryBlue.withOpacity(0.76),
-
+                        AppColors.primaryBlue.withValues(alpha: 0.92),
+                        AppColors.primaryBlue.withValues(alpha: 0.76),
                         Colors.transparent,
                       ],
                     ),
@@ -97,131 +82,92 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
 
-              /// CONTENT
+              // ── Content ─────────────────────────────────────────
               SafeArea(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.symmetric(horizontal: 24.w),
-
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-
                     children: [
-                      /// LOGO
                       const NestleLogoWidget(),
+                      SizedBox(height: 90.h),
 
-                      SizedBox(height: 130.h),
-
-                      /// EMAIL LABEL
+                      // Email
                       Text(AppStrings.email, style: AppTextStyles.labelStyle),
-
-                      SizedBox(height: 14.h),
-
-                      /// EMAIL FIELD
+                      SizedBox(height: 10.h),
                       CommonTextField(
                         hintText: AppStrings.enterEmail,
-
                         controller: emailController,
-
                         keyboardType: TextInputType.emailAddress,
+                        validator: _emailValidator,
                       ),
+                      SizedBox(height: 24.h),
 
-                      SizedBox(height: 28.h),
-
-                      /// PASSWORD LABEL
-                      Text(
-                        AppStrings.password,
-
-                        style: AppTextStyles.labelStyle,
-                      ),
-
-                      SizedBox(height: 14.h),
-
-                      /// PASSWORD FIELD
+                      // Password
+                      Text(AppStrings.password, style: AppTextStyles.labelStyle),
+                      SizedBox(height: 10.h),
                       CommonTextField(
                         hintText: AppStrings.enterPassword,
-
                         controller: passwordController,
-
                         isPassword: state.obscurePassword,
-
+                        validator: _passwordValidator,
                         suffixIcon: IconButton(
-                          onPressed: () {
-                            context.read<LoginBloc>().add(
-                              TogglePasswordVisibilityEvent(),
-                            );
-                          },
-
+                          onPressed: () => context
+                              .read<LoginBloc>()
+                              .add(TogglePasswordVisibilityEvent()),
                           icon: Icon(
                             state.obscurePassword
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-
                             color: AppColors.white,
-
                             size: 22.sp,
                           ),
                         ),
                       ),
+                      SizedBox(height: 36.h),
 
-                      SizedBox(height: 45.h),
-
-                      /// LOGIN BUTTON
+                      // Login button
                       CommonButton(
                         title: AppStrings.login,
-
-                        onTap: () {
-                          context.read<LoginBloc>().add(
-                            LoginButtonPressedEvent(
-                              email: emailController.text.trim(),
-
-                              password: passwordController.text.trim(),
-                            ),
-                          );
-                        },
+                        isLoading: state.isLoading,
+                        onTap: state.isLoading
+                            ? null
+                            : () => context.read<LoginBloc>().add(
+                                  LoginButtonPressedEvent(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  ),
+                                ),
                       ),
+                      SizedBox(height: 28.h),
 
-                      SizedBox(height: 30.h),
-
-                      /// CREATE ACCOUNT
-                      SizedBox(height: 32.h),
-
-                      /// FORGOT PASSWORD
+                      // Forgot password
                       Center(
                         child: CommonTextButton(
                           title: AppStrings.forgotPassword,
-
-                          onTap: () {
-                            Navigator.push(
-                              context,
-
-                              AppPageTransition.fadeSlideTransition(
-                                ForgotPasswordScreen(),
-                              ),
-                            );
-                          },
+                          onTap: () => Navigator.push(
+                            context,
+                            AppPageTransition.fadeSlideTransition(
+                              ForgotPasswordScreen(),
+                            ),
+                          ),
                         ),
                       ),
+                      SizedBox(height: 16.h),
 
-                      SizedBox(height: 30.h),
-
-                      /// CREATE ACCOUNT
+                      // Create account
                       Center(
                         child: CommonTextButton(
                           title: AppStrings.createAccount,
-
-                          onTap: () {
-                            Navigator.push(
-                              context,
-
-                              AppPageTransition.fadeSlideTransition(
-                                EventCodeScreen(),
-                              ),
-                            );
-                          },
+                          onTap: () => Navigator.push(
+                            context,
+                            AppPageTransition.fadeSlideTransition(
+                              EventCodeScreen(),
+                            ),
+                          ),
                         ),
                       ),
-
-                      SizedBox(height: 80.h),
+                      SizedBox(height: 60.h),
                     ],
                   ),
                 ),

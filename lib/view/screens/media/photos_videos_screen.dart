@@ -6,11 +6,11 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../view%20model/bloc/media/media_bloc.dart';
-import '../../../view%20model/bloc/media/media_state.dart';
 import '../../../view%20model/bloc/navigation/navigation_bloc.dart';
 import '../../widgets/bottom_nav/nestle_bottom_navigation_bar.dart';
 import '../../widgets/module_app_bar.dart';
 import '../../widgets/nestle_logo_widget.dart';
+import '../../widgets/screen_state_widget.dart';
 import 'widgets/media_grid_widget.dart';
 import 'widgets/media_tabs_widget.dart';
 
@@ -20,7 +20,7 @@ class PhotosVideosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => MediaBloc(),
+      create: (_) => MediaBloc()..add(const LoadMediaEvent()),
       child: const _PhotosVideosView(),
     );
   }
@@ -42,7 +42,6 @@ class _PhotosVideosView extends StatelessWidget {
         bottomNavigationBar: const NestleBottomNavigationBar(),
         body: Stack(
           children: [
-            // ── Background ──────────────────────────────────────
             Positioned.fill(
               child: Image.asset(
                 AppImages.loginBg,
@@ -69,7 +68,6 @@ class _PhotosVideosView extends StatelessWidget {
               ),
             ),
 
-            // ── Content ─────────────────────────────────────────
             SafeArea(
               bottom: false,
               child: BlocBuilder<MediaBloc, MediaState>(
@@ -79,17 +77,45 @@ class _PhotosVideosView extends StatelessWidget {
                     children: [
                       ModuleAppBar(title: AppStrings.photosAndVideosTitle),
                       SizedBox(height: 4.h),
-
-                      NestleLogoWidget(topPadding: 0),
+                      const NestleLogoWidget(topPadding: 0),
                       SizedBox(height: 20.h),
 
-                      MediaTabsWidget(state: state),
-                      SizedBox(height: 16.h),
+                      if (state.status == MediaStatus.loaded ||
+                          state.status == MediaStatus.initial) ...[
+                        MediaTabsWidget(state: state),
+                        SizedBox(height: 16.h),
+                      ],
 
                       Expanded(
-                        child: RepaintBoundary(
-                          child: MediaGridWidget(state: state),
-                        ),
+                        child: switch (state.status) {
+                          MediaStatus.initial ||
+                          MediaStatus.loading =>
+                            const Center(
+                              child: CircularProgressIndicator(
+                                  color: Colors.white),
+                            ),
+                          MediaStatus.noInternet =>
+                            ScreenStateWidget.noInternet(
+                              onRetry: () => context
+                                  .read<MediaBloc>()
+                                  .add(const LoadMediaEvent()),
+                            ),
+                          MediaStatus.serverError =>
+                            ScreenStateWidget.serverError(
+                              message: state.errorMessage,
+                              onRetry: () => context
+                                  .read<MediaBloc>()
+                                  .add(const LoadMediaEvent()),
+                            ),
+                          MediaStatus.empty => ScreenStateWidget.empty(
+                              title: 'No media yet',
+                              subtitle:
+                                  'Photos and videos will appear here after the event.',
+                            ),
+                          MediaStatus.loaded => RepaintBoundary(
+                              child: MediaGridWidget(state: state),
+                            ),
+                        },
                       ),
                     ],
                   );

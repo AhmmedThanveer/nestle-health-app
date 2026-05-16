@@ -9,6 +9,7 @@ import '../../../view%20model/bloc/auth/auth_bloc.dart';
 import '../../../view%20model/bloc/auth/auth_state.dart';
 import '../../../view%20model/bloc/profile/profile_bloc.dart';
 import '../../widgets/app_snackbar.dart';
+import '../../widgets/city_bottomsheet.dart';
 import '../../widgets/common_button.dart';
 import '../../widgets/module_app_bar.dart';
 
@@ -292,14 +293,12 @@ class _EditProfileBody extends StatelessWidget {
               ),
               SizedBox(height: 20.h),
 
-              // City
+              // City — opens grouped bottom sheet
               _FieldLabel(AppStrings.city),
               SizedBox(height: 8.h),
-              _ProfileDropdown(
-                value: selectedCity,
-                hint: AppStrings.enterCity,
-                items: AppStrings.saudiCities,
-                onChanged: onCityChanged,
+              _CityField(
+                selectedCity: selectedCity,
+                onCityChanged: onCityChanged,
               ),
               SizedBox(height: 8.h),
             ],
@@ -391,6 +390,54 @@ class _ProfileTextField extends StatelessWidget {
           focusedBorder: InputBorder.none,
           contentPadding:
               EdgeInsets.symmetric(horizontal: 24.w, vertical: 18.h),
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Profile dropdown ─────────────────────────────────────────────────────────
+
+// ─── City field — opens CityBottomSheet ───────────────────────────────────────
+
+class _CityField extends StatelessWidget {
+  final String? selectedCity;
+  final ValueChanged<String?> onCityChanged;
+
+  const _CityField({required this.selectedCity, required this.onCityChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        final city = await CityBottomSheet.show(context);
+        if (city != null) onCityChanged(city);
+      },
+      child: Container(
+        height: 68.h,
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(14.r),
+          border: Border.all(color: AppColors.borderColor, width: 1.5),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                selectedCity ?? AppStrings.enterCity,
+                style: TextStyle(
+                  color: selectedCity != null
+                      ? Colors.white
+                      : AppColors.hintColor,
+                  fontSize: selectedCity != null ? 18.sp : 16.sp,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            Icon(Icons.keyboard_arrow_down_rounded,
+                color: Colors.white70, size: 22.r),
+          ],
         ),
       ),
     );

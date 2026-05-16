@@ -57,6 +57,9 @@ dependencies:
   firebase_analytics: ^11.4.4
   firebase_crashlytics: ^4.3.3
 
+  # YouTube in-app player
+  youtube_player_flutter: ^9.1.3
+
   # QR code
   qr_flutter: ^4.1.0
 

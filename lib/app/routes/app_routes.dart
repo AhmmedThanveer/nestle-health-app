@@ -17,6 +17,7 @@ import 'package:health_congress/view/screens/ask_question/ask_question_screen.da
 import 'package:health_congress/view/screens/survey/survey_screen.dart';
 import 'package:health_congress/view/screens/change_password/change_password_screen.dart';
 import 'package:health_congress/view/screens/name_tag/name_tag_screen.dart';
+import 'package:health_congress/view/screens/voting/voting_screen.dart';
 
 import 'app_page_transition.dart';
 
@@ -111,11 +112,8 @@ class AppRoutes {
       case nameTag:
         return AppPageTransition.fadeSlideTransition(const NameTagScreen());
 
-      // ── Module placeholder routes (replace bodies as features ship) ──
       case voting:
-        return AppPageTransition.fadeSlideTransition(
-          _ModulePlaceholderScreen(routeName: settings.name ?? ''),
-        );
+        return AppPageTransition.fadeSlideTransition(const VotingScreen());
 
       default:
         return MaterialPageRoute(
@@ -153,36 +151,3 @@ class AppRoutes {
   static void pop(BuildContext context) => Navigator.pop(context);
 }
 
-// ─── Temporary placeholder used until each module screen is built ─────────────
-
-class _ModulePlaceholderScreen extends StatelessWidget {
-  final String routeName;
-
-  const _ModulePlaceholderScreen({required this.routeName});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF005EA8),
-      appBar: AppBar(
-        title: Text(
-          routeName.replaceAll('/', '').replaceAll('-', ' ').toUpperCase(),
-          style: const TextStyle(
-            fontFamily: 'Roboto',
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white),
-      ),
-      body: const Center(
-        child: Text(
-          'Coming soon',
-          style: TextStyle(color: Colors.white70, fontSize: 16),
-        ),
-      ),
-    );
-  }
-}

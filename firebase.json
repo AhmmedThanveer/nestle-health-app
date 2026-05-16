@@ -1,1 +1,26 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"healthapp-45b0b","appId":"1:61650042751:android:743ddf67cb374aae6e244a","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"healthapp-45b0b","configurations":{"android":"1:61650042751:android:743ddf67cb374aae6e244a","ios":"1:61650042751:ios:2191955870f2f0216e244a"}}}}}}
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "healthapp-45b0b",
+          "appId": "1:61650042751:android:743ddf67cb374aae6e244a",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "healthapp-45b0b",
+          "configurations": {
+            "android": "1:61650042751:android:743ddf67cb374aae6e244a",
+            "ios": "1:61650042751:ios:2191955870f2f0216e244a"
+          }
+        }
+      }
+    }
+  }
+}

@@ -26,8 +26,8 @@ class NestleLogoWidget extends StatelessWidget {
         return Opacity(
           opacity: eased,
           child: FractionalTranslation(
-            // RTL — slides in from right
-            translation: Offset((1 - eased) * 0.12, 0),
+            // LTR — slides in from left (opposite of RTL list items)
+            translation: Offset(-(1 - eased) * 0.12, 0),
             child: cachedChild,
           ),
         );

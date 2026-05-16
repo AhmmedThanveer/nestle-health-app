@@ -1,7 +1,3 @@
-/// =======================================================
-/// common_textfield_bloc.dart
-/// =======================================================
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'common_textfield_event.dart';
@@ -13,7 +9,6 @@ class CommonTextFieldBloc
 
   CommonTextFieldBloc({this.validator}) : super(const CommonTextFieldState()) {
     on<TextFieldFocusChanged>(_onFocusChanged);
-
     on<TextFieldValueChanged>(_onValueChanged);
   }
 
@@ -21,7 +16,8 @@ class CommonTextFieldBloc
     TextFieldFocusChanged event,
     Emitter<CommonTextFieldState> emit,
   ) {
-    emit(state.copyWith(isFocused: event.isFocused));
+    final becameTouched = state.isTouched || !event.isFocused;
+    emit(state.copyWith(isFocused: event.isFocused, isTouched: becameTouched));
   }
 
   void _onValueChanged(
@@ -29,11 +25,12 @@ class CommonTextFieldBloc
     Emitter<CommonTextFieldState> emit,
   ) {
     String? error;
-
     if (validator != null) {
       error = validator!(event.value);
     }
-
-    emit(state.copyWith(errorText: error));
+    emit(state.copyWith(
+      errorText: error,
+      clearError: error == null,
+    ));
   }
 }
