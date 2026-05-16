@@ -12,6 +12,7 @@ import '../../widgets/app_snackbar.dart';
 import '../../widgets/city_bottomsheet.dart';
 import '../../widgets/common_button.dart';
 import '../../widgets/module_app_bar.dart';
+import '../../widgets/nestle_logo_widget.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -226,30 +227,7 @@ class _EditProfileBody extends StatelessWidget {
           child: ListView(
             padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 24.h),
             children: [
-              // Header
-              Center(
-                child: Column(
-                  children: [
-                    Text(
-                      AppStrings.appTitle,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30.sp,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1.0,
-                      ),
-                    ),
-                    Text(
-                      AppStrings.subtitle,
-                      style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 14.sp,
-                        fontStyle: FontStyle.italic,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              const NestleLogoWidget(topPadding: 0),
               SizedBox(height: 28.h),
 
               // Full Name

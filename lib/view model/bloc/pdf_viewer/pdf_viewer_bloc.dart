@@ -23,13 +23,19 @@ class PdfViewerBloc extends Bloc<PdfViewerEvent, PdfViewerState> {
       final dir = await getTemporaryDirectory();
       final localFile = File('${dir.path}/${event.file.localFileName}');
 
+      // If cached file exists but is not a real PDF (e.g. previously saved HTML
+      // from Google Drive warning page), delete it so we re-download.
+      if (await localFile.exists() && !await _isValidPdf(localFile)) {
+        await localFile.delete();
+      }
+
       if (!await localFile.exists()) {
         final url = _resolveUrl(event.file.pdfUrl);
 
         final dio = Dio(BaseOptions(
           followRedirects: true,
           maxRedirects: 5,
-          receiveTimeout: const Duration(seconds: 30),
+          receiveTimeout: const Duration(seconds: 60),
           connectTimeout: const Duration(seconds: 15),
           headers: {
             'User-Agent':
@@ -37,21 +43,15 @@ class PdfViewerBloc extends Bloc<PdfViewerEvent, PdfViewerState> {
           },
         ));
 
-        final response = await dio.download(
-          url,
-          localFile.path,
-          onReceiveProgress: (_, __) {},
-        );
+        await dio.download(url, localFile.path);
 
-        // Google Drive returns HTML (warning page) instead of PDF for some files.
-        // Detect this and delete the corrupted file.
-        final contentType =
-            response.headers.value(Headers.contentTypeHeader) ?? '';
-        if (contentType.contains('text/html')) {
+        // Validate the downloaded file — if Google returned an HTML page
+        // (login redirect or virus-scan warning), reject it.
+        if (!await _isValidPdf(localFile)) {
           await localFile.delete();
           emit(const PdfViewerErrorState(
             'Cannot access this PDF.\n'
-            'Make sure the Google Drive file is shared as\n'
+            'Make sure the Google Drive file sharing is set to\n'
             '"Anyone with the link can view".',
           ));
           return;
@@ -73,8 +73,24 @@ class PdfViewerBloc extends Bloc<PdfViewerEvent, PdfViewerState> {
     }
   }
 
-  /// Converts any Google Drive URL to a direct-download URL via
-  /// drive.usercontent.google.com, which bypasses the virus-scan warning page.
+  /// Returns true only if the file starts with the PDF magic bytes `%PDF`.
+  Future<bool> _isValidPdf(File file) async {
+    try {
+      final bytes = await file
+          .openRead(0, 4)
+          .fold<List<int>>([], (acc, chunk) => acc..addAll(chunk));
+      return bytes.length >= 4 &&
+          bytes[0] == 0x25 && // %
+          bytes[1] == 0x50 && // P
+          bytes[2] == 0x44 && // D
+          bytes[3] == 0x46; //  F
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Converts any Google Drive URL to a direct-download URL that bypasses
+  /// the virus-scan confirmation page.
   String _resolveUrl(String url) {
     String? fileId;
 
@@ -90,7 +106,10 @@ class PdfViewerBloc extends Bloc<PdfViewerEvent, PdfViewerState> {
     }
 
     if (fileId != null) {
-      return 'https://drive.usercontent.google.com/u/0/uc?id=$fileId&export=download';
+      // drive.usercontent.google.com serves the file directly without
+      // the virus-scan warning page that uc?export=download sometimes shows.
+      return 'https://drive.usercontent.google.com/u/0/uc'
+          '?id=$fileId&export=download';
     }
 
     return url;
@@ -98,7 +117,8 @@ class PdfViewerBloc extends Bloc<PdfViewerEvent, PdfViewerState> {
 
   void _onRendered(PdfRenderedEvent event, Emitter<PdfViewerState> emit) {
     if (state is PdfViewerLoadedState) {
-      emit((state as PdfViewerLoadedState).copyWith(totalPages: event.totalPages));
+      emit((state as PdfViewerLoadedState)
+          .copyWith(totalPages: event.totalPages));
     }
   }
 
