@@ -121,31 +121,19 @@ class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
                     padding: EdgeInsets.symmetric(horizontal: 14.w),
                     child: BlocBuilder<HomeBloc, HomeState>(
                       builder: (context, state) {
-                        return Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            // Grid enters tree only when loaded — card entrance
-                            // animations provide the visual "fade in" effect.
-                            if (state.isLoaded)
-                              RepaintBoundary(
-                                child: ModuleGridContainer(
-                                  onModuleTap: (route) {
-                                    Navigator.pushNamed(context, route);
-                                  },
-                                ),
-                              ),
-
-                            // Spinner fades out when loaded; never blocks taps.
-                            IgnorePointer(
-                              child: AnimatedOpacity(
-                                opacity: state.isLoaded ? 0.0 : 1.0,
-                                duration: const Duration(milliseconds: 350),
-                                curve: Curves.easeOut,
-                                child: const _LoadingPlaceholder(),
-                              ),
+                        // Hard switch — no overlap between spinner and grid.
+                        // Card entrance animations (opacity 0→1, slide, scale)
+                        // provide the visual "fade in"; no outer transition needed.
+                        if (state.isLoaded) {
+                          return RepaintBoundary(
+                            child: ModuleGridContainer(
+                              onModuleTap: (route) {
+                                Navigator.pushNamed(context, route);
+                              },
                             ),
-                          ],
-                        );
+                          );
+                        }
+                        return const _LoadingPlaceholder();
                       },
                     ),
                   ),

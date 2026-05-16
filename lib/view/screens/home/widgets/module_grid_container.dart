@@ -50,8 +50,6 @@ class ModuleGridContainer extends StatelessWidget {
 
             itemCount: HomeModuleData.all.length,
 
-            cacheExtent: 1200,
-
             itemBuilder: (context, index) {
               final module = HomeModuleData.all[index];
 
