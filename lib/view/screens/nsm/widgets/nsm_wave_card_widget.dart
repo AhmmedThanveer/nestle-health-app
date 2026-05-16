@@ -3,11 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
-import '../../../../core/models/nsm_models.dart';
 import '../../../../core/theme/app_textstyles.dart';
+import '../../../../domain/entities/nsm_entity.dart';
 
 class NsmWaveCardWidget extends StatelessWidget {
-  final NsmWave wave;
+  final NsmWaveEntity wave;
 
   const NsmWaveCardWidget({super.key, required this.wave});
 
@@ -24,40 +24,29 @@ class NsmWaveCardWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Title row with optional FULL badge
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Text(wave.title, style: AppTextStyles.nsmWaveTitle),
               ),
-              if (wave.isFull) ...[SizedBox(width: 8.w), _FullBadge()],
+              if (wave.isFull) ...[SizedBox(width: 8.w), const _FullBadge()],
             ],
           ),
           SizedBox(height: 10.h),
 
-          // Time row
           Row(
             children: [
-              Icon(
-                Icons.access_time_rounded,
-                color: Colors.white70,
-                size: 16.r,
-              ),
+              Icon(Icons.access_time_rounded, color: Colors.white70, size: 16.r),
               SizedBox(width: 6.w),
               Text(wave.time, style: AppTextStyles.nsmWaveInfo),
             ],
           ),
           SizedBox(height: 5.h),
 
-          // Capacity row
           Row(
             children: [
-              Icon(
-                Icons.people_outline_rounded,
-                color: Colors.white70,
-                size: 16.r,
-              ),
+              Icon(Icons.people_outline_rounded, color: Colors.white70, size: 16.r),
               SizedBox(width: 6.w),
               Text(wave.capacityLabel, style: AppTextStyles.nsmWaveInfo),
             ],
@@ -68,15 +57,15 @@ class NsmWaveCardWidget extends StatelessWidget {
   }
 }
 
-// ─── FULL badge ───────────────────────────────────────────────────────────────
-
 class _FullBadge extends StatelessWidget {
+  const _FullBadge();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 85, 84, 84),
+        color: const Color(0xFF555454),
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Text(AppStrings.nsmFull, style: AppTextStyles.nsmFullBadge),

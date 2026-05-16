@@ -6,7 +6,8 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_textstyles.dart';
-import '../../../view%20model/bloc/navigation/navigation_bloc.dart';
+import '../../../view model/bloc/home/home_bloc.dart';
+import '../../../view model/bloc/navigation/navigation_bloc.dart';
 import '../../widgets/nestle_logo_widget.dart';
 import 'widgets/module_grid_container.dart';
 
@@ -14,10 +15,10 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) => const _HomeView();
+  Widget build(BuildContext context) {
+    return BlocProvider(create: (_) => HomeBloc(), child: const _HomeView());
+  }
 }
-
-// ─── View ─────────────────────────────────────────────────────────────────────
 
 class _HomeView extends StatefulWidget {
   const _HomeView();
@@ -27,14 +28,9 @@ class _HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
-  // Header slides in from the top
   late final AnimationController _headerCtrl;
   late final Animation<double> _headerOpacity;
   late final Animation<Offset> _headerSlide;
-
-  // Grid cross-fades from spinner → cards
-  late final AnimationController _gridCtrl;
-  late final Animation<double> _gridFade;
 
   @override
   void initState() {
@@ -42,42 +38,37 @@ class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
 
     _headerCtrl = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 480),
+      duration: const Duration(milliseconds: 500),
     );
+
     _headerOpacity = CurvedAnimation(
       parent: _headerCtrl,
       curve: Curves.easeOut,
     );
+
     _headerSlide = Tween<Offset>(
-      begin: const Offset(0, -0.07),
+      begin: const Offset(0, -0.08),
       end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _headerCtrl,
-      curve: Curves.easeOutCubic,
-    ));
+    ).animate(CurvedAnimation(parent: _headerCtrl, curve: Curves.easeOutCubic));
 
-    // Grid fade: 700 ms smooth reveal over the spinner
-    _gridCtrl = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 700),
-    );
-    _gridFade = CurvedAnimation(parent: _gridCtrl, curve: Curves.easeInOut);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
+
+      /// PRELOAD BACKGROUND
+      await precacheImage(const AssetImage(AppImages.loginBg), context);
+
+      if (!mounted) return;
+
       _headerCtrl.forward();
-      // Spinner shows for 600 ms, then smoothly fades out as grid fades in
-      Future.delayed(const Duration(milliseconds: 600), () {
-        if (!mounted) return;
-        _gridCtrl.forward();
-      });
+
+      /// START HOME LOADING
+      context.read<HomeBloc>().add(const HomeLoadEvent());
     });
   }
 
   @override
   void dispose() {
     _headerCtrl.dispose();
-    _gridCtrl.dispose();
     super.dispose();
   }
 
@@ -87,17 +78,18 @@ class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
       backgroundColor: AppColors.primaryBlue,
       body: Stack(
         children: [
-          // ── Static background ─────────────────────────────────────
+          /// BACKGROUND
           const Positioned.fill(child: _Background()),
+
+          /// GRADIENT
           const Positioned.fill(child: _GradientOverlay()),
 
-          // ── Animated content ──────────────────────────────────────
           SafeArea(
             bottom: false,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Header: bell + logo — slides down from top
+                /// HEADER
                 FadeTransition(
                   opacity: _headerOpacity,
                   child: SlideTransition(
@@ -106,39 +98,55 @@ class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
                       children: [
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 20.w, vertical: 4.h),
+                            horizontal: 20.w,
+                            vertical: 4.h,
+                          ),
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: _BellButton(),
                           ),
                         ),
+
                         const NestleLogoWidget(),
+
                         SizedBox(height: 18.h),
                       ],
                     ),
                   ),
                 ),
 
-                // Spinner cross-fades into the module grid
+                /// CONTENT
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 14.w),
-                    child: Stack(
-                      children: [
-                        // Spinner fades OUT as grid fades in (opacity = 1 - gridFade)
-                        FadeTransition(
-                          opacity: ReverseAnimation(_gridFade),
-                          child: const _LoadingPlaceholder(),
-                        ),
-                        // Grid fades IN (opacity = gridFade)
-                        FadeTransition(
-                          opacity: _gridFade,
-                          child: ModuleGridContainer(
-                            onModuleTap: (route) =>
-                                Navigator.pushNamed(context, route),
-                          ),
-                        ),
-                      ],
+                    child: BlocBuilder<HomeBloc, HomeState>(
+                      builder: (context, state) {
+                        return Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            // Grid enters tree only when loaded — card entrance
+                            // animations provide the visual "fade in" effect.
+                            if (state.isLoaded)
+                              RepaintBoundary(
+                                child: ModuleGridContainer(
+                                  onModuleTap: (route) {
+                                    Navigator.pushNamed(context, route);
+                                  },
+                                ),
+                              ),
+
+                            // Spinner fades out when loaded; never blocks taps.
+                            IgnorePointer(
+                              child: AnimatedOpacity(
+                                opacity: state.isLoaded ? 0.0 : 1.0,
+                                duration: const Duration(milliseconds: 350),
+                                curve: Curves.easeOut,
+                                child: const _LoadingPlaceholder(),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -151,7 +159,7 @@ class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
   }
 }
 
-// ─── Loading placeholder ──────────────────────────────────────────────────────
+/// LOADER
 
 class _LoadingPlaceholder extends StatelessWidget {
   const _LoadingPlaceholder();
@@ -169,11 +177,11 @@ class _LoadingPlaceholder extends StatelessWidget {
       ),
       child: Center(
         child: SizedBox(
-          width: 36.r,
-          height: 36.r,
+          width: 38.r,
+          height: 38.r,
           child: CircularProgressIndicator(
             strokeWidth: 2.5,
-            color: AppColors.cyan.withValues(alpha: 0.8),
+            color: AppColors.cyan.withValues(alpha: 0.9),
           ),
         ),
       ),
@@ -181,59 +189,68 @@ class _LoadingPlaceholder extends StatelessWidget {
   }
 }
 
-// ─── Static background pieces ─────────────────────────────────────────────────
+/// BACKGROUND
 
 class _Background extends StatelessWidget {
   const _Background();
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (_, constraints) => SizedBox(
-        width: constraints.maxWidth,
-        height: constraints.maxHeight,
-        child: Image.asset(
-          AppImages.loginBg,
-          fit: BoxFit.cover,
-          alignment: Alignment.bottomCenter,
-          filterQuality: FilterQuality.high,
-        ),
+    return RepaintBoundary(
+      child: Image.asset(
+        AppImages.loginBg,
+        fit: BoxFit.cover,
+        alignment: Alignment.bottomCenter,
+
+        /// PERFORMANCE FIX
+        filterQuality: FilterQuality.low,
+
+        /// PREVENT IMAGE FLASH
+        gaplessPlayback: true,
       ),
     );
   }
 }
+
+/// GRADIENT
 
 class _GradientOverlay extends StatelessWidget {
   const _GradientOverlay();
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: const [0.0, 0.45, 0.75, 1.0],
-          colors: [
-            AppColors.primaryBlue.withValues(alpha: 0.95),
-            AppColors.primaryBlue.withValues(alpha: 0.80),
-            AppColors.primaryBlue.withValues(alpha: 0.50),
-            Colors.transparent,
-          ],
+    return IgnorePointer(
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            stops: const [0.0, 0.45, 0.75, 1.0],
+            colors: [
+              AppColors.primaryBlue.withValues(alpha: 0.96),
+
+              AppColors.primaryBlue.withValues(alpha: 0.82),
+
+              AppColors.primaryBlue.withValues(alpha: 0.52),
+
+              Colors.transparent,
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-// ─── Bell icon button ─────────────────────────────────────────────────────────
+/// BELL BUTTON
 
 class _BellButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () =>
-          context.read<NavigationBloc>().add(const NavigateToTabEvent(2)),
+      onTap: () {
+        context.read<NavigationBloc>().add(const NavigateToTabEvent(2));
+      },
       child: Container(
         width: 42.r,
         height: 42.r,
@@ -245,8 +262,8 @@ class _BellButton extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Icon(Icons.notifications_outlined,
-                color: Colors.white, size: 22.r),
+            Icon(Icons.notifications_outlined, color: Colors.white, size: 22.r),
+
             Positioned(
               top: 8.r,
               right: 8.r,
@@ -266,7 +283,7 @@ class _BellButton extends StatelessWidget {
   }
 }
 
-// ─── Reusable section header ──────────────────────────────────────────────────
+/// HEADER
 
 class HomeScreenHeader extends StatelessWidget {
   final String title;
@@ -284,7 +301,9 @@ class HomeScreenHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(title, style: AppTextStyles.sectionTitle),
+
         SizedBox(height: 4.h),
+
         Text(subtitle, style: AppTextStyles.bodyWhite),
       ],
     );

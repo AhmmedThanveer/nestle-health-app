@@ -3,12 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/app_strings.dart';
-import '../../../../core/models/nsm_models.dart';
 import '../../../../core/theme/app_textstyles.dart';
+import '../../../../domain/entities/nsm_entity.dart';
 
-/// Blue pill showing "Day N" on the left and the full date on the right.
 class NsmDayHeaderWidget extends StatelessWidget {
-  final NsmDay day;
+  final NsmDayEntity day;
 
   const NsmDayHeaderWidget({super.key, required this.day});
 
@@ -23,7 +22,6 @@ class NsmDayHeaderWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // White selected pill
           Container(
             padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 10.h),
             decoration: BoxDecoration(
@@ -36,7 +34,6 @@ class NsmDayHeaderWidget extends StatelessWidget {
             ),
           ),
           SizedBox(width: 12.w),
-          // Date text
           Expanded(
             child: Text(
               day.date,

@@ -81,16 +81,46 @@ class _NsmView extends StatelessWidget {
                   Expanded(
                     child: BlocBuilder<NsmBloc, NsmState>(
                       builder: (context, state) {
-                        if (state is! NsmLoadedState) {
+                        if (state is NsmLoadingState) {
                           return const Center(
                             child: CircularProgressIndicator(color: Colors.white),
                           );
                         }
+
+                        if (state is NsmErrorState) {
+                          return Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.wifi_off_rounded,
+                                    color: Colors.white54, size: 48.r),
+                                SizedBox(height: 12.h),
+                                Text(
+                                  state.message,
+                                  style: TextStyle(
+                                      color: Colors.white70, fontSize: 14.sp),
+                                  textAlign: TextAlign.center,
+                                ),
+                                SizedBox(height: 16.h),
+                                TextButton(
+                                  onPressed: () => context
+                                      .read<NsmBloc>()
+                                      .add(const LoadNsmEvent()),
+                                  child: Text('Retry',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 14.sp)),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+
+                        final loaded = state as NsmLoadedState;
                         return RepaintBoundary(
                           child: ListView.builder(
                             padding: EdgeInsets.only(bottom: 100.h),
-                            itemCount: _itemCount(state),
-                            itemBuilder: (_, i) => _buildItem(state, i),
+                            itemCount: _itemCount(loaded),
+                            itemBuilder: (_, i) => _buildItem(loaded, i),
                           ),
                         );
                       },

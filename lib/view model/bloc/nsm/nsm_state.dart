@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../core/models/nsm_models.dart';
+import '../../../domain/entities/nsm_entity.dart';
 
 abstract class NsmState extends Equatable {
   const NsmState();
@@ -8,16 +8,20 @@ abstract class NsmState extends Equatable {
 
 class NsmLoadingState extends NsmState {
   const NsmLoadingState();
-
   @override
   List<Object> get props => [];
 }
 
 class NsmLoadedState extends NsmState {
-  final List<NsmDay> days;
-
+  final List<NsmDayEntity> days;
   const NsmLoadedState({required this.days});
-
   @override
   List<Object> get props => [days];
+}
+
+class NsmErrorState extends NsmState {
+  final String message;
+  const NsmErrorState(this.message);
+  @override
+  List<Object> get props => [message];
 }

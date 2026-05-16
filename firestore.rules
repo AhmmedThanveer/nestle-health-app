@@ -29,6 +29,19 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // ── NSM Days ─────────────────────────────────────────────────────────────
+    // Public read — schedule visible to all attendees.
+    match /nsm_days/{dayId} {
+      allow read: if true;
+      allow write: if false;
+
+      // Waves subcollection
+      match /waves/{waveId} {
+        allow read: if true;
+        allow write: if false;
+      }
+    }
+
     // ── Stations ──────────────────────────────────────────────────────────────
     // Public read so the list loads before the user has fully authenticated.
     // All writes are admin-only (done via Firebase Console / Admin SDK).

@@ -9,6 +9,7 @@ import '../../data/datasources/remote/agenda_remote_datasource.dart';
 import '../../data/datasources/remote/auth_remote_datasource.dart';
 import '../../data/datasources/remote/event_remote_datasource.dart';
 import '../../data/datasources/remote/notification_remote_datasource.dart';
+import '../../data/datasources/remote/nsm_remote_datasource.dart';
 import '../../data/datasources/remote/speaker_remote_datasource.dart';
 import '../../data/datasources/remote/station_remote_datasource.dart';
 import '../../data/datasources/remote/user_remote_datasource.dart';
@@ -18,6 +19,7 @@ import '../../data/repositories/auth_repository_impl.dart';
 import '../../data/repositories/survey_repository_impl.dart';
 import '../../data/repositories/event_repository_impl.dart';
 import '../../data/repositories/notification_repository_impl.dart';
+import '../../data/repositories/nsm_repository_impl.dart';
 import '../../data/repositories/speaker_repository_impl.dart';
 import '../../data/repositories/station_repository_impl.dart';
 import '../../data/repositories/user_repository_impl.dart';
@@ -25,6 +27,7 @@ import '../../domain/repositories/agenda_repository.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../domain/repositories/event_repository.dart';
 import '../../domain/repositories/notification_repository.dart';
+import '../../domain/repositories/nsm_repository.dart';
 import '../../domain/repositories/speaker_repository.dart';
 import '../../domain/repositories/station_repository.dart';
 import '../../domain/repositories/user_repository.dart';
@@ -37,6 +40,7 @@ import '../../domain/usecases/auth/sign_out_usecase.dart';
 import '../../domain/usecases/event/validate_event_code_usecase.dart';
 import '../../domain/repositories/survey_repository.dart';
 import '../../domain/usecases/notification/watch_notifications_usecase.dart';
+import '../../domain/usecases/nsm/get_nsm_days_usecase.dart';
 import '../../domain/usecases/speaker/get_speakers_usecase.dart';
 import '../../domain/usecases/station/award_station_points_usecase.dart';
 import '../../domain/usecases/station/load_stations_usecase.dart';
@@ -98,6 +102,10 @@ Future<void> initDependencies() async {
       () => StationRemoteDataSourceImpl(sl()));
   sl.registerLazySingleton<StationRepository>(
       () => StationRepositoryImpl(sl()));
+  sl.registerLazySingleton<NsmRemoteDataSource>(
+      () => NsmRemoteDataSourceImpl(sl()));
+  sl.registerLazySingleton<NsmRepository>(
+      () => NsmRepositoryImpl(sl()));
 
   // ── Use Cases ─────────────────────────────────────────────────────────────
   sl.registerLazySingleton(() => LoginUseCase(sl()));
@@ -118,4 +126,5 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton(() => SubmitSurveyUseCase(sl()));
   sl.registerLazySingleton(() => LoadStationsUseCase(sl()));
   sl.registerLazySingleton(() => AwardStationPointsUseCase(sl()));
+  sl.registerLazySingleton(() => GetNsmDaysUseCase(sl()));
 }
