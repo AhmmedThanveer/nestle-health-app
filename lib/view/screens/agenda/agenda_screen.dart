@@ -117,10 +117,13 @@ class _AgendaViewState extends State<_AgendaView> {
                         const Expanded(child: _LoadingView()),
 
                       if (state.status == AgendaStatus.error)
-                        Expanded(child: _ErrorView(
-                          message: state.errorMessage ?? 'Failed to load agenda',
-                          onRetry: _tryLoad,
-                        )),
+                        Expanded(
+                          child: _ErrorView(
+                            message:
+                                state.errorMessage ?? 'Failed to load agenda',
+                            onRetry: _tryLoad,
+                          ),
+                        ),
 
                       if (state.status == AgendaStatus.loaded) ...[
                         DayTabsWidget(state: state),
@@ -129,6 +132,7 @@ class _AgendaViewState extends State<_AgendaView> {
                           HallDropdownWidget(state: state),
                           SizedBox(height: 40.h),
                         ],
+                        SizedBox(height: 30.h),
                         Expanded(
                           child: RepaintBoundary(
                             child: SessionsListWidget(state: state),
@@ -157,9 +161,7 @@ class _LoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(color: Colors.white),
-    );
+    return const Center(child: CircularProgressIndicator(color: Colors.white));
   }
 }
 
@@ -179,8 +181,11 @@ class _ErrorView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.error_outline_rounded,
-                color: Colors.white54, size: 48.r),
+            Icon(
+              Icons.error_outline_rounded,
+              color: Colors.white54,
+              size: 48.r,
+            ),
             SizedBox(height: 12.h),
             Text(
               message,

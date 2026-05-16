@@ -13,6 +13,7 @@ import '../../../view%20model/bloc/auth/auth_state.dart';
 import '../../../view%20model/bloc/profile/profile_bloc.dart';
 import '../../widgets/animated_entrance_item.dart';
 import '../../widgets/app_snackbar.dart';
+import '../../widgets/delete_account_dialog.dart';
 import '../../widgets/logout_confirmation_dialog.dart';
 import '../../widgets/nestle_logo_widget.dart';
 
@@ -44,20 +45,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.primaryBlue,
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
+    return BlocListener<ProfileBloc, ProfileState>(
+      listenWhen: (prev, curr) =>
+          curr.status == ProfileStatus.deleted ||
+          (curr.status == ProfileStatus.error &&
+              prev.status == ProfileStatus.deleting),
+      listener: (context, state) {
+        if (state.status == ProfileStatus.deleted) {
+          context.read<AuthBloc>().add(SignOutEvent());
+        } else if (state.status == ProfileStatus.error &&
+            state.errorMessage != null) {
+          AppSnackBar.showError(context, state.errorMessage!);
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.primaryBlue,
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
               AppImages.loginBg,
               fit: BoxFit.cover,
               alignment: Alignment.bottomCenter,
               filterQuality: FilterQuality.low,
             ),
-          ),
-          Positioned.fill(
-            child: DecoratedBox(
+            DecoratedBox(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -71,118 +83,132 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
             ),
-          ),
-          SafeArea(
-            bottom: false,
-            child: BlocBuilder<ProfileBloc, ProfileState>(
-              builder: (context, state) {
-                if (state.status == ProfileStatus.loading &&
-                    state.user == null) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: Colors.white),
-                  );
-                }
-                return Column(
-                  children: [
-                    const NestleLogoWidget(),
-                    SizedBox(height: 20.h),
-                    Expanded(
-                      child: RefreshIndicator(
-                        onRefresh: _onRefresh,
-                        color: AppColors.primaryBlue,
-                        backgroundColor: Colors.white,
-                        child: ListView(
-                          padding: EdgeInsets.fromLTRB(
-                            16.w,
-                            0,
-                            16.w,
-                            80.h + MediaQuery.of(context).padding.bottom,
+            SafeArea(
+              bottom: false,
+              child: BlocBuilder<ProfileBloc, ProfileState>(
+                builder: (context, state) {
+                  if (state.status == ProfileStatus.loading &&
+                      state.user == null) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    );
+                  }
+                  final isDeleting = state.status == ProfileStatus.deleting;
+                  return Column(
+                    children: [
+                      const NestleLogoWidget(),
+                      SizedBox(height: 20.h),
+                      Expanded(
+                        child: RefreshIndicator(
+                          onRefresh: _onRefresh,
+                          color: AppColors.primaryBlue,
+                          backgroundColor: Colors.white,
+                          child: ListView(
+                            padding: EdgeInsets.fromLTRB(
+                              16.w,
+                              0,
+                              16.w,
+                              80.h + MediaQuery.of(context).padding.bottom,
+                            ),
+                            children: [
+                              AnimatedEntranceItem(
+                                direction: EntranceDirection.rtl,
+                                index: 0,
+                                child: _PointsCard(points: state.user?.points ?? 0),
+                              ),
+                              SizedBox(height: 14.h),
+                              AnimatedEntranceItem(
+                                direction: EntranceDirection.rtl,
+                                index: 1,
+                                child: _ContactInfoCard(user: state.user),
+                              ),
+                              SizedBox(height: 14.h),
+                              AnimatedEntranceItem(
+                                direction: EntranceDirection.rtl,
+                                index: 2,
+                                child: _CareerInfoCard(user: state.user),
+                              ),
+                              SizedBox(height: 20.h),
+                              AnimatedEntranceItem(
+                                direction: EntranceDirection.rtl,
+                                index: 3,
+                                child: _ActionButton(
+                                  icon: Icons.edit_outlined,
+                                  label: AppStrings.editProfile,
+                                  onTap: () => Navigator.pushNamed(context, AppRoutes.editProfile),
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
+                              AnimatedEntranceItem(
+                                direction: EntranceDirection.rtl,
+                                index: 4,
+                                child: _ActionButton(
+                                  icon: Icons.badge_outlined,
+                                  label: 'Name Tag',
+                                  onTap: () => Navigator.pushNamed(context, AppRoutes.nameTag),
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
+                              AnimatedEntranceItem(
+                                direction: EntranceDirection.rtl,
+                                index: 5,
+                                child: _ActionButton(
+                                  icon: Icons.lock_outline_rounded,
+                                  label: 'Change Password',
+                                  onTap: () => Navigator.pushNamed(context, AppRoutes.changePassword),
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
+                              AnimatedEntranceItem(
+                                direction: EntranceDirection.rtl,
+                                index: 6,
+                                child: _ActionButton(
+                                  icon: Icons.logout_rounded,
+                                  label: AppStrings.logout,
+                                  onTap: () async {
+                                    final confirmed =
+                                        await LogoutConfirmationDialog.show(context);
+                                    if (!confirmed || !context.mounted) return;
+                                    context.read<AuthBloc>().add(SignOutEvent());
+                                    AppSnackBar.showSuccess(context, 'Logged out successfully.');
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
+                              AnimatedEntranceItem(
+                                direction: EntranceDirection.rtl,
+                                index: 7,
+                                child: _ActionButton(
+                                  icon: Icons.delete_forever_rounded,
+                                  label: AppStrings.deleteAccount,
+                                  isDestructive: true,
+                                  isLoading: isDeleting,
+                                  onTap: isDeleting
+                                      ? () {}
+                                      : () async {
+                                          final password =
+                                              await DeleteAccountDialog.show(context);
+                                          if (password == null ||
+                                              password.isEmpty ||
+                                              !context.mounted) return;
+                                          context.read<ProfileBloc>().add(
+                                                DeleteAccountEvent(
+                                                    password: password),
+                                              );
+                                        },
+                                ),
+                              ),
+                            ],
                           ),
-                          children: [
-                            AnimatedEntranceItem(
-                              direction: EntranceDirection.rtl,
-                              index: 0,
-                              child: _PointsCard(points: state.user?.points ?? 0),
-                            ),
-                            SizedBox(height: 14.h),
-                            AnimatedEntranceItem(
-                              direction: EntranceDirection.rtl,
-                              index: 1,
-                              child: _ContactInfoCard(user: state.user),
-                            ),
-                            SizedBox(height: 14.h),
-                            AnimatedEntranceItem(
-                              direction: EntranceDirection.rtl,
-                              index: 2,
-                              child: _CareerInfoCard(user: state.user),
-                            ),
-                            SizedBox(height: 20.h),
-                            AnimatedEntranceItem(
-                              direction: EntranceDirection.rtl,
-                              index: 3,
-                              child: _ActionButton(
-                                icon: Icons.edit_outlined,
-                                label: AppStrings.editProfile,
-                                onTap: () => Navigator.pushNamed(context, AppRoutes.editProfile),
-                              ),
-                            ),
-                            SizedBox(height: 10.h),
-                            AnimatedEntranceItem(
-                              direction: EntranceDirection.rtl,
-                              index: 4,
-                              child: _ActionButton(
-                                icon: Icons.badge_outlined,
-                                label: 'Name Tag',
-                                onTap: () => Navigator.pushNamed(context, AppRoutes.nameTag),
-                              ),
-                            ),
-                            SizedBox(height: 10.h),
-                            AnimatedEntranceItem(
-                              direction: EntranceDirection.rtl,
-                              index: 5,
-                              child: _ActionButton(
-                                icon: Icons.lock_outline_rounded,
-                                label: 'Change Password',
-                                onTap: () => Navigator.pushNamed(context, AppRoutes.changePassword),
-                              ),
-                            ),
-                            SizedBox(height: 10.h),
-                            AnimatedEntranceItem(
-                              direction: EntranceDirection.rtl,
-                              index: 6,
-                              child: _ActionButton(
-                                icon: Icons.logout_rounded,
-                                label: AppStrings.logout,
-                                onTap: () async {
-                                  final confirmed =
-                                      await LogoutConfirmationDialog.show(context);
-                                  if (!confirmed || !context.mounted) return;
-                                  context.read<AuthBloc>().add(SignOutEvent());
-                                  AppSnackBar.showSuccess(context, 'Logged out successfully.');
-                                },
-                              ),
-                            ),
-                            SizedBox(height: 10.h),
-                            AnimatedEntranceItem(
-                              direction: EntranceDirection.rtl,
-                              index: 6,
-                              child: _ActionButton(
-                                icon: Icons.delete_outline_rounded,
-                                label: AppStrings.deleteAccount,
-                                isDestructive: true,
-                                onTap: () {},
-                              ),
-                            ),
-                          ],
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -433,12 +459,14 @@ class _ActionButton extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
   final bool isDestructive;
+  final bool isLoading;
 
   const _ActionButton({
     required this.icon,
     required this.label,
     required this.onTap,
     this.isDestructive = false,
+    this.isLoading = false,
   });
 
   @override
@@ -476,11 +504,21 @@ class _ActionButton extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Icon(
-              Icons.chevron_right_rounded,
-              color: color.withValues(alpha: 0.5),
-              size: 20.r,
-            ),
+            if (isLoading)
+              SizedBox(
+                width: 18.r,
+                height: 18.r,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: color,
+                ),
+              )
+            else
+              Icon(
+                Icons.chevron_right_rounded,
+                color: color.withValues(alpha: 0.5),
+                size: 20.r,
+              ),
           ],
         ),
       ),

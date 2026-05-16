@@ -19,6 +19,7 @@ abstract class AuthRemoteDataSource {
     required String currentPassword,
     required String newPassword,
   });
+  Future<void> deleteAccount({required String password});
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -93,6 +94,22 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       );
       await user.reauthenticateWithCredential(credential);
       await user.updatePassword(newPassword);
+    } on FirebaseAuthException catch (e) {
+      throw AuthException(_mapError(e.code));
+    }
+  }
+
+  @override
+  Future<void> deleteAccount({required String password}) async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) throw AuthException('No authenticated user.');
+      final credential = EmailAuthProvider.credential(
+        email: user.email!,
+        password: password,
+      );
+      await user.reauthenticateWithCredential(credential);
+      await user.delete();
     } on FirebaseAuthException catch (e) {
       throw AuthException(_mapError(e.code));
     }

@@ -154,4 +154,21 @@ class AuthRepositoryImpl implements AuthRepository {
       return Failure(UnexpectedFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Result<void>> deleteAccount({required String password}) async {
+    try {
+      final uid = _authDs.currentUser?.uid;
+      // Delete Firestore document first so it's gone before auth is revoked.
+      if (uid != null) await _userDs.deleteUser(uid);
+      await _authDs.deleteAccount(password: password);
+      return const Success(null);
+    } on AuthException catch (e) {
+      return Failure(AuthFailure(e.message));
+    } on ServerException catch (e) {
+      return Failure(ServerFailure(e.message));
+    } catch (e) {
+      return Failure(UnexpectedFailure(e.toString()));
+    }
+  }
 }

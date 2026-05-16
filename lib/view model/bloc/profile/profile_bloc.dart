@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/di/service_locator.dart';
+import '../../../domain/usecases/auth/delete_account_usecase.dart';
 import '../../../domain/usecases/auth/sign_out_usecase.dart';
 import '../../../domain/usecases/user/get_current_user_usecase.dart';
 import '../../../domain/usecases/user/update_profile_usecase.dart';
@@ -14,15 +15,18 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final GetCurrentUserUseCase _getCurrentUser;
   final UpdateProfileUseCase _updateProfile;
   final SignOutUseCase _signOut;
+  final DeleteAccountUseCase _deleteAccount;
 
   ProfileBloc()
       : _getCurrentUser = sl<GetCurrentUserUseCase>(),
         _updateProfile = sl<UpdateProfileUseCase>(),
         _signOut = sl<SignOutUseCase>(),
+        _deleteAccount = sl<DeleteAccountUseCase>(),
         super(const ProfileState()) {
     on<LoadProfileEvent>(_onLoad);
     on<UpdateProfileEvent>(_onUpdate);
     on<SignOutProfileEvent>(_onSignOut);
+    on<DeleteAccountEvent>(_onDeleteAccount);
   }
 
   Future<void> _onLoad(
@@ -73,5 +77,20 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     emit(state.copyWith(status: ProfileStatus.loading));
     await _signOut();
     emit(state.copyWith(status: ProfileStatus.signedOut));
+  }
+
+  Future<void> _onDeleteAccount(
+    DeleteAccountEvent event,
+    Emitter<ProfileState> emit,
+  ) async {
+    emit(state.copyWith(status: ProfileStatus.deleting, clearError: true));
+    final result = await _deleteAccount(password: event.password);
+    result.when(
+      success: (_) => emit(state.copyWith(status: ProfileStatus.deleted)),
+      failure: (f) => emit(state.copyWith(
+        status: ProfileStatus.error,
+        errorMessage: f.message,
+      )),
+    );
   }
 }

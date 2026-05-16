@@ -22,8 +22,7 @@ class SessionTileWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -67,6 +66,7 @@ class SessionTileWidget extends StatelessWidget {
             ],
           ),
         ),
+
         if (!isLast)
           const Divider(
             height: 1,

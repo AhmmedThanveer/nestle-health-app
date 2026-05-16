@@ -33,6 +33,7 @@ import '../../domain/repositories/station_repository.dart';
 import '../../domain/repositories/user_repository.dart';
 import '../../domain/usecases/agenda/get_agenda_usecase.dart';
 import '../../domain/usecases/auth/change_password_usecase.dart';
+import '../../domain/usecases/auth/delete_account_usecase.dart';
 import '../../domain/usecases/auth/forgot_password_usecase.dart';
 import '../../domain/usecases/auth/login_usecase.dart';
 import '../../domain/usecases/auth/register_usecase.dart';
@@ -113,6 +114,7 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton(() => ForgotPasswordUseCase(sl()));
   sl.registerLazySingleton(() => SignOutUseCase(sl()));
   sl.registerLazySingleton(() => ChangePasswordUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteAccountUseCase(sl()));
   sl.registerLazySingleton(() => ValidateEventCodeUseCase(sl()));
   sl.registerLazySingleton(() => GetCurrentUserUseCase(sl()));
   sl.registerLazySingleton(() => UpdateProfileUseCase(sl()));

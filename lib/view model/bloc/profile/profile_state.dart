@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../domain/entities/user_entity.dart';
 
-enum ProfileStatus { initial, loading, loaded, updating, updated, error, signedOut }
+enum ProfileStatus { initial, loading, loaded, updating, updated, error, signedOut, deleting, deleted }
 
 class ProfileState extends Equatable {
   final ProfileStatus status;

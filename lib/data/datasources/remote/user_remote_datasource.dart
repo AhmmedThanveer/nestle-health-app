@@ -8,6 +8,7 @@ abstract class UserRemoteDataSource {
   Future<UserModel> getUserById(String uid);
   Future<UserModel> updateUser(UserModel user);
   Future<void> updateFcmToken({required String uid, required String token});
+  Future<void> deleteUser(String uid);
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -57,6 +58,15 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
       });
     } on FirebaseException catch (e) {
       throw ServerException(e.message ?? 'Failed to update FCM token');
+    }
+  }
+
+  @override
+  Future<void> deleteUser(String uid) async {
+    try {
+      await _users.doc(uid).delete();
+    } on FirebaseException catch (e) {
+      throw ServerException(e.message ?? 'Failed to delete user profile');
     }
   }
 }

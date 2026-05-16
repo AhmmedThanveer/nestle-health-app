@@ -51,3 +51,10 @@ class UpdateProfileEvent extends ProfileEvent {
 }
 
 class SignOutProfileEvent extends ProfileEvent {}
+
+class DeleteAccountEvent extends ProfileEvent {
+  final String password;
+  const DeleteAccountEvent({required this.password});
+  @override
+  List<Object?> get props => [password];
+}
