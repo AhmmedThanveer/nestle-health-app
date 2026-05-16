@@ -1,18 +1,20 @@
 ﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/constants/app_colors.dart';
+
 abstract final class AppSnackBar {
   static void showSuccess(BuildContext context, String message) => _show(
         context,
         message: message,
-        background: const Color(0xFF1B8A4E),
+        background: AppColors.snackbarSuccess,
         icon: Icons.check_circle_outline_rounded,
       );
 
   static void showError(BuildContext context, String message) => _show(
         context,
         message: message,
-        background: const Color(0xFFCC2929),
+        background: AppColors.snackbarError,
         icon: Icons.error_outline_rounded,
       );
 

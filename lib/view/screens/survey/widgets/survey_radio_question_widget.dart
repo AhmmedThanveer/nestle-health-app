@@ -22,7 +22,7 @@ class SurveyRadioQuestionWidget extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
       decoration: BoxDecoration(
-        color: const Color(0xFF0D2B4A),
+        color: AppColors.videoCardBg,
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Column(
@@ -49,7 +49,7 @@ class SurveyRadioQuestionWidget extends StatelessWidget {
                   child: Text(
                     '*',
                     style: TextStyle(
-                      color: Colors.red,
+                      color: AppColors.dangerRed,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
                     ),

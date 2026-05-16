@@ -64,11 +64,11 @@ class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
               height: 60.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.red.withValues(alpha: 0.15),
+                color: AppColors.dangerRed.withValues(alpha: 0.15),
               ),
               child: Icon(
                 Icons.delete_forever_rounded,
-                color: Colors.red.shade400,
+                color: AppColors.dangerRed,
                 size: 30.r,
               ),
             ),
@@ -191,7 +191,7 @@ class _DialogButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDestructive = !outlined;
-    final Color activeColor = Colors.red.shade400;
+    final Color activeColor = AppColors.dangerRed;
 
     return GestureDetector(
       onTap: onTap,

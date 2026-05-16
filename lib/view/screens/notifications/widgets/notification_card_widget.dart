@@ -67,7 +67,7 @@ class NotificationCardWidget extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontSize: 12.sp,
-                        color: Colors.grey,
+                        color: AppColors.greyText,
                       ),
                     ),
                   ],
@@ -78,7 +78,7 @@ class NotificationCardWidget extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 13.sp,
-                    color: const Color(0xFF666666),
+                    color: AppColors.subtleText,
                     height: 1.45,
                   ),
                   maxLines: 3,

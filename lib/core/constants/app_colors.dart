@@ -129,4 +129,66 @@ class AppColors {
 
   /// Muted white for unselected nav items
   static const Color navUnselected = Color(0xB3FFFFFF);
+
+  // ── Text ──────────────────────────────────────────────────────
+  /// Dark heading/body text used on light card backgrounds
+  static const Color darkText = Color(0xFF1A1A2E);
+
+  /// Muted secondary text on light backgrounds
+  static const Color subtleText = Color(0xFF666666);
+
+  /// Body text on white cards
+  static const Color bodyText = Color(0xFF444444);
+
+  /// Near-black text for disclaimers and dense content
+  static const Color charcoalText = Color(0xFF1A1A1A);
+
+  /// NSM wave card hint / subtext
+  static const Color nsmSubtleText = Color(0xFF555454);
+
+  // ── Opacity helpers ────────────────────────────────────────────
+  /// White at 70% opacity
+  static const Color white70 = Color(0xB3FFFFFF);
+
+  /// White at 80% opacity
+  static const Color white80 = Color(0xCCFFFFFF);
+
+  // ── Grey shades ────────────────────────────────────────────────
+  /// Light grey – dividers, card section backgrounds (grey.shade100)
+  static const Color greyLight = Color(0xFFF5F5F5);
+
+  /// Medium grey – bottom-sheet handle bars (grey.shade500)
+  static const Color greyMid = Color(0xFF9E9E9E);
+
+  /// Muted text grey – secondary labels (grey.shade600)
+  static const Color greyText = Color(0xFF757575);
+
+  // ── Feedback / Status ─────────────────────────────────────────
+  /// Success snackbar background
+  static const Color snackbarSuccess = Color(0xFF1B8A4E);
+
+  /// Error snackbar background
+  static const Color snackbarError = Color(0xFFCC2929);
+
+  /// Destructive / delete action red (shade400)
+  static const Color dangerRed = Color(0xFFEF5350);
+
+  /// Warning / pending orange
+  static const Color warningOrange = Color(0xFFFFA726);
+
+  // ── Component backgrounds ──────────────────────────────────────
+  /// Home scaffold background (slightly darker blue)
+  static const Color homeScreenBg = Color(0xFF003087);
+
+  /// Dropdown list popup background
+  static const Color dropdownBg = Color(0xFF0E3A67);
+
+  /// Button gradient top / pressed state
+  static const Color buttonPressedBg = Color(0xFF1A5F9A);
+
+  /// Button gradient bottom / normal state
+  static const Color buttonNormalBg = Color(0xFF1A7CC8);
+
+  /// City bottom-sheet region header background
+  static const Color regionHeaderBg = Color(0xFFEAEAEA);
 }

@@ -81,7 +81,7 @@ class CityBottomSheet {
                     height: 5.h,
 
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade500,
+                      color: AppColors.greyMid,
 
                       borderRadius: BorderRadius.circular(100.r),
                     ),
@@ -119,7 +119,7 @@ class CityBottomSheet {
 
                             size: 30.sp,
 
-                            color: Colors.grey.shade600,
+                            color: AppColors.greyText,
                           ),
                         ),
                       ],
@@ -148,7 +148,7 @@ class CityBottomSheet {
                                   vertical: 14.h,
                                 ),
 
-                                color: const Color(0xFFEAEAEA),
+                                color: AppColors.regionHeaderBg,
 
                                 child: Text(
                                   region.key,

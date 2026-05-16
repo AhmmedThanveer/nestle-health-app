@@ -47,7 +47,7 @@ class _DisclaimerSheet extends StatelessWidget {
               width: 40.w,
               height: 4.h,
               decoration: BoxDecoration(
-                color: Colors.grey.shade300,
+                color: AppColors.greyLight,
                 borderRadius: BorderRadius.circular(2.r),
               ),
             ),
@@ -78,7 +78,7 @@ class _DisclaimerSheet extends StatelessWidget {
           SizedBox(height: 12.h),
 
           Divider(
-            color: Colors.grey.shade200,
+            color: AppColors.greyLight,
             thickness: 1,
             height: 1,
           ),
@@ -90,7 +90,7 @@ class _DisclaimerSheet extends StatelessWidget {
               child: Text(
                 _disclaimerText,
                 style: TextStyle(
-                  color: const Color(0xFF1A1A1A),
+                  color: AppColors.charcoalText,
                   fontSize: 13.5.sp,
                   height: 1.65,
                 ),

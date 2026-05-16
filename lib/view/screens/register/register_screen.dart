@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../app/routes/app_routes.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_textstyles.dart';
@@ -195,8 +196,8 @@ class _RegisterViewState extends State<_RegisterView> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        const Color(0xFF005EA8).withValues(alpha: 0.94),
-                        const Color(0xFF005EA8).withValues(alpha: 0.78),
+                        AppColors.primaryBlue.withValues(alpha: 0.94),
+                        AppColors.primaryBlue.withValues(alpha: 0.78),
                         Colors.transparent,
                       ],
                     ),
@@ -412,7 +413,7 @@ class _RegisterViewState extends State<_RegisterView> {
               child: Text(
                 message,
                 style: TextStyle(
-                  color: Colors.redAccent,
+                  color: AppColors.dangerRed,
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w500,
                   fontFamily: 'Montserrat',
@@ -479,8 +480,8 @@ class _CitySelector extends StatelessWidget {
                 color: showError
                     ? Colors.redAccent
                     : selectedCity != null
-                    ? const Color(0xFF4D9DE0)
-                    : const Color(0xFFE4E4E4),
+                    ? AppColors.lightBlue
+                    : AppColors.borderColor,
                 width: 1.5,
               ),
             ),
@@ -515,7 +516,7 @@ class _CitySelector extends StatelessWidget {
                   child: Text(
                     AppStrings.cityRequired,
                     style: TextStyle(
-                      color: Colors.redAccent,
+                      color: AppColors.dangerRed,
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Montserrat',

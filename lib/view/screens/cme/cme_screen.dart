@@ -202,7 +202,7 @@ class _EligibleBody extends StatelessWidget {
             Icon(
               Icons.workspace_premium_rounded,
               size: 72.r,
-              color: const Color(0xFFFFD700),
+              color: AppColors.pointsGold,
             ),
             SizedBox(height: 24.h),
             Text(

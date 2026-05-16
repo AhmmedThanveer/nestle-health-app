@@ -150,7 +150,7 @@ class AppTextStyles {
   static TextStyle agendaSessionTime = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w400,
-    color: Color(0xB3FFFFFF), // white 70%
+    color: AppColors.white70,
     fontFamily: 'Montserrat',
     height: 1.5,
   );
@@ -272,7 +272,7 @@ class AppTextStyles {
   static TextStyle assetFolderName = TextStyle(
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
-    color: Color(0xB3FFFFFF),
+    color: AppColors.white70,
     fontFamily: 'Montserrat',
   );
 
@@ -379,7 +379,7 @@ class AppTextStyles {
   static TextStyle scanQrInstruction = TextStyle(
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
-    color: Color(0xB3FFFFFF),
+    color: AppColors.white70,
     fontFamily: 'Montserrat',
     height: 1.4,
   );
@@ -388,7 +388,7 @@ class AppTextStyles {
   static TextStyle scanFailedTitle = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeight.w700,
-    color: Color(0xFF1A1A2E),
+    color: AppColors.darkText,
     fontFamily: 'Montserrat',
   );
 
@@ -396,7 +396,7 @@ class AppTextStyles {
   static TextStyle scanFailedSubtitle = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeight.w400,
-    color: Color(0xFF666666),
+    color: AppColors.subtleText,
     fontFamily: 'Montserrat',
     height: 1.45,
   );
@@ -431,7 +431,7 @@ class AppTextStyles {
   static TextStyle nsmWaveTitle = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeight.w700,
-    color: Color(0xCCFFFFFF),
+    color: AppColors.white80,
     fontFamily: 'Montserrat',
     height: 1.4,
   );
@@ -440,7 +440,7 @@ class AppTextStyles {
   static TextStyle nsmWaveInfo = TextStyle(
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
-    color: Color(0xB3FFFFFF),
+    color: AppColors.white70,
     fontFamily: 'Montserrat',
   );
 
@@ -459,7 +459,7 @@ class AppTextStyles {
   static TextStyle venueSectionTitle = TextStyle(
     fontSize: 17.sp,
     fontWeight: FontWeight.w700,
-    color: Color(0xFF1A1A2E),
+    color: AppColors.darkText,
     fontFamily: 'Montserrat',
   );
 
@@ -467,7 +467,7 @@ class AppTextStyles {
   static TextStyle venueHotelName = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeight.w700,
-    color: Color(0xFF1A1A2E),
+    color: AppColors.darkText,
     fontFamily: 'Montserrat',
   );
 
@@ -475,7 +475,7 @@ class AppTextStyles {
   static TextStyle venueInfoText = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeight.w400,
-    color: Color(0xFF444444),
+    color: AppColors.bodyText,
     fontFamily: 'Montserrat',
     height: 1.5,
   );

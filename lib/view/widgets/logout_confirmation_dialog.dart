@@ -38,11 +38,11 @@ class _LogoutDialog extends StatelessWidget {
               height: 56.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.red.withValues(alpha: 0.15),
+                color: AppColors.dangerRed.withValues(alpha: 0.15),
               ),
               child: Icon(
                 Icons.logout_rounded,
-                color: Colors.red.shade400,
+                color: AppColors.dangerRed,
                 size: 28.r,
               ),
             ),
@@ -108,7 +108,7 @@ class _DialogButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isDestructive ? Colors.red.shade400 : AppColors.cyan;
+    final color = isDestructive ? AppColors.dangerRed : AppColors.cyan;
     return GestureDetector(
       onTap: onTap,
       child: Container(

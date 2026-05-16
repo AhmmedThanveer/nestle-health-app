@@ -383,7 +383,7 @@ class _InfoCard extends StatelessWidget {
             (item) => [
               _InfoRow(item: item),
               if (item != items.last)
-                Divider(height: 18.h, color: Colors.grey.shade100),
+                Divider(height: 18.h, color: AppColors.greyLight),
             ],
           ),
         ],
@@ -431,7 +431,7 @@ class _InfoRow extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Montserrat',
                   fontSize: 11.sp,
-                  color: Colors.grey,
+                  color: AppColors.greyText,
                 ),
               ),
               SizedBox(height: 2.h),
@@ -472,7 +472,7 @@ class _ActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color color = isDestructive
-        ? Colors.red.shade600
+        ? AppColors.snackbarError
         : AppColors.primaryBlue;
 
     return GestureDetector(

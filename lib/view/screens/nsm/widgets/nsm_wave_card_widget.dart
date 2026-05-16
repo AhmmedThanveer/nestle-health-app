@@ -65,7 +65,7 @@ class _FullBadge extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
       decoration: BoxDecoration(
-        color: const Color(0xFF555454),
+        color: AppColors.nsmSubtleText,
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Text(AppStrings.nsmFull, style: AppTextStyles.nsmFullBadge),

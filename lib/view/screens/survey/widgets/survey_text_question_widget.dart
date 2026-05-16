@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../core/constants/app_colors.dart';
 import '../../../../core/models/survey_models.dart';
 import '../../../../view%20model/bloc/survey/survey_bloc.dart';
 
@@ -41,7 +42,7 @@ class _SurveyTextQuestionWidgetState extends State<SurveyTextQuestionWidget> {
       margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
       decoration: BoxDecoration(
-        color: const Color(0xFF0D2B4A),
+        color: AppColors.videoCardBg,
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Column(
@@ -68,7 +69,7 @@ class _SurveyTextQuestionWidgetState extends State<SurveyTextQuestionWidget> {
                   child: Text(
                     '*',
                     style: TextStyle(
-                      color: Colors.red,
+                      color: AppColors.dangerRed,
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
                     ),
@@ -110,7 +111,7 @@ class _SurveyTextQuestionWidgetState extends State<SurveyTextQuestionWidget> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.r),
-                borderSide: const BorderSide(color: Color(0xFF4D9DE0)),
+                borderSide: const BorderSide(color: AppColors.lightBlue),
               ),
             ),
           ),

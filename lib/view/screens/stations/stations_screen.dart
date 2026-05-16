@@ -324,7 +324,7 @@ class _ScanSuccessDialog extends StatelessWidget {
                 fontFamily: 'Montserrat',
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey.shade600,
+                color: AppColors.greyText,
               ),
               textAlign: TextAlign.center,
             ),
@@ -361,7 +361,7 @@ class _ScanSuccessDialog extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 13.sp,
-                color: Colors.grey.shade500,
+                color: AppColors.greyMid,
               ),
             ),
             SizedBox(height: 28.h),
@@ -415,7 +415,7 @@ class _AlreadyScannedDialog extends StatelessWidget {
               height: 72.r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.orange.shade400,
+                color: AppColors.warningOrange,
               ),
               child: Icon(
                 Icons.info_outline_rounded,
@@ -442,7 +442,7 @@ class _AlreadyScannedDialog extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Montserrat',
                 fontSize: 14.sp,
-                color: Colors.grey.shade600,
+                color: AppColors.greyText,
               ),
               textAlign: TextAlign.center,
             ),

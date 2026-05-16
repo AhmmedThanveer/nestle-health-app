@@ -176,7 +176,7 @@ class _ChatHeader extends StatelessWidget {
                   height: 12.r,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFF4CAF50),
+                    color: AppColors.stationScannedGreen,
                     border: Border.all(color: AppColors.primaryBlue, width: 2),
                   ),
                 ),
@@ -332,7 +332,7 @@ class _ChatInput extends StatelessWidget {
                   hintStyle: TextStyle(
                     fontFamily: 'Montserrat',
                     fontSize: 14.sp,
-                    color: Colors.grey,
+                    color: AppColors.greyText,
                   ),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(

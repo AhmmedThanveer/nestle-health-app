@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:health_congress/core/theme/app_textstyles.dart';
 
+import '../../core/constants/app_colors.dart';
+
 class CommonButton extends StatelessWidget {
   final String title;
   final VoidCallback? onTap;
@@ -24,8 +26,8 @@ class CommonButton extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           color: isLoading
-              ? const Color(0xFF1A5F9A)
-              : const Color(0xFF1A7CC8),
+              ? AppColors.buttonPressedBg
+              : AppColors.buttonNormalBg,
           borderRadius: BorderRadius.circular(12.r),
         ),
         alignment: Alignment.center,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../view%20model/bloc/home/home_bloc.dart';
 import '../../widgets/nestle_logo_widget.dart';
@@ -66,7 +67,7 @@ class _HomeViewState extends State<_HomeView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF003087),
+      backgroundColor: AppColors.homeScreenBg,
       body: Stack(
         fit: StackFit.expand,
         children: [

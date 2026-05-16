@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../core/constants/app_colors.dart';
+
 class CommonDropdownField extends StatelessWidget {
   final String hintText;
 
@@ -37,7 +39,7 @@ class CommonDropdownField extends StatelessWidget {
 
           isExpanded: true,
 
-          dropdownColor: const Color(0xFF0E3A67),
+          dropdownColor: AppColors.dropdownBg,
 
           icon: Icon(
             Icons.keyboard_arrow_down_rounded,
