@@ -6,8 +6,8 @@ import '../../core/constants/app_strings.dart';
 import '../widgets/common_button.dart';
 
 class CityBottomSheet {
-  static Future<String?> show(BuildContext context) async {
-    String? selectedCity;
+  static Future<String?> show(BuildContext context, {String? initialCity}) async {
+    String? selectedCity = initialCity;
 
     final Map<String, List<String>> cityRegions = {
       AppStrings.westernRegion: [

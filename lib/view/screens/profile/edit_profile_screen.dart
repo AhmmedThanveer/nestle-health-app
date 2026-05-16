@@ -388,7 +388,7 @@ class _CityField extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        final city = await CityBottomSheet.show(context);
+        final city = await CityBottomSheet.show(context, initialCity: selectedCity);
         if (city != null) onCityChanged(city);
       },
       child: Container(
