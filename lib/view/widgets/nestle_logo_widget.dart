@@ -12,30 +12,38 @@ class NestleLogoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: topPadding ?? 50.h),
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.0, end: 1.0),
+      duration: const Duration(milliseconds: 520),
+      builder: (_, t, cachedChild) {
+        final double eased = Curves.easeOutCubic.transform(t);
+        return Opacity(
+          opacity: eased,
+          child: FractionalTranslation(
+            translation: Offset(-(1 - eased) * 0.12, 0),
+            child: cachedChild,
+          ),
+        );
+      },
+      child: Column(
+        children: [
+          SizedBox(height: topPadding ?? 50.h),
 
-        /// NESTLE CONGRESS
-        Text(
-          AppStrings.appTitle,
+          Text(
+            AppStrings.appTitle,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.logoTitle,
+          ),
 
-          textAlign: TextAlign.center,
+          SizedBox(height: 8.h),
 
-          style: AppTextStyles.logoTitle,
-        ),
-
-        SizedBox(height: 8.h),
-
-        /// THE NEXT ERA OF NUTRITION & HEALTH
-        Text(
-          AppStrings.subtitle,
-
-          textAlign: TextAlign.center,
-
-          style: AppTextStyles.logoSubtitle,
-        ),
-      ],
+          Text(
+            AppStrings.subtitle,
+            textAlign: TextAlign.center,
+            style: AppTextStyles.logoSubtitle,
+          ),
+        ],
+      ),
     );
   }
 }

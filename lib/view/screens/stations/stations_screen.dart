@@ -225,6 +225,7 @@ class _StationsView extends StatelessWidget {
                                 final station = state.stations[i];
                                 return StationListTileWidget(
                                   station: station,
+                                  index: i,
                                   isScanned: state.isScanned(station.id),
                                   onScan: () =>
                                       _openScanner(context, station),

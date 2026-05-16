@@ -8,6 +8,7 @@ import '../../../core/theme/app_textstyles.dart';
 import '../../../view%20model/bloc/auth/auth_bloc.dart';
 import '../../../view%20model/bloc/auth/auth_state.dart';
 import '../../../view%20model/bloc/notification/notification_bloc.dart';
+import '../../widgets/animated_entrance_item.dart';
 import '../../widgets/nestle_logo_widget.dart';
 import 'widgets/notification_card_widget.dart';
 
@@ -162,8 +163,12 @@ class _NotificationsList extends StatelessWidget {
                       ),
                       sliver: SliverList(
                         delegate: SliverChildBuilderDelegate(
-                          (context, i) => NotificationCardWidget(
-                            notification: state.notifications[i],
+                          (context, i) => AnimatedEntranceItem(
+                            direction: EntranceDirection.rtl,
+                            index: i,
+                            child: NotificationCardWidget(
+                              notification: state.notifications[i],
+                            ),
                           ),
                           childCount: state.notifications.length,
                         ),

@@ -6,6 +6,7 @@ import '../../../../core/constants/app_strings.dart';
 import '../../../../core/models/media_models.dart';
 import '../../../../core/theme/app_textstyles.dart';
 import '../../../../view%20model/bloc/media/media_state.dart';
+import '../../../widgets/animated_entrance_item.dart';
 import '../photo_viewer_screen.dart';
 import '../video_player_screen.dart';
 
@@ -29,7 +30,11 @@ class MediaGridWidget extends StatelessWidget {
         childAspectRatio: 1.0,
       ),
       itemCount: items.length,
-      itemBuilder: (context, index) => _MediaCard(item: items[index]),
+      itemBuilder: (context, index) => AnimatedEntranceItem(
+        direction: EntranceDirection.rtl,
+        index: index,
+        child: _MediaCard(item: items[index]),
+      ),
     );
   }
 }

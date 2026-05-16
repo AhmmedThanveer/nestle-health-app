@@ -9,6 +9,7 @@ import '../../../view%20model/bloc/navigation/navigation_bloc.dart';
 import '../../../view%20model/bloc/nsm/nsm_bloc.dart';
 import '../../../view%20model/bloc/nsm/nsm_event.dart';
 import '../../../view%20model/bloc/nsm/nsm_state.dart';
+import '../../widgets/animated_entrance_item.dart';
 import '../../widgets/bottom_nav/nestle_bottom_navigation_bar.dart';
 import '../../widgets/module_app_bar.dart';
 import '../../widgets/nestle_logo_widget.dart';
@@ -144,10 +145,22 @@ class _NsmView extends StatelessWidget {
   Widget _buildItem(NsmLoadedState state, int index) {
     int cursor = 0;
     for (final day in state.days) {
-      if (index == cursor) return NsmDayHeaderWidget(day: day);
+      if (index == cursor) {
+        return AnimatedEntranceItem(
+          direction: EntranceDirection.ttb,
+          index: index,
+          child: NsmDayHeaderWidget(day: day),
+        );
+      }
       cursor++;
       for (final wave in day.waves) {
-        if (index == cursor) return NsmWaveCardWidget(wave: wave);
+        if (index == cursor) {
+          return AnimatedEntranceItem(
+            direction: EntranceDirection.ttb,
+            index: index,
+            child: NsmWaveCardWidget(wave: wave),
+          );
+        }
         cursor++;
       }
     }

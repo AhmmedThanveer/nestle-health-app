@@ -11,6 +11,7 @@ import '../../../view%20model/bloc/ask_question/ask_question_bloc.dart';
 import '../../../view%20model/bloc/ask_question/ask_question_event.dart';
 import '../../../view%20model/bloc/ask_question/ask_question_state.dart';
 import '../../../view%20model/bloc/navigation/navigation_bloc.dart';
+import '../../widgets/animated_entrance_item.dart';
 import '../../widgets/bottom_nav/nestle_bottom_navigation_bar.dart';
 import '../../widgets/common_button.dart';
 import '../../widgets/common_dropdown_field.dart';
@@ -126,48 +127,63 @@ class _AskQuestionViewState extends State<_AskQuestionView> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             // ── Your Name ──────────────────────────
-                            Text(
-                              AppStrings.yourName,
-                              style: AppTextStyles.aqFieldLabel,
-                            ),
-                            SizedBox(height: 10.h),
-                            CommonTextField(
-                              controller: _nameController,
-                              hintText: AppStrings.yourName,
+                            AnimatedEntranceItem(
+                              direction: EntranceDirection.ttb,
+                              index: 0,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(AppStrings.yourName, style: AppTextStyles.aqFieldLabel),
+                                  SizedBox(height: 10.h),
+                                  CommonTextField(controller: _nameController, hintText: AppStrings.yourName),
+                                ],
+                              ),
                             ),
                             SizedBox(height: 20.h),
 
                             // ── Speaker ────────────────────────────
-                            Text(
-                              AppStrings.speakerLabel,
-                              style: AppTextStyles.aqFieldLabel,
-                            ),
-                            SizedBox(height: 10.h),
-                            BlocBuilder<AskQuestionBloc, AskQuestionState>(
-                              buildWhen: (prev, curr) =>
-                                  prev.selectedSpeaker != curr.selectedSpeaker,
-                              builder: (context, state) => CommonDropdownField(
-                                hintText: AppStrings.selectSpeaker,
-                                value: state.selectedSpeaker,
-                                items: _speakerNames,
-                                onChanged: (value) => context
-                                    .read<AskQuestionBloc>()
-                                    .add(SelectSpeakerEvent(value)),
+                            AnimatedEntranceItem(
+                              direction: EntranceDirection.ttb,
+                              index: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(AppStrings.speakerLabel, style: AppTextStyles.aqFieldLabel),
+                                  SizedBox(height: 10.h),
+                                  BlocBuilder<AskQuestionBloc, AskQuestionState>(
+                                    buildWhen: (prev, curr) =>
+                                        prev.selectedSpeaker != curr.selectedSpeaker,
+                                    builder: (context, state) => CommonDropdownField(
+                                      hintText: AppStrings.selectSpeaker,
+                                      value: state.selectedSpeaker,
+                                      items: _speakerNames,
+                                      onChanged: (value) => context
+                                          .read<AskQuestionBloc>()
+                                          .add(SelectSpeakerEvent(value)),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             SizedBox(height: 20.h),
 
                             // ── Ask Question ───────────────────────
-                            Text(
-                              AppStrings.askQuestionTitle,
-                              style: AppTextStyles.aqFieldLabel,
-                            ),
-                            SizedBox(height: 10.h),
-                            CommonTextField(
-                              controller: _questionController,
-                              hintText: AppStrings.writeYourQuestion,
-                              maxLines: 5,
-                              keyboardType: TextInputType.multiline,
+                            AnimatedEntranceItem(
+                              direction: EntranceDirection.ttb,
+                              index: 2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(AppStrings.askQuestionTitle, style: AppTextStyles.aqFieldLabel),
+                                  SizedBox(height: 10.h),
+                                  CommonTextField(
+                                    controller: _questionController,
+                                    hintText: AppStrings.writeYourQuestion,
+                                    maxLines: 5,
+                                    keyboardType: TextInputType.multiline,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),

@@ -10,6 +10,7 @@ import '../../../view%20model/bloc/assets/assets_bloc.dart';
 import '../../../view%20model/bloc/assets/assets_event.dart';
 import '../../../view%20model/bloc/assets/assets_state.dart';
 import '../../../view%20model/bloc/navigation/navigation_bloc.dart';
+import '../../widgets/animated_entrance_item.dart';
 import '../../widgets/bottom_nav/nestle_bottom_navigation_bar.dart';
 import '../../widgets/module_app_bar.dart';
 import '../../widgets/nestle_logo_widget.dart';
@@ -124,12 +125,16 @@ class _FolderGrid extends StatelessWidget {
         childAspectRatio: 0.85,
       ),
       itemCount: folders.length,
-      itemBuilder: (context, index) => AssetFolderCardWidget(
-        folder: folders[index],
-        onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => AssetFolderScreen(folder: folders[index]),
+      itemBuilder: (context, index) => AnimatedEntranceItem(
+        direction: EntranceDirection.rtl,
+        index: index,
+        child: AssetFolderCardWidget(
+          folder: folders[index],
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => AssetFolderScreen(folder: folders[index]),
+            ),
           ),
         ),
       ),

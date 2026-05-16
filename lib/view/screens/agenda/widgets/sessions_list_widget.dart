@@ -5,6 +5,7 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/models/agenda_models.dart';
 import '../../../../core/theme/app_textstyles.dart';
 import '../../../../view%20model/bloc/agenda/agenda_bloc.dart';
+import '../../../widgets/animated_entrance_item.dart';
 import 'session_tile_widget.dart';
 
 /// Scrollable list: [hall banner?] + moderator banner + table header + session rows.
@@ -34,16 +35,26 @@ class SessionsListWidget extends StatelessWidget {
           if (index == 0) return _HallBanner(name: hall.fullName);
           if (index == 1) return _ModeratorBanner(names: hall.moderators);
           if (index == 2) return const _TableHeader();
-          return SessionTileWidget(
-            session: hall.sessions[index - 3],
-            isLast: index == hall.sessions.length + 2,
+          final sessionIndex = index - 3;
+          return AnimatedEntranceItem(
+            direction: EntranceDirection.ttb,
+            index: sessionIndex,
+            child: SessionTileWidget(
+              session: hall.sessions[sessionIndex],
+              isLast: index == hall.sessions.length + 2,
+            ),
           );
         } else {
           if (index == 0) return _ModeratorBanner(names: hall.moderators);
           if (index == 1) return const _TableHeader();
-          return SessionTileWidget(
-            session: hall.sessions[index - 2],
-            isLast: index == hall.sessions.length + 1,
+          final sessionIndex = index - 2;
+          return AnimatedEntranceItem(
+            direction: EntranceDirection.ttb,
+            index: sessionIndex,
+            child: SessionTileWidget(
+              session: hall.sessions[sessionIndex],
+              isLast: index == hall.sessions.length + 1,
+            ),
           );
         }
       },

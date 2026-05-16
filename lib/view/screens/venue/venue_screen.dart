@@ -9,6 +9,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_textstyles.dart';
 import '../../../view%20model/bloc/navigation/navigation_bloc.dart';
+import '../../widgets/animated_entrance_item.dart';
 import '../../widgets/bottom_nav/nestle_bottom_navigation_bar.dart';
 import '../../widgets/module_app_bar.dart';
 import '../../widgets/nestle_logo_widget.dart';
@@ -55,20 +56,13 @@ class VenueScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // Hotel photo
-                      _HotelImage(),
+                      AnimatedEntranceItem(direction: EntranceDirection.ttb, index: 0, child: _HotelImage()),
                       SizedBox(height: 16.h),
-
-                      // Location card
-                      const VenueLocationCardWidget(),
+                      AnimatedEntranceItem(direction: EntranceDirection.ttb, index: 1, child: const VenueLocationCardWidget()),
                       SizedBox(height: 12.h),
-
-                      // About the venue card
-                      const VenueAboutCardWidget(),
+                      AnimatedEntranceItem(direction: EntranceDirection.ttb, index: 2, child: const VenueAboutCardWidget()),
                       SizedBox(height: 16.h),
-
-                      // Map
-                      _VenueMap(),
+                      AnimatedEntranceItem(direction: EntranceDirection.ttb, index: 3, child: _VenueMap()),
                     ],
                   ),
                 ),
