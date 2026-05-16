@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/di/service_locator.dart';
@@ -94,6 +96,7 @@ class StationsCubit extends Cubit<StationsState> {
         sessionPoints: state.sessionPoints + station.points,
       )),
       failure: (f) {
+        log(f.toString());
         // ignore: avoid_print
         print('AWARD DEBUG → Firestore error: ${f.message}');
         emit(state.copyWith(

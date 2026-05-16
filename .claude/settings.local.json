@@ -4,7 +4,8 @@
       "Bash(flutter analyze *)",
       "mcp__code-review-graph__build_or_update_graph_tool",
       "Bash(git -C /Users/mac/nestle-health-app config user.name \"AhmmedThanveer\")",
-      "Bash(git -C /Users/mac/nestle-health-app config user.email \"thanveerahmmed4@gmail.com\")"
+      "Bash(git -C /Users/mac/nestle-health-app config user.email \"thanveerahmmed4@gmail.com\")",
+      "mcp__code-review-graph__semantic_search_nodes_tool"
     ]
   }
 }

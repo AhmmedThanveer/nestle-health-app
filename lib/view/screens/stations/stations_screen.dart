@@ -10,6 +10,7 @@ import '../../../domain/entities/station_entity.dart';
 import '../../../view%20model/bloc/auth/auth_bloc.dart';
 import '../../../view%20model/bloc/auth/auth_state.dart';
 import '../../../view%20model/bloc/navigation/navigation_bloc.dart';
+import '../../../view%20model/bloc/profile/profile_bloc.dart';
 import '../../../view%20model/cubit/stations/stations_cubit.dart';
 import '../../widgets/bottom_nav/nestle_bottom_navigation_bar.dart';
 import '../../widgets/module_app_bar.dart';
@@ -115,6 +116,9 @@ class _StationsView extends StatelessWidget {
           final cubit = context.read<StationsCubit>();
           switch (state.scanResult) {
             case ScanResult.success:
+              context
+                  .read<ProfileBloc>()
+                  .add(LoadProfileEvent(userId));
               _showScanSuccessDialog(
                 context,
                 cubit,
@@ -214,24 +218,39 @@ class _StationsView extends StatelessWidget {
                             );
                           }
 
-                          return RepaintBoundary(
-                            child: ListView.builder(
-                              padding: EdgeInsets.only(
-                                top: 4.h,
-                                bottom: 100.h,
+                          return Stack(
+                            children: [
+                              RepaintBoundary(
+                                child: ListView.builder(
+                                  padding: EdgeInsets.only(
+                                    top: 4.h,
+                                    bottom: 100.h,
+                                  ),
+                                  itemCount: state.stations.length,
+                                  itemBuilder: (_, i) {
+                                    final station = state.stations[i];
+                                    return StationListTileWidget(
+                                      station: station,
+                                      index: i,
+                                      isScanned: state.isScanned(station.id),
+                                      onScan: () =>
+                                          _openScanner(context, station),
+                                    );
+                                  },
+                                ),
                               ),
-                              itemCount: state.stations.length,
-                              itemBuilder: (_, i) {
-                                final station = state.stations[i];
-                                return StationListTileWidget(
-                                  station: station,
-                                  index: i,
-                                  isScanned: state.isScanned(station.id),
-                                  onScan: () =>
-                                      _openScanner(context, station),
-                                );
-                              },
-                            ),
+                              if (state.status == StationsStatus.scanning)
+                                AbsorbPointer(
+                                  child: Container(
+                                    color: Colors.black38,
+                                    child: const Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
                           );
                         },
                       ),
