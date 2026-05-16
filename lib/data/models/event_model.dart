@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+﻿import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/entities/event_entity.dart';
 
@@ -14,7 +14,7 @@ class EventModel extends EventEntity {
   });
 
   factory EventModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? {};
     return EventModel(
       id: doc.id,
       code: d['code'] as String? ?? '',
@@ -26,3 +26,4 @@ class EventModel extends EventEntity {
     );
   }
 }
+

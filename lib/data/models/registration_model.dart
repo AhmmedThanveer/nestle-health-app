@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+﻿import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/entities/registration_entity.dart';
 
@@ -12,7 +12,7 @@ class RegistrationModel extends RegistrationEntity {
   });
 
   factory RegistrationModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? {};
     return RegistrationModel(
       id: doc.id,
       userId: d['userId'] as String? ?? '',
@@ -30,3 +30,4 @@ class RegistrationModel extends RegistrationEntity {
         'registeredAt': FieldValue.serverTimestamp(),
       };
 }
+

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+﻿import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/entities/nsm_entity.dart';
 
@@ -14,7 +14,7 @@ class NsmWaveModel extends NsmWaveEntity {
   });
 
   factory NsmWaveModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? {};
     return NsmWaveModel(
       id: doc.id,
       title: d['title'] as String? ?? '',
@@ -40,7 +40,7 @@ class NsmDayModel extends NsmDayEntity {
     DocumentSnapshot doc,
     List<NsmWaveModel> waves,
   ) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? {};
     return NsmDayModel(
       id: doc.id,
       dayNumber: (d['dayNumber'] as num? ?? 0).toInt(),
@@ -50,3 +50,4 @@ class NsmDayModel extends NsmDayEntity {
     );
   }
 }
+

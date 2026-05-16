@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+﻿import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/entities/notification_entity.dart';
 
@@ -13,7 +13,7 @@ class NotificationModel extends NotificationEntity {
   });
 
   factory NotificationModel.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
+    final data = doc.data() as Map<String, dynamic>? ?? {};
     return NotificationModel(
       id: doc.id,
       title: data['title'] as String? ?? '',
@@ -32,3 +32,4 @@ class NotificationModel extends NotificationEntity {
         'isRead': isRead,
       };
 }
+

@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+﻿import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/entities/venue_entity.dart';
 
@@ -14,7 +14,7 @@ class VenueModel extends VenueEntity {
   });
 
   factory VenueModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? {};
     return VenueModel(
       name: d['name'] as String? ?? '',
       address: d['address'] as String? ?? '',
@@ -26,3 +26,4 @@ class VenueModel extends VenueEntity {
     );
   }
 }
+

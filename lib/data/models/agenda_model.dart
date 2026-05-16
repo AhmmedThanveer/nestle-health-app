@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+﻿import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../core/models/agenda_models.dart';
 
@@ -10,9 +10,10 @@ class AgendaDayModel extends AgendaDay {
   });
 
   factory AgendaDayModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? {};
     final hallsList = (d['halls'] as List<dynamic>? ?? [])
-        .map((h) => _parseHall(h as Map<String, dynamic>))
+        .whereType<Map<String, dynamic>>()
+        .map(_parseHall)
         .toList();
 
     return AgendaDayModel(
@@ -24,7 +25,8 @@ class AgendaDayModel extends AgendaDay {
 
   static AgendaHall _parseHall(Map<String, dynamic> h) {
     final sessions = (h['sessions'] as List<dynamic>? ?? [])
-        .map((s) => _parseSession(s as Map<String, dynamic>))
+        .whereType<Map<String, dynamic>>()
+        .map(_parseSession)
         .toList();
 
     return AgendaHall(
@@ -42,3 +44,4 @@ class AgendaDayModel extends AgendaDay {
         speaker: s['speaker'] as String? ?? '',
       );
 }
+

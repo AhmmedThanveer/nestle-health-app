@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+﻿import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/entities/station_entity.dart';
 
@@ -11,7 +11,7 @@ class StationModel extends StationEntity {
   });
 
   factory StationModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? {};
     return StationModel(
       id: doc.id,
       name: d['stationName'] as String? ?? '',
@@ -20,3 +20,4 @@ class StationModel extends StationEntity {
     );
   }
 }
+

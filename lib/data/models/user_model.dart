@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+﻿import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../domain/entities/user_entity.dart';
 
@@ -23,7 +23,7 @@ class UserModel extends UserEntity {
   });
 
   factory UserModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? {};
     return UserModel(
       uid: doc.id,
       firstName: d['firstName'] as String? ?? '',
@@ -81,3 +81,4 @@ class UserModel extends UserEntity {
         'updatedAt': FieldValue.serverTimestamp(),
       };
 }
+

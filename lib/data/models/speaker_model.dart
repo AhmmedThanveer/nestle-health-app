@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+﻿import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../core/models/speaker_models.dart';
 
@@ -11,7 +11,7 @@ class SpeakerModel extends Speaker {
   });
 
   factory SpeakerModel.fromFirestore(DocumentSnapshot doc) {
-    final d = doc.data() as Map<String, dynamic>;
+    final d = doc.data() as Map<String, dynamic>? ?? {};
     return SpeakerModel(
       name: d['name'] as String? ?? '',
       bio: d['bio'] as String? ?? '',
@@ -41,3 +41,4 @@ class SpeakerModel extends Speaker {
         SpeakerCategory.chairpersons => 'chairpersons',
       };
 }
+
