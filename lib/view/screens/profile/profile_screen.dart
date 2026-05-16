@@ -11,6 +11,7 @@ import '../../../view%20model/bloc/auth/auth_bloc.dart';
 import '../../../view%20model/bloc/auth/auth_event.dart';
 import '../../../view%20model/bloc/auth/auth_state.dart';
 import '../../../view%20model/bloc/profile/profile_bloc.dart';
+import '../../widgets/animated_entrance_item.dart';
 import '../../widgets/app_snackbar.dart';
 import '../../widgets/logout_confirmation_dialog.dart';
 import '../../widgets/nestle_logo_widget.dart';
@@ -98,67 +99,79 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             80.h + MediaQuery.of(context).padding.bottom,
                           ),
                           children: [
-                            _PointsCard(points: state.user?.points ?? 0),
+                            AnimatedEntranceItem(
+                              direction: EntranceDirection.rtl,
+                              index: 0,
+                              child: _PointsCard(points: state.user?.points ?? 0),
+                            ),
                             SizedBox(height: 14.h),
-                            if (state.user != null) ...[
-                              _ContactInfoCard(user: state.user!),
-                              SizedBox(height: 14.h),
-                              _CareerInfoCard(user: state.user!),
-                            ] else ...[
-                              _ContactInfoCard(user: null),
-                              SizedBox(height: 14.h),
-                              _CareerInfoCard(user: null),
-                            ],
+                            AnimatedEntranceItem(
+                              direction: EntranceDirection.rtl,
+                              index: 1,
+                              child: _ContactInfoCard(user: state.user),
+                            ),
+                            SizedBox(height: 14.h),
+                            AnimatedEntranceItem(
+                              direction: EntranceDirection.rtl,
+                              index: 2,
+                              child: _CareerInfoCard(user: state.user),
+                            ),
                             SizedBox(height: 20.h),
-                            _ActionButton(
-                              icon: Icons.edit_outlined,
-                              label: AppStrings.editProfile,
-                              onTap: () => Navigator.pushNamed(
-                                context,
-                                AppRoutes.editProfile,
+                            AnimatedEntranceItem(
+                              direction: EntranceDirection.rtl,
+                              index: 3,
+                              child: _ActionButton(
+                                icon: Icons.edit_outlined,
+                                label: AppStrings.editProfile,
+                                onTap: () => Navigator.pushNamed(context, AppRoutes.editProfile),
                               ),
                             ),
                             SizedBox(height: 10.h),
-                            _ActionButton(
-                              icon: Icons.badge_outlined,
-                              label: 'Name Tag',
-                              onTap: () => Navigator.pushNamed(
-                                context,
-                                AppRoutes.nameTag,
+                            AnimatedEntranceItem(
+                              direction: EntranceDirection.rtl,
+                              index: 4,
+                              child: _ActionButton(
+                                icon: Icons.badge_outlined,
+                                label: 'Name Tag',
+                                onTap: () => Navigator.pushNamed(context, AppRoutes.nameTag),
                               ),
                             ),
                             SizedBox(height: 10.h),
-                            _ActionButton(
-                              icon: Icons.lock_outline_rounded,
-                              label: 'Change Password',
-                              onTap: () => Navigator.pushNamed(
-                                context,
-                                AppRoutes.changePassword,
+                            AnimatedEntranceItem(
+                              direction: EntranceDirection.rtl,
+                              index: 5,
+                              child: _ActionButton(
+                                icon: Icons.lock_outline_rounded,
+                                label: 'Change Password',
+                                onTap: () => Navigator.pushNamed(context, AppRoutes.changePassword),
                               ),
                             ),
                             SizedBox(height: 10.h),
-                            _ActionButton(
-                              icon: Icons.logout_rounded,
-                              label: AppStrings.logout,
-                              onTap: () async {
-                                final confirmed =
-                                    await LogoutConfirmationDialog.show(
-                                      context,
-                                    );
-                                if (!confirmed || !context.mounted) return;
-                                context.read<AuthBloc>().add(SignOutEvent());
-                                AppSnackBar.showSuccess(
-                                  context,
-                                  'Logged out successfully.',
-                                );
-                              },
+                            AnimatedEntranceItem(
+                              direction: EntranceDirection.rtl,
+                              index: 6,
+                              child: _ActionButton(
+                                icon: Icons.logout_rounded,
+                                label: AppStrings.logout,
+                                onTap: () async {
+                                  final confirmed =
+                                      await LogoutConfirmationDialog.show(context);
+                                  if (!confirmed || !context.mounted) return;
+                                  context.read<AuthBloc>().add(SignOutEvent());
+                                  AppSnackBar.showSuccess(context, 'Logged out successfully.');
+                                },
+                              ),
                             ),
                             SizedBox(height: 10.h),
-                            _ActionButton(
-                              icon: Icons.delete_outline_rounded,
-                              label: AppStrings.deleteAccount,
-                              isDestructive: true,
-                              onTap: () {},
+                            AnimatedEntranceItem(
+                              direction: EntranceDirection.rtl,
+                              index: 6,
+                              child: _ActionButton(
+                                icon: Icons.delete_outline_rounded,
+                                label: AppStrings.deleteAccount,
+                                isDestructive: true,
+                                onTap: () {},
+                              ),
                             ),
                           ],
                         ),

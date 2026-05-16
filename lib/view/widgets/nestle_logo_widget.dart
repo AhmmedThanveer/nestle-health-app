@@ -10,17 +10,24 @@ class NestleLogoWidget extends StatelessWidget {
 
   const NestleLogoWidget({super.key, this.topPadding});
 
+  // 150 ms silence + 480 ms animation = 630 ms total
+  static const double _staggerFraction = 150 / 630;
+
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
       tween: Tween(begin: 0.0, end: 1.0),
-      duration: const Duration(milliseconds: 520),
-      builder: (_, t, cachedChild) {
+      duration: const Duration(milliseconds: 630),
+      builder: (_, rawValue, cachedChild) {
+        final double t =
+            ((rawValue - _staggerFraction) / (1.0 - _staggerFraction))
+                .clamp(0.0, 1.0);
         final double eased = Curves.easeOutCubic.transform(t);
         return Opacity(
           opacity: eased,
           child: FractionalTranslation(
-            translation: Offset(-(1 - eased) * 0.12, 0),
+            // RTL — slides in from right
+            translation: Offset((1 - eased) * 0.12, 0),
             child: cachedChild,
           ),
         );
