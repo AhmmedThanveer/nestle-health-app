@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:health_congress/app/routes/app_page_transition.dart';
-import 'package:health_congress/view/screens/event%20code/eventcode_screen.dart';
+import 'package:health_congress/view/screens/event_code/eventcode_screen.dart';
 import 'package:health_congress/view/screens/forgot%20password/forgot_password_screen.dart';
 
 import '../../../../../core/constants/app_colors.dart';
@@ -104,7 +104,10 @@ class LoginScreen extends StatelessWidget {
                       SizedBox(height: 24.h),
 
                       // Password
-                      Text(AppStrings.password, style: AppTextStyles.labelStyle),
+                      Text(
+                        AppStrings.password,
+                        style: AppTextStyles.labelStyle,
+                      ),
                       SizedBox(height: 10.h),
                       CommonTextField(
                         hintText: AppStrings.enterPassword,
@@ -112,9 +115,9 @@ class LoginScreen extends StatelessWidget {
                         isPassword: state.obscurePassword,
                         validator: _passwordValidator,
                         suffixIcon: IconButton(
-                          onPressed: () => context
-                              .read<LoginBloc>()
-                              .add(TogglePasswordVisibilityEvent()),
+                          onPressed: () => context.read<LoginBloc>().add(
+                            TogglePasswordVisibilityEvent(),
+                          ),
                           icon: Icon(
                             state.obscurePassword
                                 ? Icons.visibility_off
@@ -133,11 +136,11 @@ class LoginScreen extends StatelessWidget {
                         onTap: state.isLoading
                             ? null
                             : () => context.read<LoginBloc>().add(
-                                  LoginButtonPressedEvent(
-                                    email: emailController.text.trim(),
-                                    password: passwordController.text.trim(),
-                                  ),
+                                LoginButtonPressedEvent(
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
                                 ),
+                              ),
                       ),
                       SizedBox(height: 28.h),
 

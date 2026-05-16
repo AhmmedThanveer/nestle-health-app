@@ -12,7 +12,7 @@ class NotificationCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10.h),
+      margin: EdgeInsets.only(bottom: 20.h),
       padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -55,7 +55,7 @@ class NotificationCardWidget extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'Montserrat',
                           fontSize: 15.sp,
-                          fontWeight: FontWeight.w700,
+                          fontWeight: FontWeight.w600,
                           color: AppColors.darkNavy,
                           height: 1.3,
                         ),
@@ -103,4 +103,3 @@ class NotificationCardWidget extends StatelessWidget {
     return '${(diff.inDays / 365).floor()}y ago';
   }
 }
-

@@ -41,8 +41,8 @@ class AppTextStyles {
   );
 
   static TextStyle buttonStyle = TextStyle(
-    fontSize: 18.sp,
-    fontWeight: FontWeight.w700,
+    fontSize: 16.sp,
+    fontWeight: FontWeight.w600,
     color: AppColors.white,
     fontFamily: 'Montserrat',
   );
@@ -98,8 +98,8 @@ class AppTextStyles {
 
   /// Module screen title next to the back button (e.g. "Agenda")
   static TextStyle moduleScreenTitle = TextStyle(
-    fontSize: 20.sp,
-    fontWeight: FontWeight.w400,
+    fontSize: 18.sp,
+    fontWeight: FontWeight.w500,
     color: AppColors.white,
     fontFamily: 'Montserrat',
   );
@@ -336,8 +336,8 @@ class AppTextStyles {
 
   /// Bold ALL-CAPS station name in the list tile
   static TextStyle stationName = TextStyle(
-    fontSize: 15.sp,
-    fontWeight: FontWeight.w700,
+    fontSize: 13.sp,
+    fontWeight: FontWeight.w600,
     color: AppColors.white,
     fontFamily: 'Montserrat',
     letterSpacing: 0.5,
@@ -498,4 +498,3 @@ class AppTextStyles {
     fontFamily: 'Montserrat',
   );
 }
-
