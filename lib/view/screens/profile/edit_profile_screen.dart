@@ -125,30 +125,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       },
       child: Scaffold(
         backgroundColor: AppColors.primaryBlue,
+        resizeToAvoidBottomInset: false,
         body: Stack(
+          fit: StackFit.expand,
           children: [
-            Positioned.fill(
-              child: Image.asset(
-                AppImages.loginBg,
-                fit: BoxFit.cover,
-                alignment: Alignment.bottomCenter,
-                filterQuality: FilterQuality.low,
-              ),
+            Image.asset(
+              AppImages.loginBg,
+              fit: BoxFit.cover,
+              alignment: Alignment.bottomCenter,
+              filterQuality: FilterQuality.low,
             ),
-            Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: const [0.0, 0.35, 0.65, 1.0],
-                    colors: [
-                      AppColors.primaryBlue.withValues(alpha: 0.98),
-                      AppColors.primaryBlue.withValues(alpha: 0.90),
-                      AppColors.primaryBlue.withValues(alpha: 0.75),
-                      Colors.transparent,
-                    ],
-                  ),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: const [0.0, 0.35, 0.65, 1.0],
+                  colors: [
+                    AppColors.primaryBlue.withValues(alpha: 0.98),
+                    AppColors.primaryBlue.withValues(alpha: 0.90),
+                    AppColors.primaryBlue.withValues(alpha: 0.75),
+                    Colors.transparent,
+                  ],
                 ),
               ),
             ),
@@ -225,7 +223,8 @@ class _EditProfileBody extends StatelessWidget {
       children: [
         Expanded(
           child: ListView(
-            padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 24.h),
+            padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w,
+                MediaQuery.of(context).viewInsets.bottom + 24.h),
             children: [
               const NestleLogoWidget(topPadding: 0),
               SizedBox(height: 28.h),

@@ -45,18 +45,17 @@ class _ChangePasswordView extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: AppColors.primaryBlue,
+        resizeToAvoidBottomInset: false,
         body: Stack(
+          fit: StackFit.expand,
           children: [
-            Positioned.fill(
-              child: Image.asset(
-                AppImages.loginBg,
-                fit: BoxFit.cover,
-                alignment: Alignment.bottomCenter,
-                filterQuality: FilterQuality.low,
-              ),
+            Image.asset(
+              AppImages.loginBg,
+              fit: BoxFit.cover,
+              alignment: Alignment.bottomCenter,
+              filterQuality: FilterQuality.low,
             ),
-            Positioned.fill(
-              child: DecoratedBox(
+            DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -70,7 +69,6 @@ class _ChangePasswordView extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
             ),
             SafeArea(
               child: Column(
@@ -157,7 +155,8 @@ class _ChangePasswordBodyState extends State<_ChangePasswordBody> {
       children: [
         Expanded(
           child: ListView(
-            padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 24.h),
+            padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w,
+                MediaQuery.of(context).viewInsets.bottom + 24.h),
             children: [
               // Header
               Center(
