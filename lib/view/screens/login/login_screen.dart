@@ -55,29 +55,29 @@ class LoginScreen extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
+          backgroundColor: AppColors.primaryBlue,
           body: Stack(
+            fit: StackFit.expand,
             children: [
               // ── Background ──────────────────────────────────────
-              Positioned.fill(
-                child: Image.asset(
-                  AppImages.loginBg,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.bottomCenter,
-                  filterQuality: FilterQuality.high,
-                ),
+              Image.asset(
+                AppImages.loginBg,
+                fit: BoxFit.cover,
+                alignment: Alignment.bottomCenter,
+                filterQuality: FilterQuality.low,
               ),
-              Positioned.fill(
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        AppColors.primaryBlue.withValues(alpha: 0.92),
-                        AppColors.primaryBlue.withValues(alpha: 0.76),
-                        Colors.transparent,
-                      ],
-                    ),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    stops: const [0.0, 0.35, 0.65, 1.0],
+                    colors: [
+                      AppColors.primaryBlue.withValues(alpha: 1.0),
+                      AppColors.primaryBlue.withValues(alpha: 0.92),
+                      AppColors.primaryBlue.withValues(alpha: 0.60),
+                      Colors.transparent,
+                    ],
                   ),
                 ),
               ),
