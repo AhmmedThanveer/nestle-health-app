@@ -14,9 +14,11 @@ import '../../data/datasources/remote/speaker_remote_datasource.dart';
 import '../../data/datasources/remote/station_remote_datasource.dart';
 import '../../data/datasources/remote/user_remote_datasource.dart';
 import '../../data/datasources/remote/survey_remote_datasource.dart';
+import '../../data/datasources/remote/venue_remote_datasource.dart';
 import '../../data/repositories/agenda_repository_impl.dart';
 import '../../data/repositories/auth_repository_impl.dart';
 import '../../data/repositories/survey_repository_impl.dart';
+import '../../data/repositories/venue_repository_impl.dart';
 import '../../data/repositories/event_repository_impl.dart';
 import '../../data/repositories/notification_repository_impl.dart';
 import '../../data/repositories/nsm_repository_impl.dart';
@@ -48,6 +50,8 @@ import '../../domain/usecases/station/load_stations_usecase.dart';
 import '../../domain/usecases/survey/submit_survey_usecase.dart';
 import '../../domain/usecases/user/get_current_user_usecase.dart';
 import '../../domain/usecases/user/update_profile_usecase.dart';
+import '../../domain/repositories/venue_repository.dart';
+import '../../domain/usecases/venue/get_venue_usecase.dart';
 import '../../services/analytics_service.dart';
 import '../../services/crashlytics_service.dart';
 import '../../services/fcm_service.dart';
@@ -129,4 +133,9 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton(() => LoadStationsUseCase(sl()));
   sl.registerLazySingleton(() => AwardStationPointsUseCase(sl()));
   sl.registerLazySingleton(() => GetNsmDaysUseCase(sl()));
+  sl.registerLazySingleton<VenueRemoteDataSource>(
+      () => VenueRemoteDataSourceImpl(sl()));
+  sl.registerLazySingleton<VenueRepository>(
+      () => VenueRepositoryImpl(sl()));
+  sl.registerLazySingleton(() => GetVenueUseCase(sl()));
 }
