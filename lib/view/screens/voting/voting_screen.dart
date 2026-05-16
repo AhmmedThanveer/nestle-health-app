@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -23,7 +23,7 @@ class VotingScreen extends StatelessWidget {
   }
 }
 
-// ─── View ─────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ View â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _VotingView extends StatelessWidget {
   const _VotingView();
@@ -122,7 +122,7 @@ class _VotingView extends StatelessWidget {
   }
 }
 
-// ─── Poll body ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Poll body â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _PollBody extends StatelessWidget {
   final VotingState state;
@@ -161,7 +161,7 @@ class _PollBody extends StatelessWidget {
                       poll.question,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Roboto',
+                        fontFamily: 'Montserrat',
                         fontSize: 17.sp,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
@@ -233,7 +233,7 @@ class _PollBody extends StatelessWidget {
                                 child: Text(
                                   option.text,
                                   style: TextStyle(
-                                    fontFamily: 'Roboto',
+                                    fontFamily: 'Montserrat',
                                     fontSize: 15.sp,
                                     fontWeight: isSelected
                                         ? FontWeight.w700
@@ -295,7 +295,7 @@ class _PollBody extends StatelessWidget {
                     : Text(
                         'Submit Vote',
                         style: TextStyle(
-                          fontFamily: 'Roboto',
+                          fontFamily: 'Montserrat',
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w700,
                           color: state.selectedOption != null
@@ -311,3 +311,4 @@ class _PollBody extends StatelessWidget {
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -192,7 +192,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 }
 
-// ─── Body ─────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Body â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _EditProfileBody extends StatelessWidget {
   final TextEditingController fullNameCtrl;
@@ -271,7 +271,7 @@ class _EditProfileBody extends StatelessWidget {
               ),
               SizedBox(height: 20.h),
 
-              // City — opens grouped bottom sheet
+              // City â€” opens grouped bottom sheet
               _FieldLabel(AppStrings.city),
               SizedBox(height: 8.h),
               _CityField(
@@ -302,7 +302,7 @@ class _EditProfileBody extends StatelessWidget {
   }
 }
 
-// ─── Label ────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Label â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _FieldLabel extends StatelessWidget {
   final String text;
@@ -316,13 +316,13 @@ class _FieldLabel extends StatelessWidget {
         color: Colors.white,
         fontSize: 16.sp,
         fontWeight: FontWeight.w500,
-        fontFamily: 'Roboto',
+        fontFamily: 'Montserrat',
       ),
     );
   }
 }
 
-// ─── Profile text field ───────────────────────────────────────────────────────
+// â”€â”€â”€ Profile text field â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _ProfileTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -350,7 +350,7 @@ class _ProfileTextField extends StatelessWidget {
         style: TextStyle(
           color: Colors.white,
           fontSize: 18.sp,
-          fontFamily: 'Roboto',
+          fontFamily: 'Montserrat',
           fontWeight: FontWeight.w400,
         ),
         cursorColor: Colors.white,
@@ -360,7 +360,7 @@ class _ProfileTextField extends StatelessWidget {
           hintStyle: TextStyle(
             color: AppColors.hintColor,
             fontSize: 16.sp,
-            fontFamily: 'Roboto',
+            fontFamily: 'Montserrat',
           ),
           isCollapsed: true,
           border: InputBorder.none,
@@ -374,9 +374,9 @@ class _ProfileTextField extends StatelessWidget {
   }
 }
 
-// ─── Profile dropdown ─────────────────────────────────────────────────────────
+// â”€â”€â”€ Profile dropdown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-// ─── City field — opens CityBottomSheet ───────────────────────────────────────
+// â”€â”€â”€ City field â€” opens CityBottomSheet â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _CityField extends StatelessWidget {
   final String? selectedCity;
@@ -408,7 +408,7 @@ class _CityField extends StatelessWidget {
                       ? Colors.white
                       : AppColors.hintColor,
                   fontSize: selectedCity != null ? 18.sp : 16.sp,
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -422,7 +422,7 @@ class _CityField extends StatelessWidget {
   }
 }
 
-// ─── Profile dropdown ─────────────────────────────────────────────────────────
+// â”€â”€â”€ Profile dropdown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _ProfileDropdown extends StatelessWidget {
   final String? value;
@@ -455,13 +455,13 @@ class _ProfileDropdown extends StatelessWidget {
             style: TextStyle(
               color: AppColors.hintColor,
               fontSize: 16.sp,
-              fontFamily: 'Roboto',
+              fontFamily: 'Montserrat',
             ),
           ),
           style: TextStyle(
             color: Colors.white,
             fontSize: 18.sp,
-            fontFamily: 'Roboto',
+            fontFamily: 'Montserrat',
             fontWeight: FontWeight.w400,
           ),
           dropdownColor: AppColors.primaryBlue,
@@ -484,3 +484,4 @@ class _ProfileDropdown extends StatelessWidget {
     );
   }
 }
+

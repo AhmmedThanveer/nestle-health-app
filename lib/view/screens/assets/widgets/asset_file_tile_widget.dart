@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/app_colors.dart';
@@ -30,7 +30,7 @@ class AssetFileTileWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // ── File type icon square ─────────────────────────
+            // â”€â”€ File type icon square â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             Container(
               width: 54.r,
               height: 54.r,
@@ -46,7 +46,7 @@ class AssetFileTileWidget extends StatelessWidget {
             ),
             SizedBox(width: 14.w),
 
-            // ── File info ─────────────────────────────────────
+            // â”€â”€ File info â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +76,7 @@ class AssetFileTileWidget extends StatelessWidget {
                             fontSize: 11.sp,
                             fontWeight: FontWeight.w700,
                             color: AppColors.white,
-                            fontFamily: 'Roboto',
+                            fontFamily: 'Montserrat',
                           ),
                         ),
                       ),
@@ -88,7 +88,7 @@ class AssetFileTileWidget extends StatelessWidget {
               ),
             ),
 
-            // ── Chevron ───────────────────────────────────────
+            // â”€â”€ Chevron â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             Icon(
               Icons.chevron_right_rounded,
               color: AppColors.white,
@@ -100,3 +100,4 @@ class AssetFileTileWidget extends StatelessWidget {
     );
   }
 }
+

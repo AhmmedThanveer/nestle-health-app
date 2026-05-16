@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import '../constants/app_colors.dart';
 
@@ -13,7 +13,7 @@ class AppTheme {
 
     primaryColor: AppColors.primaryBlue,
 
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
 
     colorScheme: const ColorScheme.light(
       primary: AppColors.primaryBlue,
@@ -53,7 +53,7 @@ class AppTheme {
         fontSize: 24,
         fontWeight: FontWeight.w700,
         color: AppColors.white,
-        fontFamily: 'Roboto',
+        fontFamily: 'Montserrat',
       ),
 
       /// SMALL TITLE
@@ -61,7 +61,7 @@ class AppTheme {
         fontSize: 20,
         fontWeight: FontWeight.w600,
         color: AppColors.white,
-        fontFamily: 'Roboto',
+        fontFamily: 'Montserrat',
       ),
 
       /// BODY LARGE
@@ -69,7 +69,7 @@ class AppTheme {
         fontSize: 18,
         fontWeight: FontWeight.w500,
         color: AppColors.white,
-        fontFamily: 'Roboto',
+        fontFamily: 'Montserrat',
       ),
 
       /// BODY MEDIUM
@@ -77,7 +77,7 @@ class AppTheme {
         fontSize: 16,
         fontWeight: FontWeight.w400,
         color: AppColors.hintColor,
-        fontFamily: 'Roboto',
+        fontFamily: 'Montserrat',
       ),
 
       /// LABEL LARGE
@@ -85,7 +85,7 @@ class AppTheme {
         fontSize: 18,
         fontWeight: FontWeight.w700,
         color: AppColors.white,
-        fontFamily: 'Roboto',
+        fontFamily: 'Montserrat',
       ),
     ),
 
@@ -103,7 +103,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
 
         textStyle: const TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Montserrat',
           fontWeight: FontWeight.w700,
           fontSize: 20,
         ),
@@ -116,7 +116,7 @@ class AppTheme {
         foregroundColor: AppColors.white,
 
         textStyle: const TextStyle(
-          fontFamily: 'Roboto',
+          fontFamily: 'Montserrat',
           fontWeight: FontWeight.w500,
           fontSize: 16,
         ),
@@ -131,7 +131,7 @@ class AppTheme {
         color: AppColors.hintColor,
         fontSize: 18,
         fontWeight: FontWeight.w400,
-        fontFamily: 'Roboto',
+        fontFamily: 'Montserrat',
       ),
 
       border: OutlineInputBorder(
@@ -160,3 +160,4 @@ class AppTheme {
     dividerColor: AppColors.borderColor,
   );
 }
+

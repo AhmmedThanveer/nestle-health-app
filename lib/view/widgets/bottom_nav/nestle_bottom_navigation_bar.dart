@@ -1,4 +1,4 @@
-import 'dart:ui';
+﻿import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +51,7 @@ class NestleBottomNavigationBar extends StatelessWidget {
             bottomPad > 0 ? bottomPad : 14.h,
           ),
           child: Container(
-            // Outer glow — must live outside ClipRRect so it isn't clipped
+            // Outer glow â€” must live outside ClipRRect so it isn't clipped
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(28.r),
               boxShadow: [
@@ -98,7 +98,7 @@ class NestleBottomNavigationBar extends StatelessWidget {
   }
 }
 
-// ─── Data holder ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Data holder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _NavItemData {
   final String svgPath;
@@ -112,7 +112,7 @@ class _NavItemData {
   });
 }
 
-// ─── Single nav item ──────────────────────────────────────────────────────────
+// â”€â”€â”€ Single nav item â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _NavItem extends StatelessWidget {
   final _NavItemData data;
@@ -139,7 +139,7 @@ class _NavItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Icon — bigger & brighter when selected
+            // Icon â€” bigger & brighter when selected
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 220),
               transitionBuilder: (child, anim) =>
@@ -155,11 +155,11 @@ class _NavItem extends StatelessWidget {
 
             SizedBox(height: 4.h),
 
-            // Label — always shown, bold+larger when selected
+            // Label â€” always shown, bold+larger when selected
             AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 220),
               style: TextStyle(
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
                 fontSize: _isSelected ? 11.5.sp : 10.sp,
                 fontWeight:
                     _isSelected ? FontWeight.w700 : FontWeight.w400,
@@ -177,3 +177,4 @@ class _NavItem extends StatelessWidget {
     );
   }
 }
+

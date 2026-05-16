@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/constants/app_colors.dart';
@@ -91,7 +91,7 @@ class ScreenStateWidget extends StatelessWidget {
                 title!,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                   fontSize: 17.sp,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
@@ -103,7 +103,7 @@ class ScreenStateWidget extends StatelessWidget {
                 subtitle!,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                   fontSize: 13.sp,
                   color: Colors.white60,
                   height: 1.5,
@@ -133,7 +133,7 @@ class ScreenStateWidget extends StatelessWidget {
                   child: Text(
                     actionLabel ?? 'Retry',
                     style: TextStyle(
-                      fontFamily: 'Roboto',
+                      fontFamily: 'Montserrat',
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
@@ -148,3 +148,4 @@ class ScreenStateWidget extends StatelessWidget {
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -214,7 +214,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-// ─── Points card ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Points card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _PointsCard extends StatelessWidget {
   final int points;
@@ -254,7 +254,7 @@ class _PointsCard extends StatelessWidget {
           Text(
             'Points',
             style: TextStyle(
-              fontFamily: 'Roboto',
+              fontFamily: 'Montserrat',
               fontSize: 16.sp,
               fontWeight: FontWeight.w600,
               color: AppColors.darkNavy,
@@ -264,7 +264,7 @@ class _PointsCard extends StatelessWidget {
           Text(
             '$points',
             style: TextStyle(
-              fontFamily: 'Roboto',
+              fontFamily: 'Montserrat',
               fontSize: 20.sp,
               fontWeight: FontWeight.w800,
               color: AppColors.darkNavy,
@@ -276,7 +276,7 @@ class _PointsCard extends StatelessWidget {
   }
 }
 
-// ─── Contact info card ────────────────────────────────────────────────────────
+// â”€â”€â”€ Contact info card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _ContactInfoCard extends StatelessWidget {
   final UserEntity? user;
@@ -290,29 +290,29 @@ class _ContactInfoCard extends StatelessWidget {
         _InfoItem(
           icon: Icons.person_rounded,
           label: 'Name',
-          value: user?.fullName ?? '—',
+          value: user?.fullName ?? 'â€”',
         ),
         _InfoItem(
           icon: Icons.email_rounded,
           label: 'Email',
-          value: user?.email ?? '—',
+          value: user?.email ?? 'â€”',
         ),
         _InfoItem(
           icon: Icons.phone_rounded,
           label: 'Phone',
-          value: user?.mobile ?? '—',
+          value: user?.mobile ?? 'â€”',
         ),
         _InfoItem(
           icon: Icons.location_on_rounded,
           label: 'City',
-          value: user?.city ?? '—',
+          value: user?.city ?? 'â€”',
         ),
       ],
     );
   }
 }
 
-// ─── Career info card ─────────────────────────────────────────────────────────
+// â”€â”€â”€ Career info card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _CareerInfoCard extends StatelessWidget {
   final UserEntity? user;
@@ -326,24 +326,24 @@ class _CareerInfoCard extends StatelessWidget {
         _InfoItem(
           icon: Icons.work_rounded,
           label: 'Profession',
-          value: user?.profession ?? '—',
+          value: user?.profession ?? 'â€”',
         ),
         _InfoItem(
           icon: Icons.business_rounded,
           label: 'Place of Work',
-          value: user?.workplace ?? '—',
+          value: user?.workplace ?? 'â€”',
         ),
         _InfoItem(
           icon: Icons.badge_rounded,
           label: 'Saudi Health Council No.',
-          value: user?.saudiCouncilNumber ?? '—',
+          value: user?.saudiCouncilNumber ?? 'â€”',
         ),
       ],
     );
   }
 }
 
-// ─── Info card ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Info card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _InfoCard extends StatelessWidget {
   final String title;
@@ -372,7 +372,7 @@ class _InfoCard extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontFamily: 'Roboto',
+              fontFamily: 'Montserrat',
               fontSize: 15.sp,
               fontWeight: FontWeight.w700,
               color: AppColors.darkNavy,
@@ -429,7 +429,7 @@ class _InfoRow extends StatelessWidget {
               Text(
                 item.label,
                 style: TextStyle(
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                   fontSize: 11.sp,
                   color: Colors.grey,
                 ),
@@ -438,7 +438,7 @@ class _InfoRow extends StatelessWidget {
               Text(
                 item.value,
                 style: TextStyle(
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.darkNavy,
@@ -452,7 +452,7 @@ class _InfoRow extends StatelessWidget {
   }
 }
 
-// ─── Action button ────────────────────────────────────────────────────────────
+// â”€â”€â”€ Action button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _ActionButton extends StatelessWidget {
   final IconData icon;
@@ -497,7 +497,7 @@ class _ActionButton extends StatelessWidget {
             Text(
               label,
               style: TextStyle(
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w500,
                 color: color,
@@ -525,3 +525,4 @@ class _ActionButton extends StatelessWidget {
     );
   }
 }
+

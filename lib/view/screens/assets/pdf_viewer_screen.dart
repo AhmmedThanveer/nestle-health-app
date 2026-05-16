@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,7 +28,7 @@ class PdfViewerScreen extends StatelessWidget {
   }
 }
 
-// ─── View ─────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ View â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // StatefulWidget is used ONLY to hold the PDFViewController lifecycle object
 // (a native bridge controller). All UI state lives in PdfViewerBloc.
 // There is no setState call anywhere in this class.
@@ -43,7 +43,7 @@ class _PdfViewerView extends StatefulWidget {
 }
 
 class _PdfViewerViewState extends State<_PdfViewerView> {
-  // Held as a plain field — mutated by the native PDFView callback without
+  // Held as a plain field â€” mutated by the native PDFView callback without
   // setState, because it drives imperative page jumps, not widget rebuilds.
   PDFViewController? _controller;
 
@@ -82,8 +82,8 @@ class _PdfViewerViewState extends State<_PdfViewerView> {
               ),
             ),
 
-            // PDFView only rebuilds when localPath changes (loading → loaded
-            // transition). Page-change events must NOT recreate the widget —
+            // PDFView only rebuilds when localPath changes (loading â†’ loaded
+            // transition). Page-change events must NOT recreate the widget â€”
             // that would reset the native view back to page 0.
             Expanded(
               child: BlocBuilder<PdfViewerBloc, PdfViewerState>(
@@ -150,7 +150,7 @@ class _PdfViewerViewState extends State<_PdfViewerView> {
   }
 }
 
-// ─── Loading placeholder ───────────────────────────────────────────────────────
+// â”€â”€â”€ Loading placeholder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _LoadingView extends StatelessWidget {
   @override
@@ -164,11 +164,11 @@ class _LoadingView extends StatelessWidget {
             const CircularProgressIndicator(color: Colors.white),
             SizedBox(height: 16.h),
             Text(
-              'Loading PDF…',
+              'Loading PDFâ€¦',
               style: TextStyle(
                 color: Colors.white70,
                 fontSize: 14.sp,
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
               ),
             ),
           ],
@@ -178,7 +178,7 @@ class _LoadingView extends StatelessWidget {
   }
 }
 
-// ─── Error placeholder ────────────────────────────────────────────────────────
+// â”€â”€â”€ Error placeholder â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _ErrorView extends StatelessWidget {
   final String message;
@@ -198,7 +198,7 @@ class _ErrorView extends StatelessWidget {
             style: TextStyle(
               color: Colors.white70,
               fontSize: 14.sp,
-              fontFamily: 'Roboto',
+              fontFamily: 'Montserrat',
             ),
           ),
         ),
@@ -207,7 +207,7 @@ class _ErrorView extends StatelessWidget {
   }
 }
 
-// ─── Top bar ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Top bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _TopBar extends StatelessWidget {
   final int currentPage;
@@ -259,7 +259,7 @@ class _TopBar extends StatelessWidget {
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w700,
                   color: AppColors.primaryBlue,
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                 ),
               ),
             ),
@@ -270,7 +270,7 @@ class _TopBar extends StatelessWidget {
   }
 }
 
-// ─── Bottom pagination bar ────────────────────────────────────────────────────
+// â”€â”€â”€ Bottom pagination bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _BottomNav extends StatelessWidget {
   final int currentPage;
@@ -304,7 +304,7 @@ class _BottomNav extends StatelessWidget {
             ),
           ),
           Text(
-            totalPages > 0 ? '$currentPage / $totalPages' : '—',
+            totalPages > 0 ? '$currentPage / $totalPages' : 'â€”',
             style: AppTextStyles.pdfViewerPageNav,
           ),
           IconButton(
@@ -320,3 +320,4 @@ class _BottomNav extends StatelessWidget {
     );
   }
 }
+

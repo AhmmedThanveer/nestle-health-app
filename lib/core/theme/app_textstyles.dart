@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../constants/app_colors.dart';
 
 class AppTextStyles {
-  // ── Brand / Logo ──────────────────────────────────────────────
+  // â”€â”€ Brand / Logo â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-  /// Montserrat ExtraBold – "NESTLÉ CONGRESS"
+  /// Montserrat ExtraBold â€“ "NESTLÃ‰ CONGRESS"
   static TextStyle logoTitle = TextStyle(
     fontSize: 31.sp,
     fontWeight: FontWeight.w800,
@@ -15,7 +15,7 @@ class AppTextStyles {
     letterSpacing: 1.2,
   );
 
-  /// Bromello – "The Next Era of Nutrition & Health"
+  /// Bromello â€“ "The Next Era of Nutrition & Health"
   static TextStyle logoSubtitle = TextStyle(
     fontSize: 22.sp,
     color: AppColors.white,
@@ -24,48 +24,48 @@ class AppTextStyles {
     height: 1.2,
   );
 
-  // ── Form ──────────────────────────────────────────────────────
+  // â”€â”€ Form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   static TextStyle labelStyle = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   static TextStyle hintStyle = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeight.w400,
     color: const Color.fromARGB(255, 255, 253, 253),
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   static TextStyle buttonStyle = TextStyle(
     fontSize: 18.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
-  // ── Home / Dashboard ──────────────────────────────────────────
+  // â”€â”€ Home / Dashboard â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Label under each home module card
   static TextStyle moduleLabel = TextStyle(
     fontSize: 11.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     height: 1.3,
   );
 
-  // ── Bottom Navigation ─────────────────────────────────────────
+  // â”€â”€ Bottom Navigation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Selected nav item label (inside white chip)
   static TextStyle navLabelSelected = TextStyle(
     fontSize: 11.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.navSelectedContent,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     letterSpacing: 0.2,
   );
 
@@ -74,44 +74,44 @@ class AppTextStyles {
     fontSize: 10.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.navUnselected,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
-  // ── Section / Screen Titles ───────────────────────────────────
+  // â”€â”€ Section / Screen Titles â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   static TextStyle sectionTitle = TextStyle(
     fontSize: 20.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   static TextStyle bodyWhite = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     height: 1.5,
   );
 
-  // ── Module App Bar ────────────────────────────────────────────
+  // â”€â”€ Module App Bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Module screen title next to the back button (e.g. "Agenda")
   static TextStyle moduleScreenTitle = TextStyle(
     fontSize: 20.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
-  // ── Agenda ────────────────────────────────────────────────────
+  // â”€â”€ Agenda â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Selected day tab label
   static TextStyle agendaDayTabSelected = TextStyle(
     fontSize: 13.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.primaryBlue,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Unselected day tab label
@@ -119,7 +119,7 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Hall / moderator banner text
@@ -127,7 +127,7 @@ class AppTextStyles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Hall name in the dropdown pill (primaryBlue, bold)
@@ -135,7 +135,7 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.primaryBlue,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// "Time / Topic / Speakers" table-header row
@@ -143,15 +143,15 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
-  /// Session time (muted, two-line start–end)
+  /// Session time (muted, two-line startâ€“end)
   static TextStyle agendaSessionTime = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w400,
     color: Color(0xB3FFFFFF), // white 70%
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     height: 1.5,
   );
 
@@ -160,7 +160,7 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     height: 1.45,
   );
 
@@ -169,7 +169,7 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     height: 1.45,
   );
 
@@ -178,7 +178,7 @@ class AppTextStyles {
     fontSize: 16.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Hall option in picker sheet
@@ -186,7 +186,7 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Selected hall option in picker sheet
@@ -194,17 +194,17 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
-  // ── Speakers ──────────────────────────────────────────────────
+  // â”€â”€ Speakers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Selected category tab label (bold white)
   static TextStyle speakerCategoryTabSelected = TextStyle(
     fontSize: 12.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Unselected category tab label
@@ -212,7 +212,7 @@ class AppTextStyles {
     fontSize: 12.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Speaker name in list tile (bold white)
@@ -220,7 +220,7 @@ class AppTextStyles {
     fontSize: 17.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// "Name" / "Bio" muted labels on detail card
@@ -228,7 +228,7 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.speakerLabelColor,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Speaker name and bio body text on detail card
@@ -236,18 +236,18 @@ class AppTextStyles {
     fontSize: 15.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     height: 1.55,
   );
 
-  // ── Media (Photos & Videos) ───────────────────────────────────
+  // â”€â”€ Media (Photos & Videos) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Selected media tab label (bold white)
   static TextStyle mediaTabSelected = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Unselected media tab label
@@ -255,7 +255,7 @@ class AppTextStyles {
     fontSize: 15.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// "Play" / "View" action label on media cards
@@ -263,17 +263,17 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
-  // ── Assets ────────────────────────────────────────────────────
+  // â”€â”€ Assets â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Muted folder name in the card's top area
   static TextStyle assetFolderName = TextStyle(
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
     color: Color(0xB3FFFFFF),
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Bold folder name in the card's dark bottom bar
@@ -281,7 +281,7 @@ class AppTextStyles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// "View Assets" action label in folder card bottom bar
@@ -289,7 +289,7 @@ class AppTextStyles {
     fontSize: 12.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// File name in asset file list tile
@@ -297,7 +297,7 @@ class AppTextStyles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// File size / secondary info in asset file tile
@@ -305,7 +305,7 @@ class AppTextStyles {
     fontSize: 12.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.speakerLabelColor,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// "X file(s)" count label above the file list
@@ -313,7 +313,7 @@ class AppTextStyles {
     fontSize: 15.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.speakerLabelColor,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// PDF viewer top-bar title ("Page X of Y")
@@ -321,7 +321,7 @@ class AppTextStyles {
     fontSize: 16.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// PDF viewer bottom-bar pagination ("X / Y")
@@ -329,17 +329,17 @@ class AppTextStyles {
     fontSize: 16.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
-  // ── Stations ──────────────────────────────────────────────────
+  // â”€â”€ Stations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Bold ALL-CAPS station name in the list tile
   static TextStyle stationName = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     letterSpacing: 0.5,
   );
 
@@ -348,7 +348,7 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// "Scan" text inside the scan pill button
@@ -356,7 +356,7 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// "Scan QR Code" title in the scanner bottom sheet
@@ -364,7 +364,7 @@ class AppTextStyles {
     fontSize: 20.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Station name in cyan shown below the QR sheet title
@@ -372,7 +372,7 @@ class AppTextStyles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w500,
     color: AppColors.scannerStationCyan,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Instruction text at the bottom of the QR scanner sheet
@@ -380,7 +380,7 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
     color: Color(0xB3FFFFFF),
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     height: 1.4,
   );
 
@@ -389,7 +389,7 @@ class AppTextStyles {
     fontSize: 18.sp,
     fontWeight: FontWeight.w700,
     color: Color(0xFF1A1A2E),
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Gray subtitle in the scan-failed dialog
@@ -397,7 +397,7 @@ class AppTextStyles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w400,
     color: Color(0xFF666666),
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     height: 1.45,
   );
 
@@ -406,17 +406,17 @@ class AppTextStyles {
     fontSize: 16.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
-  // ── NSM ───────────────────────────────────────────────────────
+  // â”€â”€ NSM â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// "Day N" inside the white selected pill
   static TextStyle nsmDayLabel = TextStyle(
     fontSize: 15.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.primaryBlue,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Date text on the right of the day header pill
@@ -424,7 +424,7 @@ class AppTextStyles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Wave card title (e.g. "1st wave : Move from Ritz Carlton")
@@ -432,7 +432,7 @@ class AppTextStyles {
     fontSize: 15.sp,
     fontWeight: FontWeight.w700,
     color: Color(0xCCFFFFFF),
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     height: 1.4,
   );
 
@@ -441,7 +441,7 @@ class AppTextStyles {
     fontSize: 13.sp,
     fontWeight: FontWeight.w400,
     color: Color(0xB3FFFFFF),
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// "FULL" badge text
@@ -449,18 +449,18 @@ class AppTextStyles {
     fontSize: 11.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     letterSpacing: 0.5,
   );
 
-  // ── Venue ──────────────────────────────────────────────────────
+  // â”€â”€ Venue â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// "Location" / "About the Venue" card section title
   static TextStyle venueSectionTitle = TextStyle(
     fontSize: 17.sp,
     fontWeight: FontWeight.w700,
     color: Color(0xFF1A1A2E),
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
   /// Bold hotel name "RITZ CARLTON JEDDAH"
@@ -468,15 +468,15 @@ class AppTextStyles {
     fontSize: 15.sp,
     fontWeight: FontWeight.w700,
     color: Color(0xFF1A1A2E),
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
-  /// Address, city, hall — regular info text in venue card
+  /// Address, city, hall â€” regular info text in venue card
   static TextStyle venueInfoText = TextStyle(
     fontSize: 14.sp,
     fontWeight: FontWeight.w400,
     color: Color(0xFF444444),
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
     height: 1.5,
   );
 
@@ -485,16 +485,17 @@ class AppTextStyles {
     fontSize: 14.sp,
     fontWeight: FontWeight.w600,
     color: AppColors.primaryBlue,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 
-  // ── Ask Question ──────────────────────────────────────────────
+  // â”€â”€ Ask Question â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Form field label ("Your Name", "Speaker", "Ask Question")
   static TextStyle aqFieldLabel = TextStyle(
     fontSize: 16.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
-    fontFamily: 'Roboto',
+    fontFamily: 'Montserrat',
   );
 }
+

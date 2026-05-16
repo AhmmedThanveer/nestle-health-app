@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/app_colors.dart';
@@ -53,7 +53,7 @@ class NotificationCardWidget extends StatelessWidget {
                       child: Text(
                         notification.title,
                         style: TextStyle(
-                          fontFamily: 'Roboto',
+                          fontFamily: 'Montserrat',
                           fontSize: 15.sp,
                           fontWeight: FontWeight.w700,
                           color: AppColors.darkNavy,
@@ -65,7 +65,7 @@ class NotificationCardWidget extends StatelessWidget {
                     Text(
                       _timeAgo(notification.timestamp),
                       style: TextStyle(
-                        fontFamily: 'Roboto',
+                        fontFamily: 'Montserrat',
                         fontSize: 12.sp,
                         color: Colors.grey,
                       ),
@@ -76,7 +76,7 @@ class NotificationCardWidget extends StatelessWidget {
                 Text(
                   notification.body,
                   style: TextStyle(
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Montserrat',
                     fontSize: 13.sp,
                     color: const Color(0xFF666666),
                     height: 1.45,
@@ -103,3 +103,4 @@ class NotificationCardWidget extends StatelessWidget {
     return '${(diff.inDays / 365).floor()}y ago';
   }
 }
+

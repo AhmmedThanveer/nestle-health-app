@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,7 +19,7 @@ class LiveChatScreen extends StatelessWidget {
   }
 }
 
-// ─── View – StatefulWidget only for controller lifecycle, zero setState ───────
+// â”€â”€â”€ View â€“ StatefulWidget only for controller lifecycle, zero setState â”€â”€â”€â”€â”€â”€â”€
 
 class _LiveChatView extends StatefulWidget {
   const _LiveChatView();
@@ -95,12 +95,12 @@ class _LiveChatViewState extends State<_LiveChatView> {
             bottom: false,
             child: Column(
               children: [
-                // ── Header ──────────────────────────────────────────
+                // â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                 _ChatHeader(),
 
                 const Divider(height: 1, color: Colors.white12),
 
-                // ── Messages ─────────────────────────────────────────
+                // â”€â”€ Messages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                 Expanded(
                   child: BlocConsumer<ChatBloc, ChatState>(
                     listenWhen: (prev, curr) =>
@@ -126,7 +126,7 @@ class _LiveChatViewState extends State<_LiveChatView> {
                   ),
                 ),
 
-                // ── Input ────────────────────────────────────────────
+                // â”€â”€ Input â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                 Builder(
                   builder: (ctx) => _ChatInput(
                     controller: _textCtrl,
@@ -144,7 +144,7 @@ class _LiveChatViewState extends State<_LiveChatView> {
   }
 }
 
-// ─── Header ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _ChatHeader extends StatelessWidget {
   @override
@@ -190,7 +190,7 @@ class _ChatHeader extends StatelessWidget {
               Text(
                 'Live Chat',
                 style: TextStyle(
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                   fontSize: 18.sp,
                   fontWeight: FontWeight.w700,
                   color: Colors.white,
@@ -199,7 +199,7 @@ class _ChatHeader extends StatelessWidget {
               Text(
                 'We typically reply within minutes',
                 style: TextStyle(
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                   fontSize: 12.sp,
                   color: Colors.white70,
                 ),
@@ -212,7 +212,7 @@ class _ChatHeader extends StatelessWidget {
   }
 }
 
-// ─── Message bubble ───────────────────────────────────────────────────────────
+// â”€â”€â”€ Message bubble â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _MessageBubble extends StatelessWidget {
   final ChatMessage message;
@@ -255,7 +255,7 @@ class _MessageBubble extends StatelessWidget {
                 Text(
                   message.text,
                   style: TextStyle(
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Montserrat',
                     fontSize: 14.sp,
                     color: Colors.white,
                     height: 1.4,
@@ -268,7 +268,7 @@ class _MessageBubble extends StatelessWidget {
                     Text(
                       message.time,
                       style: TextStyle(
-                        fontFamily: 'Roboto',
+                        fontFamily: 'Montserrat',
                         fontSize: 10.sp,
                         color: Colors.white60,
                       ),
@@ -289,7 +289,7 @@ class _MessageBubble extends StatelessWidget {
   }
 }
 
-// ─── Input row ────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Input row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _ChatInput extends StatelessWidget {
   final TextEditingController controller;
@@ -323,14 +323,14 @@ class _ChatInput extends StatelessWidget {
                 textInputAction: TextInputAction.send,
                 onSubmitted: (_) => onSend(),
                 style: TextStyle(
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                   fontSize: 14.sp,
                   color: AppColors.darkNavy,
                 ),
                 decoration: InputDecoration(
                   hintText: 'Type your message...',
                   hintStyle: TextStyle(
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Montserrat',
                     fontSize: 14.sp,
                     color: Colors.grey,
                   ),
@@ -362,3 +362,4 @@ class _ChatInput extends StatelessWidget {
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/constants/app_colors.dart';
@@ -58,7 +58,7 @@ class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // ── Icon ──────────────────────────────────────────────
+            // â”€â”€ Icon â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             Container(
               width: 60.r,
               height: 60.r,
@@ -74,19 +74,19 @@ class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
             ),
             SizedBox(height: 16.h),
 
-            // ── Title ─────────────────────────────────────────────
+            // â”€â”€ Title â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             Text(
               'Delete Account',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w700,
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
               ),
             ),
             SizedBox(height: 10.h),
 
-            // ── Warning message ───────────────────────────────────
+            // â”€â”€ Warning message â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             Text(
               'This action is permanent and cannot be undone. '
               'All your data will be deleted.',
@@ -95,12 +95,12 @@ class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
                 color: Colors.white60,
                 fontSize: 13.sp,
                 height: 1.5,
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
               ),
             ),
             SizedBox(height: 20.h),
 
-            // ── Password field ────────────────────────────────────
+            // â”€â”€ Password field â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             Container(
               height: 52.h,
               decoration: BoxDecoration(
@@ -117,7 +117,7 @@ class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 15.sp,
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                 ),
                 cursorColor: Colors.white54,
                 decoration: InputDecoration(
@@ -125,7 +125,7 @@ class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
                   hintStyle: TextStyle(
                     color: Colors.white38,
                     fontSize: 13.sp,
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Montserrat',
                   ),
                   border: InputBorder.none,
                   enabledBorder: InputBorder.none,
@@ -148,7 +148,7 @@ class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
             ),
             SizedBox(height: 24.h),
 
-            // ── Buttons ───────────────────────────────────────────
+            // â”€â”€ Buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             Row(
               children: [
                 Expanded(
@@ -219,7 +219,7 @@ class _DialogButton extends StatelessWidget {
               color: isDestructive ? activeColor : Colors.white70,
               fontSize: 15.sp,
               fontWeight: FontWeight.w600,
-              fontFamily: 'Roboto',
+              fontFamily: 'Montserrat',
             ),
           ),
         ),
@@ -227,3 +227,4 @@ class _DialogButton extends StatelessWidget {
     );
   }
 }
+

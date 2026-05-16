@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:health_congress/view%20model/bloc/textfield%20bloc/common_textfield_event.dart';
@@ -83,7 +83,7 @@ class CommonTextField extends StatelessWidget {
                     style: TextStyle(
                       color: AppColors.white,
                       fontSize: 18.sp,
-                      fontFamily: 'Roboto',
+                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w400,
                       height: 1.0,
                     ),
@@ -116,7 +116,7 @@ class CommonTextField extends StatelessWidget {
                       color: Colors.redAccent,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
-                      fontFamily: 'Roboto',
+                      fontFamily: 'Montserrat',
                     ),
                   ),
                 ),
@@ -127,3 +127,4 @@ class CommonTextField extends StatelessWidget {
     );
   }
 }
+

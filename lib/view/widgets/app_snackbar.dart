@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract final class AppSnackBar {
@@ -42,7 +42,7 @@ abstract final class AppSnackBar {
                 child: Text(
                   message,
                   style: TextStyle(
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Montserrat',
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
@@ -56,3 +56,4 @@ abstract final class AppSnackBar {
       );
   }
 }
+

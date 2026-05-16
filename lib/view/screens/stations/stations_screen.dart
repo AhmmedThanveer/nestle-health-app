@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -33,7 +33,7 @@ class StationsScreen extends StatelessWidget {
   }
 }
 
-// ─── View ─────────────────────────────────────────────────────────────────────
+// â”€â”€â”€ View â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _StationsView extends StatelessWidget {
   final String userId;
@@ -247,7 +247,7 @@ class _StationsView extends StatelessWidget {
   }
 }
 
-// ─── Scan Success dialog ──────────────────────────────────────────────────────
+// â”€â”€â”€ Scan Success dialog â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _ScanSuccessDialog extends StatelessWidget {
   final StationEntity station;
@@ -290,7 +290,7 @@ class _ScanSuccessDialog extends StatelessWidget {
             Text(
               'Points Earned!',
               style: TextStyle(
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w800,
                 color: AppColors.darkNavy,
@@ -302,7 +302,7 @@ class _ScanSuccessDialog extends StatelessWidget {
             Text(
               station.name,
               style: TextStyle(
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
                 color: Colors.grey.shade600,
@@ -326,7 +326,7 @@ class _ScanSuccessDialog extends StatelessWidget {
                   Text(
                     '+${station.points} pts',
                     style: TextStyle(
-                      fontFamily: 'Roboto',
+                      fontFamily: 'Montserrat',
                       fontSize: 22.sp,
                       fontWeight: FontWeight.w800,
                       color: AppColors.primaryBlue,
@@ -340,7 +340,7 @@ class _ScanSuccessDialog extends StatelessWidget {
             Text(
               'Total this session: $sessionPoints pts',
               style: TextStyle(
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
                 fontSize: 13.sp,
                 color: Colors.grey.shade500,
               ),
@@ -372,7 +372,7 @@ class _ScanSuccessDialog extends StatelessWidget {
   }
 }
 
-// ─── Already scanned dialog ───────────────────────────────────────────────────
+// â”€â”€â”€ Already scanned dialog â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _AlreadyScannedDialog extends StatelessWidget {
   final VoidCallback onDone;
@@ -409,7 +409,7 @@ class _AlreadyScannedDialog extends StatelessWidget {
             Text(
               'Already Scanned',
               style: TextStyle(
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w800,
                 color: AppColors.darkNavy,
@@ -421,7 +421,7 @@ class _AlreadyScannedDialog extends StatelessWidget {
             Text(
               'You have already earned points\nfor this station.',
               style: TextStyle(
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
                 fontSize: 14.sp,
                 color: Colors.grey.shade600,
               ),
@@ -454,7 +454,7 @@ class _AlreadyScannedDialog extends StatelessWidget {
   }
 }
 
-// ─── Scan Failed dialog ───────────────────────────────────────────────────────
+// â”€â”€â”€ Scan Failed dialog â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _ScanFailedDialog extends StatelessWidget {
   final VoidCallback onDone;
@@ -487,7 +487,7 @@ class _ScanFailedDialog extends StatelessWidget {
                     color: Colors.white,
                     fontSize: 36.sp,
                     fontWeight: FontWeight.w900,
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Montserrat',
                     height: 1.0,
                   ),
                 ),
@@ -533,3 +533,4 @@ class _ScanFailedDialog extends StatelessWidget {
     );
   }
 }
+

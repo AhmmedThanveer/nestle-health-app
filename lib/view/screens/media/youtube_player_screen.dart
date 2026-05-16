@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -74,7 +74,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // ── Background image ──────────────────────────────────
+          // â”€â”€ Background image â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
           Image.asset(
             AppImages.loginBg,
             fit: BoxFit.cover,
@@ -82,7 +82,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
             filterQuality: FilterQuality.low,
           ),
 
-          // ── Gradient overlay ──────────────────────────────────
+          // â”€â”€ Gradient overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
           DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -99,7 +99,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
             ),
           ),
 
-          // ── Content ───────────────────────────────────────────
+          // â”€â”€ Content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
           SafeArea(
             bottom: false,
             child: Column(
@@ -132,7 +132,7 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
                     style: TextStyle(
                       color: Colors.white70,
                       fontSize: 14.sp,
-                      fontFamily: 'Roboto',
+                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -147,3 +147,4 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
     );
   }
 }
+

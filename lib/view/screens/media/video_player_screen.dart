@@ -1,4 +1,4 @@
-import 'package:chewie/chewie.dart';
+﻿import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
@@ -61,7 +61,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          // ── Background image ──────────────────────────────────
+          // â”€â”€ Background image â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
           Image.asset(
             AppImages.loginBg,
             fit: BoxFit.cover,
@@ -69,7 +69,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             filterQuality: FilterQuality.low,
           ),
 
-          // ── Gradient overlay ──────────────────────────────────
+          // â”€â”€ Gradient overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
           DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -86,7 +86,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
             ),
           ),
 
-          // ── Content ───────────────────────────────────────────
+          // â”€â”€ Content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
           SafeArea(
             bottom: false,
             child: Column(
@@ -111,7 +111,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                             style: TextStyle(
                               color: Colors.white70,
                               fontSize: 14.sp,
-                              fontFamily: 'Roboto',
+                              fontFamily: 'Montserrat',
                             ),
                           ),
                         );
@@ -135,3 +135,4 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     );
   }
 }
+

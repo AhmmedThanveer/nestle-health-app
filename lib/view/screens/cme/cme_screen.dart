@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -116,7 +116,7 @@ class _CmeView extends StatelessWidget {
   }
 }
 
-// ── Not Eligible ──────────────────────────────────────────────────────────────
+// â”€â”€ Not Eligible â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _NotEligibleBody extends StatelessWidget {
   final VoidCallback onRetry;
@@ -140,7 +140,7 @@ class _NotEligibleBody extends StatelessWidget {
               'You have not attended the event.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
                 fontSize: 18.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.white,
@@ -152,7 +152,7 @@ class _NotEligibleBody extends StatelessWidget {
               'No CME available.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
                 fontSize: 15.sp,
                 color: Colors.white.withValues(alpha: 0.75),
               ),
@@ -172,7 +172,7 @@ class _NotEligibleBody extends StatelessWidget {
               child: Text(
                 'Retry',
                 style: TextStyle(
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                   fontSize: 16.sp,
                   fontWeight: FontWeight.w600,
                 ),
@@ -185,7 +185,7 @@ class _NotEligibleBody extends StatelessWidget {
   }
 }
 
-// ── Eligible ──────────────────────────────────────────────────────────────────
+// â”€â”€ Eligible â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _EligibleBody extends StatelessWidget {
   final String? certificateUrl;
@@ -209,7 +209,7 @@ class _EligibleBody extends StatelessWidget {
               'Congratulations!',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
                 fontSize: 22.sp,
                 fontWeight: FontWeight.w800,
                 color: Colors.white,
@@ -220,7 +220,7 @@ class _EligibleBody extends StatelessWidget {
               'Your CME certificate is ready.',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontFamily: 'Roboto',
+                fontFamily: 'Montserrat',
                 fontSize: 15.sp,
                 color: Colors.white.withValues(alpha: 0.85),
               ),
@@ -235,7 +235,7 @@ class _EligibleBody extends StatelessWidget {
                 label: Text(
                   'Download Certificate',
                   style: TextStyle(
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Montserrat',
                     fontSize: 15.sp,
                     fontWeight: FontWeight.w700,
                   ),
@@ -257,3 +257,4 @@ class _EligibleBody extends StatelessWidget {
     );
   }
 }
+

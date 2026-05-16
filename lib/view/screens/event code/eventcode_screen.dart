@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -137,7 +137,7 @@ class EventCodeScreen extends StatelessWidget {
 
                                   fontWeight: FontWeight.w700,
 
-                                  fontFamily: 'Roboto',
+                                  fontFamily: 'Montserrat',
                                 ),
                               ),
                             ),
@@ -171,7 +171,7 @@ class EventCodeScreen extends StatelessWidget {
 
                                     fontWeight: FontWeight.w500,
 
-                                    fontFamily: 'Roboto',
+                                    fontFamily: 'Montserrat',
                                   ),
                                 ),
                               ),
@@ -213,7 +213,7 @@ class EventCodeScreen extends StatelessWidget {
 
                                     fontWeight: FontWeight.w400,
 
-                                    fontFamily: 'Roboto',
+                                    fontFamily: 'Montserrat',
                                   ),
                                 ),
                               ),
@@ -232,3 +232,4 @@ class EventCodeScreen extends StatelessWidget {
     );
   }
 }
+

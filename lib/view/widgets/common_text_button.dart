@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../core/constants/app_colors.dart';
@@ -27,7 +27,7 @@ class CommonTextButton extends StatelessWidget {
 
           color: AppColors.white,
 
-          fontFamily: 'Roboto',
+          fontFamily: 'Montserrat',
 
           decoration: TextDecoration.none,
         ),
@@ -35,3 +35,4 @@ class CommonTextButton extends StatelessWidget {
     );
   }
 }
+

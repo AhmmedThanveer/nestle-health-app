@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -32,7 +32,7 @@ class RegisterScreen extends StatelessWidget {
   }
 }
 
-// ─── View (holds all local state & controllers) ───────────────────────────────
+// â”€â”€â”€ View (holds all local state & controllers) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _RegisterView extends StatefulWidget {
   const _RegisterView();
@@ -42,7 +42,7 @@ class _RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<_RegisterView> {
-  // ── Controllers ──────────────────────────────────────────────────────────
+  // â”€â”€ Controllers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   final _firstNameCtrl = TextEditingController();
   final _familyNameCtrl = TextEditingController();
   final _emailCtrl = TextEditingController();
@@ -51,7 +51,7 @@ class _RegisterViewState extends State<_RegisterView> {
   final _saudiCouncilCtrl = TextEditingController();
   final _workPlaceCtrl = TextEditingController();
 
-  // ── Local state ──────────────────────────────────────────────────────────
+  // â”€â”€ Local state â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   String? _selectedProfession;
   String? _selectedTopic;
   String? _selectedCity;
@@ -72,7 +72,7 @@ class _RegisterViewState extends State<_RegisterView> {
     super.dispose();
   }
 
-  // ── Validation ────────────────────────────────────────────────────────────
+  // â”€â”€ Validation â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   /// Returns the first validation error found, or null if all fields are valid.
   String? _validateAll() {
@@ -102,7 +102,7 @@ class _RegisterViewState extends State<_RegisterView> {
     return null;
   }
 
-  // ── Submit handler ────────────────────────────────────────────────────────
+  // â”€â”€ Submit handler â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   void _onRegisterPressed(BuildContext context) {
     FocusScope.of(context).unfocus();
@@ -131,7 +131,7 @@ class _RegisterViewState extends State<_RegisterView> {
     );
   }
 
-  // ── Build ─────────────────────────────────────────────────────────────────
+  // â”€â”€ Build â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +171,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
           body: Stack(
             children: [
-              // ── Background ─────────────────────────────────────────────
+              // â”€â”€ Background â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
               Positioned.fill(
                 child: LayoutBuilder(
                   builder: (context, constraints) => SizedBox(
@@ -187,7 +187,7 @@ class _RegisterViewState extends State<_RegisterView> {
                 ),
               ),
 
-              // ── Gradient overlay ───────────────────────────────────────
+              // â”€â”€ Gradient overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
               Positioned.fill(
                 child: Container(
                   decoration: BoxDecoration(
@@ -204,7 +204,7 @@ class _RegisterViewState extends State<_RegisterView> {
                 ),
               ),
 
-              // ── Form content ───────────────────────────────────────────
+              // â”€â”€ Form content â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
               AnimatedScreenWrapper(
                 child: SafeArea(
                   child: SingleChildScrollView(
@@ -219,7 +219,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 48.h),
 
-                        // ── First Name ──────────────────────────────────
+                        // â”€â”€ First Name â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         _label(AppStrings.firstName),
                         CommonTextField(
                           hintText: AppStrings.enterFirstName,
@@ -232,7 +232,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 24.h),
 
-                        // ── Family Name ─────────────────────────────────
+                        // â”€â”€ Family Name â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         _label(AppStrings.familyName),
                         CommonTextField(
                           hintText: AppStrings.enterFamilyName,
@@ -245,7 +245,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 24.h),
 
-                        // ── Email ───────────────────────────────────────
+                        // â”€â”€ Email â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         _label(AppStrings.email),
                         CommonTextField(
                           hintText: AppStrings.enterEmail,
@@ -257,7 +257,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 24.h),
 
-                        // ── Mobile ──────────────────────────────────────
+                        // â”€â”€ Mobile â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         _label(AppStrings.mobileNumber),
                         CommonTextField(
                           hintText: AppStrings.enterMobileNumber,
@@ -269,7 +269,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 24.h),
 
-                        // ── Password ────────────────────────────────────
+                        // â”€â”€ Password â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         _label(AppStrings.password),
                         CommonTextField(
                           hintText: AppStrings.enterPassword,
@@ -293,7 +293,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 24.h),
 
-                        // ── Profession dropdown ─────────────────────────
+                        // â”€â”€ Profession dropdown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         _label(AppStrings.profession),
                         CommonDropdownField(
                           hintText: AppStrings.enterProfession,
@@ -309,7 +309,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 24.h),
 
-                        // ── Secondary topics dropdown ───────────────────
+                        // â”€â”€ Secondary topics dropdown â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         _label(AppStrings.secondaryTopics),
                         CommonDropdownField(
                           hintText: AppStrings.enterSecondaryTopics,
@@ -324,7 +324,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 24.h),
 
-                        // ── City ────────────────────────────────────────
+                        // â”€â”€ City â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         _label(AppStrings.city),
                         _CitySelector(
                           selectedCity: _selectedCity,
@@ -335,7 +335,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 24.h),
 
-                        // ── Saudi Council Number ────────────────────────
+                        // â”€â”€ Saudi Council Number â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         _label(AppStrings.saudiHealthCouncilNumber),
                         CommonTextField(
                           hintText: AppStrings.enterSaudiHealthCouncilNumber,
@@ -349,7 +349,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 24.h),
 
-                        // ── Place of Work ───────────────────────────────
+                        // â”€â”€ Place of Work â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         _label(AppStrings.placeOfWork),
                         CommonTextField(
                           hintText: AppStrings.enterPlaceOfWork,
@@ -362,7 +362,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 48.h),
 
-                        // ── Register button ─────────────────────────────
+                        // â”€â”€ Register button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         CommonButton(
                           title: AppStrings.register,
                           isLoading: state.isLoading,
@@ -371,7 +371,7 @@ class _RegisterViewState extends State<_RegisterView> {
 
                         SizedBox(height: 28.h),
 
-                        // ── Login link ──────────────────────────────────
+                        // â”€â”€ Login link â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                         Center(
                           child: CommonTextButton(
                             title: AppStrings.loginToAccount,
@@ -395,7 +395,7 @@ class _RegisterViewState extends State<_RegisterView> {
     );
   }
 
-  // ── Helpers ───────────────────────────────────────────────────────────────
+  // â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
   Widget _label(String text) => Padding(
     padding: EdgeInsets.only(bottom: 12.h),
@@ -415,7 +415,7 @@ class _RegisterViewState extends State<_RegisterView> {
                   color: Colors.redAccent,
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w500,
-                  fontFamily: 'Roboto',
+                  fontFamily: 'Montserrat',
                 ),
               ),
             )
@@ -446,7 +446,7 @@ class _RegisterViewState extends State<_RegisterView> {
   }
 }
 
-// ─── City selector button ─────────────────────────────────────────────────────
+// â”€â”€â”€ City selector button â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _CitySelector extends StatelessWidget {
   final String? selectedCity;
@@ -495,7 +495,7 @@ class _CitySelector extends StatelessWidget {
                         : Colors.white.withValues(alpha: 0.7),
                     fontSize: 18.sp,
                     fontWeight: FontWeight.w400,
-                    fontFamily: 'Roboto',
+                    fontFamily: 'Montserrat',
                   ),
                 ),
                 Icon(
@@ -518,7 +518,7 @@ class _CitySelector extends StatelessWidget {
                       color: Colors.redAccent,
                       fontSize: 13.sp,
                       fontWeight: FontWeight.w500,
-                      fontFamily: 'Roboto',
+                      fontFamily: 'Montserrat',
                     ),
                   ),
                 )
@@ -528,3 +528,4 @@ class _CitySelector extends StatelessWidget {
     );
   }
 }
+
