@@ -7,6 +7,10 @@ abstract class ChatEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+class WatchMessagesEvent extends ChatEvent {
+  const WatchMessagesEvent();
+}
+
 class SendMessageEvent extends ChatEvent {
   final String text;
 

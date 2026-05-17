@@ -75,6 +75,8 @@ class UserModel extends UserEntity {
         'eventId': eventId,
         'selectedTopic': selectedTopic,
         'fcmToken': fcmToken,
+        'points': points,
+        'scannedStations': scannedStations,
         'createdAt': createdAt != null
             ? Timestamp.fromDate(createdAt!)
             : FieldValue.serverTimestamp(),

@@ -63,6 +63,8 @@ dependencies:
   # QR code
   qr_flutter: ^4.1.0
 
+  flutter_local_notifications: ^18.0.1
+
   # DI
   get_it: ^8.0.3
 

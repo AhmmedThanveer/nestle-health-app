@@ -1,7 +1,8 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../app/di/service_locator.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../core/models/chat_message.dart';
@@ -13,13 +14,13 @@ class LiveChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ChatBloc(),
+      create: (_) => sl<ChatBloc>()..add(const WatchMessagesEvent()),
       child: const _LiveChatView(),
     );
   }
 }
 
-// â”€â”€â”€ View â€“ StatefulWidget only for controller lifecycle, zero setState â”€â”€â”€â”€â”€â”€â”€
+// ─── View ─────────────────────────────────────────────────────────────────────
 
 class _LiveChatView extends StatefulWidget {
   const _LiveChatView();
@@ -44,6 +45,9 @@ class _LiveChatViewState extends State<_LiveChatView> {
     if (text.trim().isEmpty) return;
     ctx.read<ChatBloc>().add(SendMessageEvent(text));
     _textCtrl.clear();
+  }
+
+  void _scrollToBottom() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollCtrl.hasClients) {
         _scrollCtrl.animateTo(
@@ -95,41 +99,73 @@ class _LiveChatViewState extends State<_LiveChatView> {
             bottom: false,
             child: Column(
               children: [
-                // â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-                _ChatHeader(),
-
+                // ── Header ────────────────────────────────────────────
+                const _ChatHeader(),
                 const Divider(height: 1, color: Colors.white12),
 
-                // â”€â”€ Messages â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                // ── Messages ──────────────────────────────────────────
                 Expanded(
                   child: BlocConsumer<ChatBloc, ChatState>(
                     listenWhen: (prev, curr) =>
                         prev.messages.length != curr.messages.length,
-                    listener: (_, __) {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        if (_scrollCtrl.hasClients) {
-                          _scrollCtrl.animateTo(
-                            _scrollCtrl.position.maxScrollExtent,
-                            duration: const Duration(milliseconds: 300),
-                            curve: Curves.easeOut,
-                          );
-                        }
-                      });
+                    listener: (_, __) => _scrollToBottom(),
+                    builder: (context, state) {
+                      if (state.status == ChatStatus.loading) {
+                        return const Center(
+                          child: CircularProgressIndicator(color: Colors.white54),
+                        );
+                      }
+                      if (state.messages.isEmpty) {
+                        return Center(
+                          child: Text(
+                            'No messages yet.\nBe the first to say hello!',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontSize: 14.sp,
+                              color: Colors.white54,
+                              height: 1.6,
+                            ),
+                          ),
+                        );
+                      }
+                      return ListView.builder(
+                        controller: _scrollCtrl,
+                        padding:
+                            EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 12.h),
+                        itemCount: state.messages.length,
+                        itemBuilder: (_, i) =>
+                            _MessageBubble(message: state.messages[i]),
+                      );
                     },
-                    builder: (context, state) => ListView.builder(
-                      controller: _scrollCtrl,
-                      padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 12.h),
-                      itemCount: state.messages.length,
-                      itemBuilder: (_, i) =>
-                          _MessageBubble(message: state.messages[i]),
-                    ),
                   ),
                 ),
 
-                // â”€â”€ Input â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-                Builder(
-                  builder: (ctx) => _ChatInput(
+                // ── Send error ────────────────────────────────────────
+                BlocBuilder<ChatBloc, ChatState>(
+                  buildWhen: (p, c) => p.sendError != c.sendError,
+                  builder: (_, state) => state.sendError != null
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 4.h),
+                          child: Text(
+                            state.sendError!,
+                            style: TextStyle(
+                              color: Colors.redAccent,
+                              fontSize: 12.sp,
+                              fontFamily: 'Montserrat',
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ),
+
+                // ── Input ─────────────────────────────────────────────
+                BlocBuilder<ChatBloc, ChatState>(
+                  buildWhen: (p, c) => p.isSending != c.isSending,
+                  builder: (ctx, state) => _ChatInput(
                     controller: _textCtrl,
+                    isSending: state.isSending,
                     onSend: () => _send(ctx),
                   ),
                 ),
@@ -144,16 +180,17 @@ class _LiveChatViewState extends State<_LiveChatView> {
   }
 }
 
-// â”€â”€â”€ Header â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Header ───────────────────────────────────────────────────────────────────
 
 class _ChatHeader extends StatelessWidget {
+  const _ChatHeader();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
       child: Row(
         children: [
-          // Agent avatar with online dot
           Stack(
             children: [
               Container(
@@ -212,7 +249,7 @@ class _ChatHeader extends StatelessWidget {
   }
 }
 
-// â”€â”€â”€ Message bubble â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Message bubble ───────────────────────────────────────────────────────────
 
 class _MessageBubble extends StatelessWidget {
   final ChatMessage message;
@@ -252,6 +289,19 @@ class _MessageBubble extends StatelessWidget {
               crossAxisAlignment:
                   isSent ? CrossAxisAlignment.end : CrossAxisAlignment.start,
               children: [
+                if (!isSent)
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 4.h),
+                    child: Text(
+                      message.userName,
+                      style: TextStyle(
+                        fontFamily: 'Montserrat',
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.cyan,
+                      ),
+                    ),
+                  ),
                 Text(
                   message.text,
                   style: TextStyle(
@@ -289,13 +339,18 @@ class _MessageBubble extends StatelessWidget {
   }
 }
 
-// â”€â”€â”€ Input row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Input row ────────────────────────────────────────────────────────────────
 
 class _ChatInput extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onSend;
+  final bool isSending;
 
-  const _ChatInput({required this.controller, required this.onSend});
+  const _ChatInput({
+    required this.controller,
+    required this.onSend,
+    required this.isSending,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -303,7 +358,6 @@ class _ChatInput extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
       child: Row(
         children: [
-          // Text field
           Expanded(
             child: Container(
               height: 50.h,
@@ -335,18 +389,15 @@ class _ChatInput extends StatelessWidget {
                     color: AppColors.greyText,
                   ),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                      horizontal: 20.w, vertical: 14.h),
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
                 ),
               ),
             ),
           ),
-
           SizedBox(width: 10.w),
-
-          // Send button
           GestureDetector(
-            onTap: onSend,
+            onTap: isSending ? null : onSend,
             child: Container(
               width: 50.r,
               height: 50.r,
@@ -354,7 +405,15 @@ class _ChatInput extends StatelessWidget {
                 shape: BoxShape.circle,
                 color: AppColors.primaryBlue,
               ),
-              child: Icon(Icons.send_rounded, color: Colors.white, size: 22.r),
+              child: isSending
+                  ? Padding(
+                      padding: EdgeInsets.all(14.r),
+                      child: const CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 2,
+                      ),
+                    )
+                  : Icon(Icons.send_rounded, color: Colors.white, size: 22.r),
             ),
           ),
         ],
@@ -362,4 +421,3 @@ class _ChatInput extends StatelessWidget {
     );
   }
 }
-

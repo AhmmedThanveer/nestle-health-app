@@ -2,9 +2,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/di/service_locator.dart';
 import '../../../core/utils/session_store.dart';
+import '../../../data/datasources/remote/user_remote_datasource.dart';
 import '../../../domain/usecases/auth/register_usecase.dart';
 import '../../../services/analytics_service.dart';
 import '../../../services/crashlytics_service.dart';
+import '../../../services/fcm_service.dart';
 import 'register_event.dart';
 import 'register_state.dart';
 
@@ -62,11 +64,21 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         _analytics.setUserId(user.uid);
         _crashlytics.setUserIdentifier(user.uid);
         emit(state.copyWith(isLoading: false, isSuccess: true));
+        _saveFcmToken(user.uid);
       },
       failure: (f) {
         _crashlytics.log('Registration failed: ${f.message}');
         emit(state.copyWith(isLoading: false, errorMessage: f.message));
       },
     );
+  }
+
+  void _saveFcmToken(String uid) async {
+    try {
+      final token = await sl<FCMService>().getToken();
+      if (token != null) {
+        await sl<UserRemoteDataSource>().updateFcmToken(uid: uid, token: token);
+      }
+    } catch (_) {}
   }
 }

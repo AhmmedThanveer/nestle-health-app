@@ -4,6 +4,13 @@ abstract class AskQuestionEvent extends Equatable {
   const AskQuestionEvent();
 }
 
+class LoadSpeakersForQuestionEvent extends AskQuestionEvent {
+  const LoadSpeakersForQuestionEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
 class SelectSpeakerEvent extends AskQuestionEvent {
   final String? speaker;
 

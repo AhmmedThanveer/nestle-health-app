@@ -7,6 +7,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:health_congress/app/app.dart';
 import 'package:health_congress/app/di/service_locator.dart';
+import 'package:health_congress/services/fcm_service.dart';
+import 'package:health_congress/services/local_notification_service.dart';
 import 'firebase_options.dart';
 
 @pragma('vm:entry-point')
@@ -31,6 +33,9 @@ void main() async {
   };
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  await sl<FCMService>().initialize();
+  await sl<LocalNotificationService>().initialize();
 
   runApp(const NestleHealthApp());
 }

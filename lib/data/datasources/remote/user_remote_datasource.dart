@@ -42,7 +42,18 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   @override
   Future<UserModel> updateUser(UserModel user) async {
     try {
-      await _users.doc(user.uid).update(user.toFirestore());
+      // Only update profile fields — never touch points/scannedStations here.
+      await _users.doc(user.uid).update({
+        'firstName': user.firstName,
+        'familyName': user.familyName,
+        'mobile': user.mobile,
+        'profession': user.profession,
+        'city': user.city,
+        'workplace': user.workplace,
+        'saudiCouncilNumber': user.saudiCouncilNumber,
+        'selectedTopic': user.selectedTopic,
+        'updatedAt': FieldValue.serverTimestamp(),
+      });
       return user;
     } on FirebaseException catch (e) {
       throw ServerException(e.message ?? 'Failed to update user profile');

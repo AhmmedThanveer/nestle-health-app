@@ -3,9 +3,12 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 
 import '../../data/datasources/remote/agenda_remote_datasource.dart';
+import '../../data/datasources/remote/chat_remote_datasource.dart';
+import '../../data/datasources/remote/question_remote_datasource.dart';
 import '../../data/datasources/remote/auth_remote_datasource.dart';
 import '../../data/datasources/remote/event_remote_datasource.dart';
 import '../../data/datasources/remote/notification_remote_datasource.dart';
@@ -17,6 +20,8 @@ import '../../data/datasources/remote/survey_remote_datasource.dart';
 import '../../data/datasources/remote/venue_remote_datasource.dart';
 import '../../data/repositories/agenda_repository_impl.dart';
 import '../../data/repositories/auth_repository_impl.dart';
+import '../../data/repositories/chat_repository_impl.dart';
+import '../../data/repositories/question_repository_impl.dart';
 import '../../data/repositories/survey_repository_impl.dart';
 import '../../data/repositories/venue_repository_impl.dart';
 import '../../data/repositories/event_repository_impl.dart';
@@ -50,11 +55,19 @@ import '../../domain/usecases/station/load_stations_usecase.dart';
 import '../../domain/usecases/survey/submit_survey_usecase.dart';
 import '../../domain/usecases/user/get_current_user_usecase.dart';
 import '../../domain/usecases/user/update_profile_usecase.dart';
+import '../../domain/repositories/chat_repository.dart';
+import '../../domain/repositories/question_repository.dart';
 import '../../domain/repositories/venue_repository.dart';
+import '../../domain/usecases/chat/send_chat_message_usecase.dart';
+import '../../domain/usecases/chat/watch_chat_messages_usecase.dart';
+import '../../domain/usecases/question/submit_question_usecase.dart';
 import '../../domain/usecases/venue/get_venue_usecase.dart';
 import '../../services/analytics_service.dart';
 import '../../services/crashlytics_service.dart';
 import '../../services/fcm_service.dart';
+import '../../services/local_notification_service.dart';
+import '../../view model/bloc/ask_question/ask_question_bloc.dart';
+import '../../view model/bloc/chat/chat_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -73,6 +86,8 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<AnalyticsService>(() => AnalyticsService(sl()));
   sl.registerLazySingleton<CrashlyticsService>(
       () => CrashlyticsService(sl()));
+  sl.registerLazySingleton<LocalNotificationService>(
+      () => LocalNotificationService(FlutterLocalNotificationsPlugin()));
 
   // ── Data Sources ──────────────────────────────────────────────────────────
   sl.registerLazySingleton<AuthRemoteDataSource>(
@@ -138,4 +153,24 @@ Future<void> initDependencies() async {
   sl.registerLazySingleton<VenueRepository>(
       () => VenueRepositoryImpl(sl()));
   sl.registerLazySingleton(() => GetVenueUseCase(sl()));
+  sl.registerLazySingleton<QuestionRemoteDataSource>(
+      () => QuestionRemoteDataSourceImpl(sl(), sl()));
+  sl.registerLazySingleton<QuestionRepository>(
+      () => QuestionRepositoryImpl(sl()));
+  sl.registerLazySingleton(() => SubmitQuestionUseCase(sl()));
+  sl.registerFactory(() => AskQuestionBloc(
+        submitQuestion: sl(),
+        getSpeakers: sl(),
+        getCurrentUser: sl(),
+      ));
+  sl.registerLazySingleton<ChatRemoteDataSource>(
+      () => ChatRemoteDataSourceImpl(sl()));
+  sl.registerLazySingleton<ChatRepository>(() => ChatRepositoryImpl(sl()));
+  sl.registerLazySingleton(() => WatchChatMessagesUseCase(sl()));
+  sl.registerLazySingleton(() => SendChatMessageUseCase(sl()));
+  sl.registerFactory(() => ChatBloc(
+        watchMessages: sl(),
+        sendMessage: sl(),
+        getCurrentUser: sl(),
+      ));
 }

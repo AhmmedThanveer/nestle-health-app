@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../app/di/service_locator.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/constants/app_images.dart';
 import '../../../core/constants/app_strings.dart';
-import '../../../core/models/speaker_models.dart';
 import '../../../core/theme/app_textstyles.dart';
 import '../../../view%20model/bloc/ask_question/ask_question_bloc.dart';
 import '../../../view%20model/bloc/ask_question/ask_question_event.dart';
 import '../../../view%20model/bloc/ask_question/ask_question_state.dart';
 import '../../../view%20model/bloc/navigation/navigation_bloc.dart';
 import '../../widgets/animated_entrance_item.dart';
+import '../../widgets/app_snackbar.dart';
 import '../../widgets/bottom_nav/nestle_bottom_navigation_bar.dart';
 import '../../widgets/common_button.dart';
 import '../../widgets/common_dropdown_field.dart';
@@ -25,12 +26,32 @@ class AskQuestionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AskQuestionBloc(),
+      create: (_) => sl<AskQuestionBloc>()..add(const LoadSpeakersForQuestionEvent()),
       child: const _AskQuestionView(),
     );
   }
 }
 
+class _FieldError extends StatelessWidget {
+  final String message;
+  const _FieldError(this.message);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: 6.h, left: 4.w),
+      child: Text(
+        message,
+        style: TextStyle(
+          color: Colors.redAccent,
+          fontSize: 12.sp,
+          fontWeight: FontWeight.w500,
+          fontFamily: 'Montserrat',
+        ),
+      ),
+    );
+  }
+}
 // ─── View ─────────────────────────────────────────────────────────────────────
 
 /// StatefulWidget holds TextEditingControllers only — no setState calls.
@@ -44,8 +65,6 @@ class _AskQuestionView extends StatefulWidget {
 class _AskQuestionViewState extends State<_AskQuestionView> {
   final _nameController = TextEditingController();
   final _questionController = TextEditingController();
-
-  static final _speakerNames = SpeakersData.all.map((s) => s.name).toList();
 
   @override
   void dispose() {
@@ -61,25 +80,25 @@ class _AskQuestionViewState extends State<_AskQuestionView> {
       listener: (_, __) => Navigator.maybePop(context),
       child: BlocListener<AskQuestionBloc, AskQuestionState>(
         listenWhen: (prev, curr) =>
-            curr.status == AskQuestionStatus.submitted &&
-            prev.status != AskQuestionStatus.submitted,
-        listener: (context, _) {
-          _nameController.clear();
-          _questionController.clear();
-          context.read<AskQuestionBloc>().add(const ResetAskQuestionEvent());
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Your question has been submitted!'),
-              backgroundColor: AppColors.primaryBlue,
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-            ),
-          );
+            prev.status != curr.status &&
+            (curr.status == AskQuestionStatus.submitted ||
+                curr.status == AskQuestionStatus.failure),
+        listener: (context, state) {
+          if (state.status == AskQuestionStatus.submitted) {
+            _nameController.clear();
+            _questionController.clear();
+            context.read<AskQuestionBloc>().add(const ResetAskQuestionEvent());
+            AppSnackBar.showSuccess(context, 'Your question has been submitted!');
+          } else {
+            AppSnackBar.showError(
+              context,
+              state.errorMessage ?? 'Failed to submit question.',
+            );
+          }
         },
         child: Scaffold(
           extendBody: true,
+          resizeToAvoidBottomInset: false,
           backgroundColor: AppColors.primaryBlue,
           bottomNavigationBar: const NestleBottomNavigationBar(),
           body: Stack(
@@ -122,7 +141,8 @@ class _AskQuestionViewState extends State<_AskQuestionView> {
                     // ── Scrollable form fields ─────────────────────
                     Expanded(
                       child: SingleChildScrollView(
-                        padding: EdgeInsets.fromLTRB(20.w, 0, 20.w, 20.h),
+                        padding: EdgeInsets.fromLTRB(20.w, 0, 20.w,
+                            MediaQuery.of(context).viewInsets.bottom + 20.h),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -130,13 +150,18 @@ class _AskQuestionViewState extends State<_AskQuestionView> {
                             AnimatedEntranceItem(
                               direction: EntranceDirection.ttb,
                               index: 0,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(AppStrings.yourName, style: AppTextStyles.aqFieldLabel),
-                                  SizedBox(height: 10.h),
-                                  CommonTextField(controller: _nameController, hintText: AppStrings.yourName),
-                                ],
+                              child: BlocBuilder<AskQuestionBloc, AskQuestionState>(
+                                buildWhen: (p, c) => p.nameError != c.nameError,
+                                builder: (context, state) => Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Text(AppStrings.yourName, style: AppTextStyles.aqFieldLabel),
+                                    SizedBox(height: 10.h),
+                                    CommonTextField(controller: _nameController, hintText: AppStrings.yourName),
+                                    if (state.nameError != null)
+                                      _FieldError(state.nameError!),
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(height: 20.h),
@@ -145,24 +170,28 @@ class _AskQuestionViewState extends State<_AskQuestionView> {
                             AnimatedEntranceItem(
                               direction: EntranceDirection.ttb,
                               index: 1,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(AppStrings.speakerLabel, style: AppTextStyles.aqFieldLabel),
-                                  SizedBox(height: 10.h),
-                                  BlocBuilder<AskQuestionBloc, AskQuestionState>(
-                                    buildWhen: (prev, curr) =>
-                                        prev.selectedSpeaker != curr.selectedSpeaker,
-                                    builder: (context, state) => CommonDropdownField(
+                              child: BlocBuilder<AskQuestionBloc, AskQuestionState>(
+                                buildWhen: (p, c) =>
+                                    p.selectedSpeaker != c.selectedSpeaker ||
+                                    p.speakerNames != c.speakerNames ||
+                                    p.speakerError != c.speakerError,
+                                builder: (context, state) => Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Text(AppStrings.speakerLabel, style: AppTextStyles.aqFieldLabel),
+                                    SizedBox(height: 10.h),
+                                    CommonDropdownField(
                                       hintText: AppStrings.selectSpeaker,
                                       value: state.selectedSpeaker,
-                                      items: _speakerNames,
+                                      items: state.speakerNames,
                                       onChanged: (value) => context
                                           .read<AskQuestionBloc>()
                                           .add(SelectSpeakerEvent(value)),
                                     ),
-                                  ),
-                                ],
+                                    if (state.speakerError != null)
+                                      _FieldError(state.speakerError!),
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(height: 20.h),
@@ -171,18 +200,23 @@ class _AskQuestionViewState extends State<_AskQuestionView> {
                             AnimatedEntranceItem(
                               direction: EntranceDirection.ttb,
                               index: 2,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(AppStrings.askQuestionTitle, style: AppTextStyles.aqFieldLabel),
-                                  SizedBox(height: 10.h),
-                                  CommonTextField(
-                                    controller: _questionController,
-                                    hintText: AppStrings.writeYourQuestion,
-                                    maxLines: 5,
-                                    keyboardType: TextInputType.multiline,
-                                  ),
-                                ],
+                              child: BlocBuilder<AskQuestionBloc, AskQuestionState>(
+                                buildWhen: (p, c) => p.questionError != c.questionError,
+                                builder: (context, state) => Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Text(AppStrings.askQuestionTitle, style: AppTextStyles.aqFieldLabel),
+                                    SizedBox(height: 10.h),
+                                    CommonTextField(
+                                      controller: _questionController,
+                                      hintText: AppStrings.writeYourQuestion,
+                                      maxLines: 5,
+                                      keyboardType: TextInputType.multiline,
+                                    ),
+                                    if (state.questionError != null)
+                                      _FieldError(state.questionError!),
+                                  ],
+                                ),
                               ),
                             ),
                           ],

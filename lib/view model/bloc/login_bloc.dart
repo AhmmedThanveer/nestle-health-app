@@ -2,10 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../app/di/service_locator.dart';
 import '../../core/utils/session_store.dart';
+import '../../data/datasources/remote/user_remote_datasource.dart';
 import '../../domain/usecases/auth/forgot_password_usecase.dart';
 import '../../domain/usecases/auth/login_usecase.dart';
 import '../../services/analytics_service.dart';
 import '../../services/crashlytics_service.dart';
+import '../../services/fcm_service.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
@@ -56,12 +58,22 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         _analytics.setUserId(user.uid);
         _crashlytics.setUserIdentifier(user.uid);
         emit(state.copyWith(isLoading: false, isLoginSuccess: true));
+        _saveFcmToken(user.uid);
       },
       failure: (f) {
         _crashlytics.log('Login failed: ${f.message}');
         emit(state.copyWith(isLoading: false, errorMessage: f.message));
       },
     );
+  }
+
+  void _saveFcmToken(String uid) async {
+    try {
+      final token = await sl<FCMService>().getToken();
+      if (token != null) {
+        await sl<UserRemoteDataSource>().updateFcmToken(uid: uid, token: token);
+      }
+    } catch (_) {}
   }
 
   Future<void> _onSendPasswordReset(

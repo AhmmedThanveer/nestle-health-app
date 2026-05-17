@@ -34,36 +34,34 @@ class CommonDropdownField extends StatelessWidget {
       ),
 
       child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: value,
-
-          isExpanded: true,
-
-          dropdownColor: AppColors.dropdownBg,
-
-          icon: Icon(
-            Icons.keyboard_arrow_down_rounded,
-            color: Colors.white,
-            size: 28.sp,
-          ),
-
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 17.sp,
-            fontWeight: FontWeight.w400,
-          ),
-
-          hint: Text(
-            hintText,
-            style: TextStyle(color: Colors.white70, fontSize: 17.sp),
-          ),
-
-          items: items.map((item) {
-            return DropdownMenuItem<String>(value: item, child: Text(item));
-          }).toList(),
-
-          onChanged: onChanged,
-        ),
+        child: Builder(builder: (context) {
+          final uniqueItems = items.toSet().toList();
+          final safeValue = uniqueItems.contains(value) ? value : null;
+          return DropdownButton<String>(
+            value: safeValue,
+            isExpanded: true,
+            dropdownColor: AppColors.dropdownBg,
+            icon: Icon(
+              Icons.keyboard_arrow_down_rounded,
+              color: Colors.white,
+              size: 28.sp,
+            ),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 17.sp,
+              fontWeight: FontWeight.w400,
+            ),
+            hint: Text(
+              hintText,
+              style: TextStyle(color: Colors.white70, fontSize: 17.sp),
+            ),
+            items: uniqueItems
+                .map((item) =>
+                    DropdownMenuItem<String>(value: item, child: Text(item)))
+                .toList(),
+            onChanged: onChanged,
+          );
+        }),
       ),
     );
   }
