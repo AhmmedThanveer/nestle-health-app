@@ -44,6 +44,10 @@ class AskQuestionBloc extends Bloc<AskQuestionEvent, AskQuestionState> {
     result.when(
       success: (speakers) => emit(state.copyWith(
         speakerNames: speakers.map((s) => s.name).toList(),
+        prefillName: userResult.when(
+          success: (user) => user.fullName,
+          failure: (_) => '',
+        ),
       )),
       failure: (_) {},
     );
@@ -63,10 +67,19 @@ class AskQuestionBloc extends Bloc<AskQuestionEvent, AskQuestionState> {
     SubmitQuestionEvent event,
     Emitter<AskQuestionState> emit,
   ) async {
-    final nameErr =
-        event.name.trim().isEmpty ? 'Please enter your name' : null;
-    final qErr =
-        event.question.trim().isEmpty ? 'Please enter your question' : null;
+    final name = event.name.trim();
+    final question = event.question.trim();
+
+    final nameErr = name.isEmpty
+        ? 'Please enter your name'
+        : name.length < 3
+            ? 'Name must be at least 3 characters'
+            : null;
+    final qErr = question.isEmpty
+        ? 'Please enter your question'
+        : question.length < 10
+            ? 'Question is too short (min 10 characters)'
+            : null;
     final spErr =
         state.selectedSpeaker == null ? 'Please select a speaker' : null;
 

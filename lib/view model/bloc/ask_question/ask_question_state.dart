@@ -10,6 +10,7 @@ class AskQuestionState extends Equatable {
   final String? nameError;
   final String? questionError;
   final String? speakerError;
+  final String prefillName;
 
   const AskQuestionState({
     this.selectedSpeaker,
@@ -19,6 +20,7 @@ class AskQuestionState extends Equatable {
     this.nameError,
     this.questionError,
     this.speakerError,
+    this.prefillName = '',
   });
 
   AskQuestionState copyWith({
@@ -29,6 +31,7 @@ class AskQuestionState extends Equatable {
     String? Function()? nameError,
     String? Function()? questionError,
     String? Function()? speakerError,
+    String? prefillName,
   }) =>
       AskQuestionState(
         selectedSpeaker:
@@ -40,6 +43,7 @@ class AskQuestionState extends Equatable {
         questionError:
             questionError != null ? questionError() : this.questionError,
         speakerError: speakerError != null ? speakerError() : this.speakerError,
+        prefillName: prefillName ?? this.prefillName,
       );
 
   @override
@@ -51,5 +55,6 @@ class AskQuestionState extends Equatable {
         nameError,
         questionError,
         speakerError,
+        prefillName,
       ];
 }

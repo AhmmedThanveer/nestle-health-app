@@ -71,7 +71,10 @@ class ForgotPasswordScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 20.h),
-                      const NestleLogoWidget(),
+                      const SizedBox(
+                        width: double.infinity,
+                        child: NestleLogoWidget(),
+                      ),
                       SizedBox(height: 60.h),
 
                       Text(AppStrings.email, style: AppTextStyles.labelStyle),

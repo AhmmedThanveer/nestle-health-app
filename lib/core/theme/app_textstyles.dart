@@ -201,7 +201,7 @@ class AppTextStyles {
 
   /// Selected category tab label (bold white)
   static TextStyle speakerCategoryTabSelected = TextStyle(
-    fontSize: 12.sp,
+    fontSize: 10.sp,
     fontWeight: FontWeight.w700,
     color: AppColors.white,
     fontFamily: 'Montserrat',
@@ -209,7 +209,7 @@ class AppTextStyles {
 
   /// Unselected category tab label
   static TextStyle speakerCategoryTabUnselected = TextStyle(
-    fontSize: 12.sp,
+    fontSize: 10.sp,
     fontWeight: FontWeight.w400,
     color: AppColors.white,
     fontFamily: 'Montserrat',
@@ -217,8 +217,8 @@ class AppTextStyles {
 
   /// Speaker name in list tile (bold white)
   static TextStyle speakerName = TextStyle(
-    fontSize: 17.sp,
-    fontWeight: FontWeight.w700,
+    fontSize: 15.sp,
+    fontWeight: FontWeight.w600,
     color: AppColors.white,
     fontFamily: 'Montserrat',
   );

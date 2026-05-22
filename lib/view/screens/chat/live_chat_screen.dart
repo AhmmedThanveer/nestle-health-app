@@ -116,18 +116,7 @@ class _LiveChatViewState extends State<_LiveChatView> {
                         );
                       }
                       if (state.messages.isEmpty) {
-                        return Center(
-                          child: Text(
-                            'No messages yet.\nBe the first to say hello!',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontSize: 14.sp,
-                              color: Colors.white54,
-                              height: 1.6,
-                            ),
-                          ),
-                        );
+                        return const _EmptyChat();
                       }
                       return ListView.builder(
                         controller: _scrollCtrl,
@@ -172,6 +161,59 @@ class _LiveChatViewState extends State<_LiveChatView> {
 
                 SizedBox(height: navBarHeight),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Empty state ──────────────────────────────────────────────────────────────
+
+class _EmptyChat extends StatelessWidget {
+  const _EmptyChat();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 80.r,
+            height: 80.r,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white.withValues(alpha: 0.08),
+              border: Border.all(
+                color: Colors.white.withValues(alpha: 0.15),
+                width: 1.5,
+              ),
+            ),
+            child: Icon(
+              Icons.chat_bubble_outline_rounded,
+              color: Colors.white38,
+              size: 36.r,
+            ),
+          ),
+          SizedBox(height: 20.h),
+          Text(
+            'No messages yet',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w600,
+              color: Colors.white60,
+            ),
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            'Be the first to say hello!',
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 13.sp,
+              color: Colors.white38,
             ),
           ),
         ],

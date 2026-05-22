@@ -9,6 +9,7 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/theme/app_textstyles.dart';
 import '../../../core/utils/validators.dart';
 import '../../../view%20model/bloc/register/register_bloc.dart';
+import '../../../view%20model/bloc/navigation/navigation_bloc.dart';
 import '../../widgets/animated_screen_wrapper.dart';
 import '../../widgets/city_bottomsheet.dart';
 import '../../widgets/common_back_button.dart';
@@ -145,8 +146,10 @@ class _RegisterViewState extends State<_RegisterView> {
           AppSnackBar.showSuccess(context, AppStrings.registrationSuccess);
           DisclaimerBottomSheet.show(
             context,
-            onAccepted: () =>
-                AppRoutes.pushAndRemoveUntil(context, AppRoutes.main),
+            onAccepted: () {
+              context.read<NavigationBloc>().add(const NavigateToTabEvent(0));
+              AppRoutes.pushAndRemoveUntil(context, AppRoutes.main);
+            },
           );
           return;
         }
@@ -216,7 +219,10 @@ class _RegisterViewState extends State<_RegisterView> {
                       children: [
                         SizedBox(height: 20.h),
 
-                        const NestleLogoWidget(),
+                        const SizedBox(
+                          width: double.infinity,
+                          child: NestleLogoWidget(),
+                        ),
 
                         SizedBox(height: 48.h),
 

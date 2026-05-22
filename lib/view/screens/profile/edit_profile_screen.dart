@@ -46,8 +46,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       _selectedTopic = AppStrings.secondaryTopicsList.contains(user.selectedTopic)
           ? user.selectedTopic
           : null;
-      _selectedCity =
-          AppStrings.saudiCities.contains(user.city) ? user.city : null;
+      _selectedCity = user.city.isNotEmpty ? user.city : null;
     }
   }
 

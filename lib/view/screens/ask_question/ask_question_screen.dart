@@ -80,16 +80,22 @@ class _AskQuestionViewState extends State<_AskQuestionView> {
       listener: (_, __) => Navigator.maybePop(context),
       child: BlocListener<AskQuestionBloc, AskQuestionState>(
         listenWhen: (prev, curr) =>
-            prev.status != curr.status &&
-            (curr.status == AskQuestionStatus.submitted ||
-                curr.status == AskQuestionStatus.failure),
+            prev.prefillName != curr.prefillName ||
+            (prev.status != curr.status &&
+                (curr.status == AskQuestionStatus.submitted ||
+                    curr.status == AskQuestionStatus.failure)),
         listener: (context, state) {
+          // Pre-fill name from Firestore once it arrives.
+          if (state.prefillName.isNotEmpty &&
+              _nameController.text.isEmpty) {
+            _nameController.text = state.prefillName;
+          }
           if (state.status == AskQuestionStatus.submitted) {
-            _nameController.clear();
+            _nameController.text = state.prefillName;
             _questionController.clear();
             context.read<AskQuestionBloc>().add(const ResetAskQuestionEvent());
             AppSnackBar.showSuccess(context, 'Your question has been submitted!');
-          } else {
+          } else if (state.status == AskQuestionStatus.failure) {
             AppSnackBar.showError(
               context,
               state.errorMessage ?? 'Failed to submit question.',

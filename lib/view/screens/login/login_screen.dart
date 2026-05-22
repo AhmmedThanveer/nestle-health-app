@@ -19,6 +19,7 @@ import '../../../../../app/routes/app_routes.dart';
 import '../../../../../view model/bloc/login_bloc.dart';
 import '../../../../../view model/bloc/login_event.dart';
 import '../../../../../view model/bloc/login_state.dart';
+import '../../../../../view model/bloc/navigation/navigation_bloc.dart';
 import '../../../../view/widgets/app_snackbar.dart';
 import '../../../../view/widgets/disclaimer_bottom_sheet.dart';
 
@@ -45,8 +46,10 @@ class LoginScreen extends StatelessWidget {
           AppSnackBar.showSuccess(context, 'Login Successfully');
           DisclaimerBottomSheet.show(
             context,
-            onAccepted: () =>
-                AppRoutes.pushAndRemoveUntil(context, AppRoutes.main),
+            onAccepted: () {
+              context.read<NavigationBloc>().add(const NavigateToTabEvent(0));
+              AppRoutes.pushAndRemoveUntil(context, AppRoutes.main);
+            },
           );
         } else if (state.errorMessage != null) {
           AppSnackBar.showError(context, state.errorMessage!);
@@ -89,7 +92,10 @@ class LoginScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const NestleLogoWidget(),
+                      const SizedBox(
+                        width: double.infinity,
+                        child: NestleLogoWidget(),
+                      ),
                       SizedBox(height: 90.h),
 
                       // Email
